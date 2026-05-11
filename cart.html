@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart — The Sapphire Scroll</title>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Your Cart — The Sapphire Scroll">
+  <meta property="og:description" content="Review your selected items and proceed to checkout.">
+  <meta property="og:url" content="https://thesapphirescroll.com/cart.html">
+  <meta property="og:image" content="https://thesapphirescroll.com/assets/og-cart.jpg">
+  <meta property="og:site_name" content="The Sapphire Scroll">
+
+  <!-- Google Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner container">
+      <a href="index.html" class="navbar-logo">
+        <span class="logo-emblem">◈</span>
+        <span class="logo-text">The Sapphire Scroll</span>
+      </a>
+      <ul class="navbar-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="has-dropdown">
+          <a href="shop.html" class="active">Shop</a>
+          <div class="dropdown-menu">
+            <a href="shop.html">All Products</a><a href="shop.html">Journals</a>
+            <a href="shop.html">Stationery</a><a href="shop.html">Pens &amp; Writing</a>
+            <a href="shop.html">Gift Sets</a>
+          </div>
+        </li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="blog.html">Journal</a></li>
+        <li><a href="corporate.html">Corporates</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="navbar-actions">
+        <button class="navbar-icon-btn search-toggle" aria-label="Search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        </button>
+        <a href="wishlist.html" class="navbar-icon-btn" aria-label="Wishlist">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </a>
+        <button class="navbar-icon-btn cart-toggle" aria-label="Cart" style="position:relative;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="cart-count" style="display:none">0</span>
+        </button>
+        <button class="mobile-menu-btn" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <nav class="mobile-nav">
+    <a href="index.html">Home</a><a href="shop.html" class="active">Shop</a><a href="about.html">About</a>
+    <a href="blog.html">Journal</a><a href="corporate.html">Corporates</a><a href="contact.html">Contact</a>
+  </nav>
+
+  <!-- SEARCH OVERLAY -->
+  <div class="search-overlay" role="dialog" aria-label="Search">
+    <div class="search-overlay-inner">
+      <span class="search-label">What are you looking for?</span>
+      <div class="search-input-wrap">
+        <input type="search" placeholder="Search journals, stationery, gifts…" aria-label="Search">
+        <button class="search-close" aria-label="Close">&times;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART DRAWER -->
+  <div class="cart-drawer" role="dialog" aria-label="Shopping cart">
+    <div class="cart-drawer-header">
+      <h3>Your Cart</h3>
+      <button class="cart-drawer-close navbar-icon-btn">&times;</button>
+    </div>
+    <div class="cart-drawer-items"></div>
+    <div class="cart-drawer-footer">
+      <div class="cart-subtotal"><span>Subtotal</span><span class="cart-subtotal-amount">&#8377;0</span></div>
+      <p style="font-size:0.75rem;color:var(--grey-mid);margin-bottom:1rem;">Taxes and shipping at checkout.</p>
+      <a href="cart.html" class="btn btn-dark" style="width:100%;display:block;text-align:center;margin-bottom:0.75rem;">View Cart</a>
+      <a href="#" class="btn btn-gold" style="width:100%;display:block;text-align:center;">Checkout</a>
+    </div>
+  </div>
+  <div class="cart-overlay"></div>
+
+  <!-- SECTION 1: PAGE HEADER -->
+  <section style="padding-top:calc(var(--navbar-height, 80px) + 3rem);padding-bottom:2rem;">
+    <div class="container">
+      <span class="section-label">Shopping</span>
+      <h1 style="font-family:'Cormorant Garamond',serif;text-align:left;margin-bottom:1rem;">Your Cart</h1>
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb" style="list-style:none;padding:0;margin:0;display:flex;gap:0.5rem;font-size:0.8rem;color:var(--grey-mid);">
+          <li><a href="index.html" style="color:var(--grey-mid);text-decoration:none;">Home</a></li>
+          <li style="color:var(--grey-mid);">/</li>
+          <li style="color:var(--brown);">Cart</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- SECTION 2: CART LAYOUT -->
+  <section class="section">
+    <div class="container">
+      <div class="cart-layout">
+
+        <!-- Left: Cart Items -->
+        <div class="cart-items-col">
+
+          <!-- Table Header -->
+          <div class="cart-table-header">
+            <span>Product</span>
+            <span style="text-align:center;">Quantity</span>
+            <span style="text-align:right;">Price</span>
+            <span style="text-align:right;opacity:0;">&times;</span>
+          </div>
+
+          <!-- Row 1: The Obsidian Journal -->
+          <div class="cart-table-row cart-table-row-grid">
+            <div class="cart-product-info" style="display:flex;gap:1rem;align-items:center;">
+              <div style="width:80px;height:100px;flex-shrink:0;background:linear-gradient(135deg,#1a1a1a 0%,#3d2b1f 50%,#1a1209 100%);border-radius:2px;"></div>
+              <div>
+                <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;margin-bottom:0.25rem;">The Obsidian Journal</h4>
+                <p style="font-size:0.78rem;color:var(--grey-mid);font-family:'Jost',sans-serif;margin:0;">A5 &middot; Midnight Black</p>
+              </div>
+            </div>
+            <div class="qty-selector" style="display:flex;align-items:center;gap:0.5rem;border:1px solid var(--grey-light);padding:0.25rem 0.5rem;">
+              <button class="qty-btn" aria-label="Decrease" style="background:none;border:none;cursor:pointer;font-size:1rem;color:var(--brown);width:1.5rem;height:1.5rem;display:flex;align-items:center;justify-content:center;">&#8722;</button>
+              <span style="font-family:'Jost',sans-serif;font-size:0.9rem;min-width:1.5rem;text-align:center;">1</span>
+              <button class="qty-btn" aria-label="Increase" style="background:none;border:none;cursor:pointer;font-size:1rem;color:var(--brown);width:1.5rem;height:1.5rem;display:flex;align-items:center;justify-content:center;">&#43;</button>
+            </div>
+            <span style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;text-align:right;white-space:nowrap;">&#8377;2,400</span>
+            <button aria-label="Remove item" style="background:none;border:none;cursor:pointer;color:var(--grey-mid);font-size:1.2rem;text-align:right;padding:0;transition:color 0.2s;">&times;</button>
+          </div>
+
+          <!-- Row 2: Aurora Softcover -->
+          <div class="cart-table-row cart-table-row-grid">
+            <div class="cart-product-info" style="display:flex;gap:1rem;align-items:center;">
+              <div style="width:80px;height:100px;flex-shrink:0;background:linear-gradient(135deg,#f5c6c6 0%,#e8a5a5 50%,#d4849a 100%);border-radius:2px;"></div>
+              <div>
+                <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;margin-bottom:0.25rem;">Aurora Softcover</h4>
+                <p style="font-size:0.78rem;color:var(--grey-mid);font-family:'Jost',sans-serif;margin:0;">B5 &middot; Blush</p>
+              </div>
+            </div>
+            <div class="qty-selector" style="display:flex;align-items:center;gap:0.5rem;border:1px solid var(--grey-light);padding:0.25rem 0.5rem;">
+              <button class="qty-btn" aria-label="Decrease" style="background:none;border:none;cursor:pointer;font-size:1rem;color:var(--brown);width:1.5rem;height:1.5rem;display:flex;align-items:center;justify-content:center;">&#8722;</button>
+              <span style="font-family:'Jost',sans-serif;font-size:0.9rem;min-width:1.5rem;text-align:center;">1</span>
+              <button class="qty-btn" aria-label="Increase" style="background:none;border:none;cursor:pointer;font-size:1rem;color:var(--brown);width:1.5rem;height:1.5rem;display:flex;align-items:center;justify-content:center;">&#43;</button>
+            </div>
+            <span style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;text-align:right;white-space:nowrap;">&#8377;1,800</span>
+            <button aria-label="Remove item" style="background:none;border:none;cursor:pointer;color:var(--grey-mid);font-size:1.2rem;text-align:right;padding:0;transition:color 0.2s;">&times;</button>
+          </div>
+
+          <!-- Row 3: Wax Seal Stamp Set -->
+          <div class="cart-table-row cart-table-row-grid">
+            <div class="cart-product-info" style="display:flex;gap:1rem;align-items:center;">
+              <div style="width:80px;height:100px;flex-shrink:0;background:linear-gradient(135deg,#c9a84c 0%,#a07830 50%,#5c3d2e 100%);border-radius:2px;"></div>
+              <div>
+                <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;margin-bottom:0.25rem;">Wax Seal Stamp Set</h4>
+                <p style="font-size:0.78rem;color:var(--grey-mid);font-family:'Jost',sans-serif;margin:0;">Classic Gold</p>
+              </div>
+            </div>
+            <div class="qty-selector" style="display:flex;align-items:center;gap:0.5rem;border:1px solid var(--grey-light);padding:0.25rem 0.5rem;">
+              <button class="qty-btn" aria-label="Decrease" style="background:none;border:none;cursor:pointer;font-size:1rem;color:var(--brown);width:1.5rem;height:1.5rem;display:flex;align-items:center;justify-content:center;">&#8722;</button>
+              <span style="font-family:'Jost',sans-serif;font-size:0.9rem;min-width:1.5rem;text-align:center;">1</span>
+              <button class="qty-btn" aria-label="Increase" style="background:none;border:none;cursor:pointer;font-size:1rem;color:var(--brown);width:1.5rem;height:1.5rem;display:flex;align-items:center;justify-content:center;">&#43;</button>
+            </div>
+            <span style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;text-align:right;white-space:nowrap;">&#8377;1,400</span>
+            <button aria-label="Remove item" style="background:none;border:none;cursor:pointer;color:var(--grey-mid);font-size:1.2rem;text-align:right;padding:0;transition:color 0.2s;">&times;</button>
+          </div>
+
+          <!-- Continue Shopping -->
+          <div style="margin-top:1.5rem;">
+            <a href="shop.html" style="font-family:'Jost',sans-serif;font-size:0.85rem;color:var(--gold);text-decoration:underline;text-underline-offset:3px;">&#8592; Continue Shopping</a>
+          </div>
+        </div>
+
+        <!-- Right: Order Summary -->
+        <div class="order-summary" style="border:1px solid var(--grey-light);padding:2rem;background:var(--white);">
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--grey-light);">Order Summary</h3>
+
+          <div class="summary-line" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;font-size:0.9rem;">
+            <span style="color:var(--grey-mid);">Subtotal</span>
+            <span style="font-family:'Cormorant Garamond',serif;font-size:1rem;">&#8377;5,600</span>
+          </div>
+          <div class="summary-line" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;font-size:0.9rem;">
+            <span style="color:var(--grey-mid);">Shipping</span>
+            <span style="color:var(--gold);font-family:'Jost',sans-serif;font-size:0.8rem;">Free (above &#8377;2,000)</span>
+          </div>
+          <div class="summary-line" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;font-size:0.9rem;padding-bottom:1.25rem;border-bottom:1px solid var(--grey-light);">
+            <span style="color:var(--grey-mid);">Taxes (18% GST)</span>
+            <span style="font-family:'Cormorant Garamond',serif;font-size:1rem;">&#8377;1,008</span>
+          </div>
+          <div class="summary-line total" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+            <span style="font-family:'Jost',sans-serif;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;font-size:0.85rem;">Total</span>
+            <span style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--brown);">&#8377;6,608</span>
+          </div>
+
+          <!-- Coupon -->
+          <div class="coupon-input" style="display:flex;gap:0;margin-bottom:1.5rem;border:1px solid var(--grey-light);">
+            <input type="text" placeholder="Enter coupon code" style="flex:1;border:none;padding:0.65rem 0.75rem;font-family:'Jost',sans-serif;font-size:0.85rem;background:transparent;outline:none;color:var(--black);">
+            <button style="background:var(--brown);color:#fff;border:none;padding:0.65rem 1rem;font-family:'Jost',sans-serif;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;">Apply</button>
+          </div>
+
+          <a href="#" class="btn btn-gold" style="width:100%;display:block;text-align:center;margin-bottom:1rem;">Proceed to Checkout</a>
+          <p style="font-size:0.75rem;font-style:italic;color:var(--grey-mid);text-align:center;margin:0;">We accept Razorpay &middot; Stripe &middot; PayU &middot; UPI &middot; Cards &middot; Net Banking</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: YOU MAY ALSO LIKE -->
+  <section class="section section--cream">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Before You Go</span>
+        <h2>You May Also Like</h2>
+      </div>
+      <div class="product-grid grid-4-col">
+
+        <!-- Product Card 1 -->
+        <div class="product-card">
+          <div class="product-card-image" style="background:linear-gradient(135deg,#2c3e50 0%,#1a1a2e 100%);aspect-ratio:3/4;"></div>
+          <div class="product-card-body">
+            <h4 class="product-card-name">The Vellum Planner</h4>
+            <p class="product-card-variant">A5 &middot; Slate</p>
+            <div class="product-card-footer">
+              <span class="product-card-price">&#8377;2,200</span>
+              <button class="btn btn-outline-gold btn-sm">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Card 2 -->
+        <div class="product-card">
+          <div class="product-card-image" style="background:linear-gradient(135deg,#8b6914 0%,#c9a84c 50%,#f5e6c0 100%);aspect-ratio:3/4;"></div>
+          <div class="product-card-body">
+            <h4 class="product-card-name">Gold-Tip Fountain Set</h4>
+            <p class="product-card-variant">Brass &middot; Amber Ink</p>
+            <div class="product-card-footer">
+              <span class="product-card-price">&#8377;3,400</span>
+              <button class="btn btn-outline-gold btn-sm">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Card 3 -->
+        <div class="product-card">
+          <div class="product-card-image" style="background:linear-gradient(135deg,#f5f0e8 0%,#e8d5b7 50%,#c9a84c 100%);aspect-ratio:3/4;"></div>
+          <div class="product-card-body">
+            <h4 class="product-card-name">Heritage Letter Set</h4>
+            <p class="product-card-variant">Cream &middot; 30 Sheets</p>
+            <div class="product-card-footer">
+              <span class="product-card-price">&#8377;1,200</span>
+              <button class="btn btn-outline-gold btn-sm">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Card 4 -->
+        <div class="product-card">
+          <div class="product-card-image" style="background:linear-gradient(135deg,#3d1a1a 0%,#7a3030 50%,#c9504c 100%);aspect-ratio:3/4;"></div>
+          <div class="product-card-body">
+            <h4 class="product-card-name">The Crimson Notebook</h4>
+            <p class="product-card-variant">B6 &middot; Ruby</p>
+            <div class="product-card-footer">
+              <span class="product-card-price">&#8377;1,600</span>
+              <button class="btn btn-outline-gold btn-sm">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <span class="footer-logo-text">The Sapphire Scroll</span>
+          <p class="footer-tagline">Crafted with intention.</p>
+          <p>Premium stationery and journals for those who believe the written word deserves a worthy home.</p>
+          <div class="footer-social-links">
+            <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#" aria-label="Pinterest"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 20l4-9"/><path d="M10.7 14c.437 1.263 1.43 2 2.55 2 2.071 0 3.75-1.554 3.75-4a5 5 0 1 0-9.7 1.7"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-col"><h5>Explore</h5><ul>
+          <li><a href="shop.html">All Products</a></li><li><a href="shop.html">Journals</a></li>
+          <li><a href="shop.html">Stationery</a></li><li><a href="corporate.html">Corporate Gifting</a></li>
+        </ul></div>
+        <div class="footer-col"><h5>Company</h5><ul>
+          <li><a href="about.html">Our Story</a></li><li><a href="blog.html">The Journal</a></li>
+          <li><a href="contact.html">Contact Us</a></li><li><a href="contact.html">FAQ</a></li>
+        </ul></div>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <div class="footer-legal">
+        <a href="#">Terms &amp; Conditions</a><a href="#">Privacy Policy</a>
+        <a href="#">Shipping Policy</a><a href="#">Returns &amp; Refunds</a>
+        <a href="#">Cookie Policy</a><a href="contact.html">Help / FAQ</a>
+      </div>
+      <p class="footer-copyright">&copy; 2026 The Sapphire Scroll. All rights reserved.</p>
+    </div>
+    <p class="footer-craft"><em>Crafted with intention. Written with purpose.</em></p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

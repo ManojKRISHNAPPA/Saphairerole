@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -n '320,335p' /Users/manojkrishnappa/Second-project/saphaire-role-website/shop.html)",
+      "Bash(sed -n '175,185p' /Users/manojkrishnappa/Second-project/saphaire-role-website/product.html)",
+      "Bash(sed -n '143,155p' /Users/manojkrishnappa/Second-project/saphaire-role-website/corporate.html)",
+      "Bash(sed -n '175,183p' /Users/manojkrishnappa/Second-project/saphaire-role-website/corporate.html)",
+      "Bash(sed -n '324,328p' /Users/manojkrishnappa/Second-project/saphaire-role-website/product.html)",
+      "Bash(sed -n '225,229p' /Users/manojkrishnappa/Second-project/saphaire-role-website/cart.html)",
+      "Bash(python3 -m http.server 8080)"
+    ]
+  }
+}
