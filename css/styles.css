@@ -920,7 +920,7 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
 
 /* ── Footer ──────────────────────────────────────────────── */
 .footer {
-  background: var(--black);
+  background: #2A1A0E;
   color: rgba(255,255,255,0.7);
   padding-top: clamp(3rem, 6vw, 5rem);
 }
