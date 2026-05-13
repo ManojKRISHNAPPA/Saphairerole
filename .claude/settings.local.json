@@ -7,7 +7,8 @@
       "Bash(sed -n '175,183p' /Users/manojkrishnappa/Second-project/saphaire-role-website/corporate.html)",
       "Bash(sed -n '324,328p' /Users/manojkrishnappa/Second-project/saphaire-role-website/product.html)",
       "Bash(sed -n '225,229p' /Users/manojkrishnappa/Second-project/saphaire-role-website/cart.html)",
-      "Bash(python3 -m http.server 8080)"
+      "Bash(python3 -m http.server 8080)",
+      "Bash(open *)"
     ]
   }
 }
