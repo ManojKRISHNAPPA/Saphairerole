@@ -49,21 +49,12 @@
         <img src="images/HORIZONTAL-FULL-COLOR.webp" alt="The Sapphire Scroll">
       </a>
       <ul class="navbar-links">
-        <li><a href="index.html">Home</a></li>
-        <li class="has-dropdown">
-          <a href="shop.html">Shop</a>
-          <div class="dropdown-menu">
-            <a href="shop.html">All Products</a>
-            <a href="shop.html">Journals</a>
-            <a href="shop.html">Stationery</a>
-            <a href="shop.html">Pens &amp; Writing</a>
-            <a href="shop.html">Gift Sets</a>
-          </div>
-        </li>
-        <li><a href="about.html" class="active">About</a></li>
-        <li><a href="blog.html">Journal</a></li>
-        <li><a href="corporate.html">Corporates</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="shop.html?category=journals">Journals</a></li>
+        <li><a href="shop.html?category=notebooks">Notebooks</a></li>
+        <li><a href="shop.html?category=self-care-cards">Self Care Cards</a></li>
+        <li><a href="shop.html?category=desk-edit">Desk Edit</a></li>
+        <li><a href="about.html" class="active">About Us</a></li>
+        <li><a href="contact.html">Enquiry</a></li>
       </ul>
       <div class="navbar-actions">
         <button class="navbar-icon-btn search-toggle" aria-label="Search">
@@ -85,12 +76,12 @@
        MOBILE NAV
   ============================================================ -->
   <nav class="mobile-nav" aria-label="Mobile navigation">
-    <a href="index.html">Home</a>
-    <a href="shop.html">Shop</a>
-    <a href="about.html">About</a>
-    <a href="blog.html">Journal</a>
-    <a href="corporate.html">Corporates</a>
-    <a href="contact.html">Contact</a>
+    <a href="shop.html?category=journals">Journals</a>
+    <a href="shop.html?category=notebooks">Notebooks</a>
+    <a href="shop.html?category=self-care-cards">Self Care Cards</a>
+    <a href="shop.html?category=desk-edit">Desk Edit</a>
+    <a href="about.html">About Us</a>
+    <a href="contact.html">Enquiry</a>
   </nav>
 
   <!-- ============================================================
@@ -129,12 +120,12 @@
     <!-- ============================================================
          PAGE HERO
     ============================================================ -->
-    <section class="page-hero" aria-label="Our Story" style="min-height:60vh;position:relative;display:flex;align-items:center;overflow:hidden;">
+    <section class="page-hero" aria-label="Our Story" style="min-height:70vh;position:relative;display:flex;align-items:center;overflow:hidden;">
       <div class="page-hero-bg" aria-hidden="true" style="position:absolute;inset:0;">
-        <img src="images/about-us-display-min.webp" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;">
+        <img src="images/about-us-display-min.webp" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 55%;">
       </div>
-      <div class="page-hero-overlay" aria-hidden="true" style="position:absolute;inset:0;background:rgba(28,28,46,0.5);"></div>
-      <div class="page-hero-content container" style="position:relative;z-index:2;text-align:center;padding-top:7rem;padding-bottom:5rem;">
+      <div class="page-hero-overlay" aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(28,28,46,0.35) 0%, rgba(28,28,46,0.65) 100%);"></div>
+      <div class="page-hero-content container" style="position:relative;z-index:2;text-align:center;padding-top:calc(var(--navbar-height) + 3rem);padding-bottom:4rem;">
         <span style="font-family:'Jost',sans-serif;font-size:0.7rem;letter-spacing:0.35em;text-transform:uppercase;color:#C9A84C;display:block;margin-bottom:1.5rem;">Our Story</span>
         <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,6vw,4.5rem);font-weight:300;color:#FFFFFF;line-height:1.1;margin:0 0 1.5rem;max-width:720px;margin-left:auto;margin-right:auto;">
           Born from a love of the written word.
@@ -212,7 +203,7 @@
     ============================================================ -->
     <section class="section" data-reveal aria-labelledby="craft-heading">
       <div class="container">
-        <div class="grid-2-col craft-grid">
+        <div class="grid-2 craft-grid">
 
           <!-- Left: Text -->
           <div>
@@ -319,7 +310,7 @@
           <p>Premium stationery and journals for those who believe the written word deserves a worthy home.</p>
           <div class="footer-social-links">
             <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-            <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 20l4-9"/><path d="M10.7 14c.437 1.263 1.43 2 2.55 2 2.071 0 3.75-1.554 3.75-4a5 5 0 1 0-9.7 1.7"/></svg></a>
+            <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
             <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
           </div>
         </div>
