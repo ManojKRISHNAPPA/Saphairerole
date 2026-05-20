@@ -776,9 +776,7 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   margin-bottom: 0.5rem;
 }
 .product-card-price {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--brown);
+  display: none;
 }
 .product-card-price .sale { color: var(--gold); }
 .product-card-price .original {
@@ -895,6 +893,131 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   font-style: italic;
   letter-spacing: 0.08em;
   color: var(--brown);
+}
+
+/* ── Showcase Banner ─────────────────────────────────────── */
+.showcase-banner {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  min-height: 420px;
+  background: #E8E4DE;
+  overflow: hidden;
+}
+.showcase-banner-image {
+  flex: 0 0 55%;
+  overflow: hidden;
+}
+.showcase-banner-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.8s ease;
+}
+.showcase-banner:hover .showcase-banner-image img {
+  transform: scale(1.03);
+}
+.showcase-banner-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 3rem clamp(2rem, 5vw, 5rem);
+  text-align: right;
+}
+.showcase-banner-content .label {
+  display: block;
+  margin-bottom: 1.25rem;
+}
+.showcase-banner-content h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--navy);
+  line-height: 1.2;
+  margin-bottom: 2rem;
+}
+.btn-brown {
+  background: var(--brown);
+  color: var(--white);
+  border: 1.5px solid var(--brown);
+}
+.btn-brown:hover {
+  background: transparent;
+  color: var(--brown);
+}
+
+/* ── Product Detail — new dynamic styles ─────────────────── */
+.pd-category-label {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--grey-mid);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+.pd-price-row {
+  display: none;
+}
+.pd-price-row .product-price-current {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--navy);
+}
+.pd-stock {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 400;
+}
+.pd-stock.in-stock  { color: #2d7a4f; }
+.pd-stock.out-of-stock { color: #c0392b; }
+.pd-description { margin: 0 0 1.5rem; }
+.pd-description p {
+  font-size: 0.9rem;
+  color: var(--brown);
+  line-height: 1.85;
+  margin-bottom: 0.75rem;
+}
+.pd-features-section { margin-bottom: 2rem; }
+.pd-features-heading {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.pd-features-list {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+.pd-features-list li {
+  font-size: 0.88rem;
+  color: var(--brown);
+  line-height: 1.85;
+  margin-bottom: 0.2rem;
+}
+.pd-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+.pd-btn-add,
+.pd-btn-buy {
+  width: 100%;
+  justify-content: center;
+}
+.product-card-link {
+  display: block;
+  overflow: hidden;
 }
 
 /* ── Newsletter ──────────────────────────────────────────── */
@@ -1236,8 +1359,8 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   margin-bottom: 0.75rem;
 }
 
-.product-price-block { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
-.product-price-current { font-size: 1.4rem; font-weight: 500; color: var(--gold); }
+.product-price-block { display: none; }
+.product-price-current { display: none; }
 .product-price-original {
   font-size: 1rem;
   color: var(--grey-mid);
@@ -2023,4 +2146,20 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   .product-grid { grid-template-columns: 1fr; }
   .values-grid  { grid-template-columns: 1fr; }
   .mobile-nav a { font-size: 1.6rem; }
+}
+
+/* ── Showcase Banner Responsive ──────────────────────────── */
+@media (max-width: 768px) {
+  .showcase-banner { flex-direction: column; }
+  .showcase-banner-image { flex: 0 0 260px; width: 100%; }
+  .showcase-banner-content {
+    align-items: flex-start;
+    text-align: left;
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* ── Product Detail — pd-actions responsive ─────────────── */
+@media (max-width: 480px) {
+  .pd-actions { grid-template-columns: 1fr; }
 }

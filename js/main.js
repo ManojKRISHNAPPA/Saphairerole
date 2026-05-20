@@ -2,6 +2,132 @@
    THE SAPPHIRE SCROLL — Main JavaScript
    ============================================================ */
 
+// ── Product Catalog ───────────────────────────────────────
+const PRODUCTS = {
+  'the-shift': {
+    category: 'Journal',
+    name: 'The Shift – Productivity Journal',
+    price: 200,
+    priceFormatted: 'INR 200',
+    inStock: true,
+    images: [
+      'images/the-shift-produt-display-min.webp',
+      'images/the-shift-img1-min.webp',
+      'images/the-shift-img2.webp',
+      'images/the-shift-img3.webp',
+    ],
+    description: [
+      "The Shift is created for those seasons of life when you're ready for more clarity, more intention, and more flow — without the pressure to \"perform\" productivity.",
+      "This journal gently guides you into a rhythm that feels natural, not forced. Instead of overwhelming you with complex systems, The Shift helps you organise your day in a way that feels doable, grounding, and aligned with what truly matters to you.",
+      "Imagine beginning each morning by simply laying out your priorities, setting your intentions, and taking a moment to breathe before the day begins. Imagine ending the week by checking in with yourself — What worked? What didn't? What felt good? — and letting that reflection shape the week ahead.",
+      "The Shift turns planning into a mindful ritual, not a task. It's your soft structure for a busy life, a quiet companion that holds your plans, thoughts, and progress with calm certainty.",
+    ],
+    features: [
+      'Total Pages: 120 pages for structured, consistent planning.',
+      '100 gsm Paper: Smooth, bleed-resistant pages suitable for most pens.',
+      'Hardback cover for durability, stability, and a luxurious hand-feel.',
+      'Compact Size: 5.8 × 8.3 inches for easy carrying.',
+      '99 Daily Planner Pages: Simple daily layouts to organise tasks, priorities, and notes.',
+      '15 Weekly Reflection Pages: A quick weekly reset to review progress and realign.',
+      '5 Monthly Calendar Pages: Minimal monthly overview for planning ahead and tracking key dates.',
+    ],
+  },
+  'gentle-pause': {
+    category: 'Journal',
+    name: 'The Gentle Pause',
+    price: 1299,
+    priceFormatted: 'INR 1,299',
+    inStock: true,
+    images: ['images/gentle-pause-product-display-min.webp', 'images/gentle-pause-1a-1.webp'],
+    description: [
+      "The Gentle Pause is a journal for those moments when you need to slow down and breathe. Designed with intention, it invites you to pause, reflect, and reconnect with what matters.",
+      "With a deep plum cover and geometric gold pattern, it's a beautiful companion for your daily reflections.",
+    ],
+    features: [
+      'Deep plum hardback cover with geometric gold foil pattern.',
+      '120 guided reflection pages.',
+      '100 gsm acid-free paper.',
+      'Compact size suitable for everyday carry.',
+      'Ribbon bookmark in gold.',
+    ],
+  },
+  'inner-alchemy': {
+    category: 'Journal',
+    name: 'Inner Alchemy',
+    price: 1199,
+    priceFormatted: 'INR 1,199',
+    inStock: true,
+    images: ['images/inner-alchemy-product-display-min.webp', 'images/inner-alchemy-img1-min-1.webp'],
+    description: [
+      "Inner Alchemy is a minimalist ivory journal designed for reflection and growth. With a delicate botanical illustration on the cover, it invites you to tend to your inner world with the same care as a garden.",
+      "Each page is a blank canvas for your thoughts, intentions, and discoveries.",
+    ],
+    features: [
+      'Ivory hardback cover with botanical illustration.',
+      '120 dot-grid pages for free expression.',
+      '100 gsm acid-free paper.',
+      'Lay-flat binding for comfortable writing.',
+      'Ribbon bookmark.',
+    ],
+  },
+  'self-discovery': {
+    category: 'Journal',
+    name: 'Self Discovery',
+    price: 1299,
+    priceFormatted: 'INR 1,299',
+    inStock: true,
+    images: ['images/self-discovery-product-display-min.webp', 'images/seld-discovery-img1-min (1).webp'],
+    description: [
+      "Self Discovery is a guided journal for deep self-knowing. Set in forest green with gold embossing, it's built for those who are ready to explore who they are and who they are becoming.",
+      "Through structured prompts and open pages, this journal becomes a mirror for your inner life.",
+    ],
+    features: [
+      'Forest green hardback cover with gold embossing.',
+      '128 guided and open pages.',
+      '100 gsm paper.',
+      'Structured prompts for self-exploration.',
+      'Premium ribbon marker.',
+    ],
+  },
+  'self-care-cards': {
+    category: 'Self Care Cards',
+    name: 'Self Care Cards',
+    price: 799,
+    priceFormatted: 'INR 799',
+    inStock: true,
+    images: ['images/self-care-cards-display-min.webp', 'images/self-care-card-img-1.webp'],
+    description: [
+      "52 daily prompt cards to inspire creativity and mindful self-care. Each card carries a gentle nudge — a reminder to slow down, breathe, and tend to yourself with intention.",
+      "Beautiful enough to display, meaningful enough to change your day.",
+    ],
+    features: [
+      '52 beautifully designed prompt cards.',
+      'Printed on 350 gsm premium card stock.',
+      'Matte finish with subtle gold details.',
+      'Boxed for gifting or personal use.',
+      'Card dimensions: 10 × 14 cm.',
+    ],
+  },
+  'bookmark-set': {
+    category: 'Desk Edit',
+    name: 'Watercolour Bookmarks',
+    price: 449,
+    priceFormatted: 'INR 449',
+    inStock: true,
+    images: ['images/bookmark-img1-min.webp', 'images/bookmark-img2-min.webp', 'images/bookmark-img3-min.webp'],
+    description: [
+      "A set of 3 cream and blush watercolour art bookmarks. Gift-ready and beautiful, these bookmarks bring a touch of artistry to every book you open.",
+    ],
+    features: [
+      'Set of 3 watercolour art bookmarks.',
+      'Printed on 300 gsm cotton paper.',
+      'Cream and blush colour palette.',
+      'Wrapped in tissue and ribbon — gift-ready.',
+      'Bookmark dimensions: 5 × 18 cm.',
+    ],
+  },
+};
+
 // ── State ─────────────────────────────────────────────────
 let cart = JSON.parse(localStorage.getItem('ss_cart') || '[]');
 
@@ -350,23 +476,109 @@ function initNewsletter() {
   });
 }
 
+// ── Product Page (dynamic) ────────────────────────────────
+function initProductPage() {
+  const mainImgEl   = qs('#pd-main-img');
+  if (!mainImgEl) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const id     = params.get('id') || 'the-shift';
+  const p      = PRODUCTS[id] || PRODUCTS['the-shift'];
+
+  // Populate text fields
+  const set = (sel, val) => { const el = qs(sel); if (el) el.textContent = val; };
+  set('#pd-category', p.category);
+  set('#pd-name',     p.name);
+  set('#pd-price',    p.priceFormatted);
+  set('#pd-stock',    p.inStock ? 'In stock' : 'Out of stock');
+
+  const stockEl = qs('#pd-stock');
+  if (stockEl) {
+    stockEl.className = 'pd-stock ' + (p.inStock ? 'in-stock' : 'out-of-stock');
+  }
+
+  // Description paragraphs
+  const descEl = qs('#pd-description');
+  if (descEl) {
+    descEl.innerHTML = p.description.map(t => `<p>${t}</p>`).join('');
+  }
+
+  // Features list
+  const featuresEl = qs('#pd-features');
+  if (featuresEl) {
+    featuresEl.innerHTML = p.features.map(f => `<li>${f}</li>`).join('');
+  }
+
+  // Update page title / breadcrumb
+  document.title = `${p.name} — The Sapphire Scroll`;
+  const breadcrumbCurrent = qs('[aria-current="page"]');
+  if (breadcrumbCurrent) breadcrumbCurrent.textContent = p.name;
+
+  // Main image
+  mainImgEl.src = p.images[0];
+  mainImgEl.alt = p.name;
+
+  // Thumbnails
+  const thumbsEl = qs('#pd-thumbs');
+  if (thumbsEl && p.images.length > 1) {
+    thumbsEl.innerHTML = p.images.map((src, i) => `
+      <div class="product-thumb ${i === 0 ? 'active' : ''}" role="listitem" tabindex="0"
+           data-thumb-src="${src}" aria-label="View image ${i + 1}">
+        <img src="${src}" alt="${p.name} view ${i + 1}" style="width:100%;height:100%;object-fit:cover;">
+      </div>`).join('');
+
+    thumbsEl.querySelectorAll('.product-thumb').forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        mainImgEl.src = thumb.dataset.thumbSrc;
+        thumbsEl.querySelectorAll('.product-thumb').forEach(t => t.classList.remove('active'));
+        thumb.classList.add('active');
+      });
+    });
+  }
+
+  // Add to Cart button
+  const addBtn = qs('#pd-add-cart');
+  if (addBtn) {
+    addBtn.addEventListener('click', () => {
+      addToCart({ id: 'p_' + id, name: p.name, price: p.price, variant: '', qty: 1, img: p.images[0] });
+    });
+  }
+
+  // Buy Now button (add to cart then go to cart)
+  const buyBtn = qs('#pd-buy-now');
+  if (buyBtn) {
+    buyBtn.addEventListener('click', () => {
+      addToCart({ id: 'p_' + id, name: p.name, price: p.price, variant: '', qty: 1, img: p.images[0] });
+      window.location.href = 'cart.html';
+    });
+  }
+}
+
 // ── Category Filters (blog / shop) ───────────────────────
 function initCategoryFilters() {
+  const urlCat = new URLSearchParams(window.location.search).get('category') || '';
+
   qsa('.category-filters').forEach(filterBar => {
-    filterBar.querySelectorAll('.cat-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBar.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+    const buttons = filterBar.querySelectorAll('.cat-btn');
 
-        const cat = btn.dataset.category;
-        const grid = filterBar.closest('.section')?.querySelector('[data-filterable]');
-        if (!grid) return;
-
-        qsa('[data-category]', grid).forEach(item => {
-          const show = cat === 'all' || item.dataset.category === cat;
-          item.style.display = show ? '' : 'none';
-        });
+    const applyFilter = (cat) => {
+      buttons.forEach(b => b.classList.toggle('active', b.dataset.category === cat));
+      const grid = filterBar.closest('main')?.querySelector('[data-filterable]')
+                || document.querySelector('[data-filterable]');
+      if (!grid) return;
+      qsa('[data-category]', grid).forEach(item => {
+        item.style.display = (cat === 'all' || item.dataset.category === cat) ? '' : 'none';
       });
+    };
+
+    // Auto-apply URL category on load
+    if (urlCat) {
+      const match = [...buttons].find(b => b.dataset.category === urlCat);
+      if (match) applyFilter(urlCat);
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => applyFilter(btn.dataset.category));
     });
   });
 }
@@ -550,6 +762,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCart();
   initScrollReveal();
   initAccordions();
+  initProductPage();
   initProductGallery();
   initVariantSelectors();
   initQtySelectors();

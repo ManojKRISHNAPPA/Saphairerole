@@ -49,21 +49,12 @@
         <img src="images/HORIZONTAL-FULL-COLOR.webp" alt="The Sapphire Scroll">
       </a>
       <ul class="navbar-links">
-        <li><a href="index.html">Home</a></li>
-        <li class="has-dropdown">
-          <a href="shop.html" class="active">Shop</a>
-          <div class="dropdown-menu">
-            <a href="shop.html">All Products</a>
-            <a href="shop.html">Journals</a>
-            <a href="shop.html">Stationery</a>
-            <a href="shop.html">Pens &amp; Writing</a>
-            <a href="shop.html">Gift Sets</a>
-          </div>
-        </li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="blog.html">Journal</a></li>
-        <li><a href="corporate.html">Corporates</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="shop.html?category=journals" class="active">Journals</a></li>
+        <li><a href="shop.html?category=notebooks">Notebooks</a></li>
+        <li><a href="shop.html?category=self-care-cards">Self Care Cards</a></li>
+        <li><a href="shop.html?category=desk-edit">Desk Edit</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Enquiry</a></li>
       </ul>
       <div class="navbar-actions">
         <button class="navbar-icon-btn search-toggle" aria-label="Search">
@@ -85,8 +76,12 @@
        MOBILE NAV
   ============================================================ -->
   <nav class="mobile-nav">
-    <a href="index.html">Home</a><a href="shop.html">Shop</a><a href="about.html">About</a>
-    <a href="blog.html">Journal</a><a href="corporate.html">Corporates</a><a href="contact.html">Contact</a>
+    <a href="shop.html?category=journals">Journals</a>
+    <a href="shop.html?category=notebooks">Notebooks</a>
+    <a href="shop.html?category=self-care-cards">Self Care Cards</a>
+    <a href="shop.html?category=desk-edit">Desk Edit</a>
+    <a href="about.html">About Us</a>
+    <a href="contact.html">Enquiry</a>
   </nav>
 
   <!-- ============================================================
@@ -138,10 +133,10 @@
       <div class="category-filters" style="justify-content:center;">
         <button class="cat-btn active" data-category="all">All</button>
         <button class="cat-btn" data-category="journals">Journals</button>
-        <button class="cat-btn" data-category="stationery">Stationery</button>
-        <button class="cat-btn" data-category="pens">Pens &amp; Writing</button>
+        <button class="cat-btn" data-category="notebooks">Notebooks</button>
+        <button class="cat-btn" data-category="self-care-cards">Self Care Cards</button>
+        <button class="cat-btn" data-category="desk-edit">Desk Edit</button>
         <button class="cat-btn" data-category="gifts">Gift Sets</button>
-        <button class="cat-btn" data-category="accessories">Accessories</button>
       </div>
     </div>
 
@@ -159,29 +154,6 @@
           </button>
           <aside class="filters-sidebar collapsed" id="filters-sidebar" aria-label="Product filters">
             <h5 style="font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1.5rem;color:var(--black);">Filters</h5>
-
-            <!-- Price Range -->
-            <div class="filter-group">
-              <div class="filter-group-title">Price Range</div>
-              <div class="filter-options">
-                <label class="filter-option">
-                  <input type="checkbox" name="price" value="under-1000">
-                  Under &#8377;1,000
-                </label>
-                <label class="filter-option">
-                  <input type="checkbox" name="price" value="1000-2000">
-                  &#8377;1,000 – &#8377;2,000
-                </label>
-                <label class="filter-option">
-                  <input type="checkbox" name="price" value="2000-4000">
-                  &#8377;2,000 – &#8377;4,000
-                </label>
-                <label class="filter-option">
-                  <input type="checkbox" name="price" value="4000-plus">
-                  &#8377;4,000+
-                </label>
-              </div>
-            </div>
 
             <!-- Material -->
             <div class="filter-group">
@@ -249,16 +221,18 @@
 
               <!-- 1. The Shift -->
               <article class="product-card" data-category="journals" data-reveal data-reveal-delay="0">
-                <div class="product-card-media">
-                  <img src="images/1-the-shift-display-min-1.webp" alt="The Shift Journal" class="product-img-primary">
-                </div>
+                <a href="product.html?id=the-shift" class="product-card-link" aria-label="View The Shift">
+                  <div class="product-card-media">
+                    <img src="images/1-the-shift-display-min-1.webp" alt="The Shift Journal" class="product-img-primary">
+                  </div>
+                </a>
                 <span class="product-badge">Bestseller</span>
                 <button class="product-wishlist-btn" aria-label="Add The Shift to wishlist">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </button>
                 <button class="product-card-cta" data-quick-add="the-shift">Add to Cart</button>
                 <div class="product-card-info">
-                  <a href="product.html" style="display:block;">
+                  <a href="product.html?id=the-shift" style="display:block;">
                     <h3 class="product-card-name">The Shift</h3>
                   </a>
                   <p class="product-card-desc">Guided journal for mindful transformation — navy, gold-foil accents</p>
@@ -268,15 +242,19 @@
 
               <!-- 2. The Gentle Pause -->
               <article class="product-card" data-category="journals" data-reveal data-reveal-delay="1">
-                <div class="product-card-media">
-                  <img src="images/gentle-pause-product-display-min.webp" alt="The Gentle Pause Journal" class="product-img-primary">
-                </div>
+                <a href="product.html?id=gentle-pause" class="product-card-link" aria-label="View The Gentle Pause">
+                  <div class="product-card-media">
+                    <img src="images/gentle-pause-product-display-min.webp" alt="The Gentle Pause Journal" class="product-img-primary">
+                  </div>
+                </a>
                 <button class="product-wishlist-btn" aria-label="Add The Gentle Pause to wishlist">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </button>
                 <button class="product-card-cta" data-quick-add="the-gentle-pause">Add to Cart</button>
                 <div class="product-card-info">
-                  <h3 class="product-card-name">The Gentle Pause</h3>
+                  <a href="product.html?id=gentle-pause" style="display:block;">
+                    <h3 class="product-card-name">The Gentle Pause</h3>
+                  </a>
                   <p class="product-card-desc">Journal for slowing down — deep plum, geometric gold pattern</p>
                   <span class="product-card-price">&#8377;1,299</span>
                 </div>
@@ -284,16 +262,20 @@
 
               <!-- 3. Inner Alchemy -->
               <article class="product-card" data-category="journals" data-reveal data-reveal-delay="2">
-                <div class="product-card-media">
-                  <img src="images/inner-alchemy-product-display-min.webp" alt="Inner Alchemy Journal" class="product-img-primary">
-                </div>
+                <a href="product.html?id=inner-alchemy" class="product-card-link" aria-label="View Inner Alchemy">
+                  <div class="product-card-media">
+                    <img src="images/inner-alchemy-product-display-min.webp" alt="Inner Alchemy Journal" class="product-img-primary">
+                  </div>
+                </a>
                 <span class="product-badge" style="background:var(--brown);">New</span>
                 <button class="product-wishlist-btn" aria-label="Add Inner Alchemy to wishlist">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </button>
                 <button class="product-card-cta" data-quick-add="inner-alchemy">Add to Cart</button>
                 <div class="product-card-info">
-                  <h3 class="product-card-name">Inner Alchemy</h3>
+                  <a href="product.html?id=inner-alchemy" style="display:block;">
+                    <h3 class="product-card-name">Inner Alchemy</h3>
+                  </a>
                   <p class="product-card-desc">Minimalist ivory journal with botanical illustration</p>
                   <span class="product-card-price">&#8377;1,199</span>
                 </div>
@@ -301,128 +283,160 @@
 
               <!-- 4. Self Discovery -->
               <article class="product-card" data-category="journals" data-reveal data-reveal-delay="0">
-                <div class="product-card-media">
-                  <img src="images/self-discovery-product-display-min.webp" alt="Self Discovery Journal" class="product-img-primary">
-                </div>
+                <a href="product.html?id=self-discovery" class="product-card-link" aria-label="View Self Discovery">
+                  <div class="product-card-media">
+                    <img src="images/self-discovery-product-display-min.webp" alt="Self Discovery Journal" class="product-img-primary">
+                  </div>
+                </a>
                 <button class="product-wishlist-btn" aria-label="Add Self Discovery to wishlist">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </button>
                 <button class="product-card-cta" data-quick-add="self-discovery">Add to Cart</button>
                 <div class="product-card-info">
-                  <h3 class="product-card-name">Self Discovery</h3>
+                  <a href="product.html?id=self-discovery" style="display:block;">
+                    <h3 class="product-card-name">Self Discovery</h3>
+                  </a>
                   <p class="product-card-desc">Deep self-knowing — forest green with gold embossing</p>
                   <span class="product-card-price">&#8377;1,299</span>
                 </div>
               </article>
 
               <!-- 5. Self Care Cards -->
-              <article class="product-card" data-category="accessories" data-reveal data-reveal-delay="1">
-                <div class="product-card-media">
-                  <img src="images/self-care-cards-display-min.webp" alt="Self Care Cards" class="product-img-primary">
-                </div>
+              <article class="product-card" data-category="self-care-cards" data-reveal data-reveal-delay="1">
+                <a href="product.html?id=self-care-cards" class="product-card-link" aria-label="View Self Care Cards">
+                  <div class="product-card-media">
+                    <img src="images/self-care-cards-display-min.webp" alt="Self Care Cards" class="product-img-primary">
+                  </div>
+                </a>
                 <span class="product-badge" style="background:var(--gold);">Popular</span>
                 <button class="product-wishlist-btn" aria-label="Add Self Care Cards to wishlist">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </button>
                 <button class="product-card-cta" data-quick-add="self-care-cards">Add to Cart</button>
                 <div class="product-card-info">
-                  <h3 class="product-card-name">Self Care Cards</h3>
+                  <a href="product.html?id=self-care-cards" style="display:block;">
+                    <h3 class="product-card-name">Self Care Cards</h3>
+                  </a>
                   <p class="product-card-desc">52 daily prompt cards for creativity and mindful self-care</p>
                   <span class="product-card-price">&#8377;799</span>
                 </div>
               </article>
 
               <!-- 6. Watercolour Bookmarks -->
-              <article class="product-card" data-category="accessories" data-reveal data-reveal-delay="2">
-                <div class="product-card-media">
-                  <img src="images/bookmark-img1-min.webp" alt="Watercolour Bookmark Set" class="product-img-primary">
-                </div>
+              <article class="product-card" data-category="desk-edit" data-reveal data-reveal-delay="2">
+                <a href="product.html?id=bookmark-set" class="product-card-link" aria-label="View Watercolour Bookmarks">
+                  <div class="product-card-media">
+                    <img src="images/bookmark-img1-min.webp" alt="Watercolour Bookmark Set" class="product-img-primary">
+                  </div>
+                </a>
                 <button class="product-wishlist-btn" aria-label="Add Watercolour Bookmarks to wishlist">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </button>
                 <button class="product-card-cta" data-quick-add="bookmark-set">Add to Cart</button>
                 <div class="product-card-info">
-                  <h3 class="product-card-name">Watercolour Bookmarks</h3>
+                  <a href="product.html?id=bookmark-set" style="display:block;">
+                    <h3 class="product-card-name">Watercolour Bookmarks</h3>
+                  </a>
                   <p class="product-card-desc">Set of 3 — cream & blush watercolour art bookmarks, gift-ready</p>
                   <span class="product-card-price">&#8377;449</span>
                 </div>
               </article>
 
-              <!-- 7. The Shift — Detail Images Pack -->
+              <!-- 7. The Shift — Gold Edition -->
               <article class="product-card" data-category="journals" data-reveal data-reveal-delay="0">
-                <div class="product-card-media">
-                  <img src="images/the-shift-img1-min.webp" alt="The Shift Journal detail" class="product-img-primary">
-                </div>
+                <a href="product.html?id=the-shift" class="product-card-link" aria-label="View The Shift Gold Edition">
+                  <div class="product-card-media">
+                    <img src="images/the-shift-img1-min.webp" alt="The Shift Journal detail" class="product-img-primary">
+                  </div>
+                </a>
                 <button class="product-wishlist-btn" aria-label="Add to wishlist">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </button>
                 <button class="product-card-cta" data-quick-add="the-shift-gold">Add to Cart</button>
                 <div class="product-card-info">
-                  <h3 class="product-card-name">The Shift — Gold Edition</h3>
+                  <a href="product.html?id=the-shift" style="display:block;">
+                    <h3 class="product-card-name">The Shift — Gold Edition</h3>
+                  </a>
                   <p class="product-card-desc">Special gold-foil collector's edition with premium packaging</p>
                   <span class="product-card-price">&#8377;1,599</span>
                 </div>
               </article>
 
-              <!-- 8. Gentle Pause Detail -->
+              <!-- 8. Gentle Pause Bundle -->
               <article class="product-card" data-category="journals" data-reveal data-reveal-delay="1">
-                <div class="product-card-media">
-                  <img src="images/gentle-pause-1a-1.webp" alt="The Gentle Pause Journal interior" class="product-img-primary">
-                </div>
+                <a href="product.html?id=gentle-pause" class="product-card-link" aria-label="View Gentle Pause Bundle">
+                  <div class="product-card-media">
+                    <img src="images/gentle-pause-1a-1.webp" alt="The Gentle Pause Journal interior" class="product-img-primary">
+                  </div>
+                </a>
                 <button class="product-wishlist-btn" aria-label="Add to wishlist">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </button>
                 <button class="product-card-cta" data-quick-add="gentle-pause-bundle">Add to Cart</button>
                 <div class="product-card-info">
-                  <h3 class="product-card-name">The Gentle Pause — Bundle</h3>
+                  <a href="product.html?id=gentle-pause" style="display:block;">
+                    <h3 class="product-card-name">The Gentle Pause — Bundle</h3>
+                  </a>
                   <p class="product-card-desc">Journal + self care cards gift set — perfect for gifting</p>
                   <span class="product-card-price">&#8377;1,899</span>
                 </div>
               </article>
 
               <!-- 9. Ritual Cards -->
-              <article class="product-card" data-category="accessories" data-reveal data-reveal-delay="2">
-                <div class="product-card-media">
-                  <img src="images/6-ritual-cards-display-min.webp" alt="Ritual Cards" class="product-img-primary">
-                </div>
+              <article class="product-card" data-category="self-care-cards" data-reveal data-reveal-delay="2">
+                <a href="product.html?id=self-care-cards" class="product-card-link" aria-label="View Ritual Cards">
+                  <div class="product-card-media">
+                    <img src="images/6-ritual-cards-display-min.webp" alt="Ritual Cards" class="product-img-primary">
+                  </div>
+                </a>
                 <button class="product-wishlist-btn" aria-label="Add Ritual Cards to wishlist">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </button>
                 <button class="product-card-cta" data-quick-add="ritual-cards">Add to Cart</button>
                 <div class="product-card-info">
-                  <h3 class="product-card-name">Daily Ritual Cards</h3>
+                  <a href="product.html?id=self-care-cards" style="display:block;">
+                    <h3 class="product-card-name">Daily Ritual Cards</h3>
+                  </a>
                   <p class="product-card-desc">Morning rituals and evening reflections — set of 40 cards</p>
                   <span class="product-card-price">&#8377;699</span>
                 </div>
               </article>
 
               <!-- 10. Bookmark Set 2 -->
-              <article class="product-card" data-category="accessories" data-reveal data-reveal-delay="0">
-                <div class="product-card-media">
-                  <img src="images/bookmark-img2-min.webp" alt="Bookmark Set 2" class="product-img-primary">
-                </div>
+              <article class="product-card" data-category="desk-edit" data-reveal data-reveal-delay="0">
+                <a href="product.html?id=bookmark-set" class="product-card-link" aria-label="View Bookmark Set 2">
+                  <div class="product-card-media">
+                    <img src="images/bookmark-img2-min.webp" alt="Bookmark Set 2" class="product-img-primary">
+                  </div>
+                </a>
                 <button class="product-wishlist-btn" aria-label="Add Bookmark Set 2 to wishlist">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </button>
                 <button class="product-card-cta" data-quick-add="bookmark-set-2">Add to Cart</button>
                 <div class="product-card-info">
-                  <h3 class="product-card-name">Watercolour Bookmarks II</h3>
+                  <a href="product.html?id=bookmark-set" style="display:block;">
+                    <h3 class="product-card-name">Watercolour Bookmarks II</h3>
+                  </a>
                   <p class="product-card-desc">Second collection — rose and burgundy ink on cream stock</p>
                   <span class="product-card-price">&#8377;449</span>
                 </div>
               </article>
 
-              <!-- 11. Self Care Cards 2 -->
-              <article class="product-card" data-category="accessories" data-reveal data-reveal-delay="1">
-                <div class="product-card-media">
-                  <img src="images/self-care-cards-img-2.webp" alt="Self Care Cards set 2" class="product-img-primary">
-                </div>
+              <!-- 11. Self Care Cards Vol. 2 -->
+              <article class="product-card" data-category="self-care-cards" data-reveal data-reveal-delay="1">
+                <a href="product.html?id=self-care-cards" class="product-card-link" aria-label="View Self Care Cards Vol.2">
+                  <div class="product-card-media">
+                    <img src="images/self-care-cards-img-2.webp" alt="Self Care Cards set 2" class="product-img-primary">
+                  </div>
+                </a>
                 <button class="product-wishlist-btn" aria-label="Add Self Care Cards 2 to wishlist">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </button>
                 <button class="product-card-cta" data-quick-add="self-care-vol2">Add to Cart</button>
                 <div class="product-card-info">
-                  <h3 class="product-card-name">Self Care Cards — Vol. 2</h3>
+                  <a href="product.html?id=self-care-cards" style="display:block;">
+                    <h3 class="product-card-name">Self Care Cards — Vol. 2</h3>
+                  </a>
                   <p class="product-card-desc">52 fresh prompts for rest, creativity and deeper self-care</p>
                   <span class="product-card-price">&#8377;799</span>
                 </div>
