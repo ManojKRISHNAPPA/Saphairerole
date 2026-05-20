@@ -539,7 +539,8 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
 /* ── Hero Section ────────────────────────────────────────── */
 .hero {
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100vh;
   min-height: 600px;
@@ -547,12 +548,42 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   position: relative;
 }
 
+/* Video hero variant */
+.hero--video {
+  background: var(--cream);
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(250, 246, 239, 0.52);
+  z-index: 1;
+}
+
+.hero-content-center {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: calc(var(--navbar-height) + 2rem) var(--container-pad) 3rem;
+  max-width: 640px;
+}
+
+/* keep legacy classes for other pages */
 .hero-split-image {
   flex: 0 0 58%;
   overflow: hidden;
   position: relative;
 }
-
 .hero-split-image img {
   width: 100%;
   height: 100%;
@@ -560,7 +591,6 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   object-position: left center;
   display: block;
 }
-
 .hero-split-content {
   flex: 1;
   background: var(--cream);
@@ -569,22 +599,18 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   justify-content: center;
   padding: calc(var(--navbar-height) + 2rem) clamp(2rem, 4vw, 4rem) 3rem;
 }
-
-/* keep old classes harmless for other pages */
-.hero-video,
 .hero-fallback {
   position: absolute;
   inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
+  background: var(--cream);
 }
-.hero-fallback { background: var(--cream); }
 .hero-fallback img {
   width: 100%; height: 100%;
   object-fit: cover;
   object-position: left center;
 }
-.hero-overlay { display: none; }
 
 .hero-content {
   position: relative;
@@ -606,6 +632,7 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   max-width: 220px;
   height: auto;
   display: block;
+  margin: 0 auto;
 }
 
 .hero-tagline {
@@ -621,7 +648,7 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
 .scroll-indicator {
   position: absolute;
   bottom: 2.5rem;
-  left: 29%;
+  left: 50%;
   transform: translateX(-50%);
   z-index: 2;
   display: flex;
@@ -873,7 +900,7 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
 /* ── Newsletter ──────────────────────────────────────────── */
 .newsletter-section {
   background: #3D2210;
-  padding: clamp(3rem, 6vw, 5rem) var(--container-pad);
+  padding: clamp(1.5rem, 3vw, 2.5rem) var(--container-pad);
   text-align: center;
   position: relative;
 }
@@ -1852,18 +1879,9 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   .navbar-actions .navbar-icon-btn:not(.cart-toggle):not(.search-toggle) { display: none; }
   .mobile-menu-btn { display: flex; }
 
-  /* Hero tablet — stack split vertically */
-  .hero { flex-direction: column; height: auto; min-height: 100vh; }
-  .hero-split-image { flex: 0 0 52vh; width: 100%; }
-  .hero-split-image img { object-position: center 30%; }
-  .hero-split-content {
-    flex: 1;
-    padding: 3rem 2rem 2.5rem;
-    align-items: center;
-    text-align: center;
-  }
-  .hero-split-content .hero-logo img { margin: 0 auto; }
-  .hero-split-content > div[style*="flex"] { justify-content: center !important; }
+  /* Hero tablet — video hero stays full screen */
+  .hero { height: 100vh; min-height: 600px; }
+  .hero-content-center { padding: calc(var(--navbar-height) + 1rem) 1.5rem 2rem; }
 
   /* Shop */
   .shop-layout { grid-template-columns: 1fr; }
@@ -1909,18 +1927,10 @@ textarea.form-control { min-height: 140px; resize: vertical; }
 @media (max-width: 640px) {
   :root { --container-pad: 1rem; }
 
-  /* Hero mobile — compact image, centered content */
-  .hero { flex-direction: column; height: auto; min-height: 100vh; }
-  .hero-split-image { flex: 0 0 45vh; width: 100%; }
-  .hero-split-content {
-    flex: 1;
-    padding: 2rem 1.5rem 2rem;
-    align-items: center;
-    text-align: center;
-  }
-  .hero-split-content .hero-logo img { margin: 0 auto; }
-  .hero-split-content .btn { width: 100%; justify-content: center; }
-  .hero-split-content > div[style*="flex"] { justify-content: center !important; }
+  /* Hero mobile — video stays full screen */
+  .hero { height: 100svh; min-height: 560px; }
+  .hero-content-center { padding: calc(var(--navbar-height) + 1rem) 1rem 2rem; }
+  .hero-content-center .btn { width: 100%; justify-content: center; }
 
   /* Typography scale down */
   .tagline-section h1 { font-size: 1.9rem; }
