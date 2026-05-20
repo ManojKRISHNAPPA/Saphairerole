@@ -558,6 +558,38 @@ function initProductPage() {
 function initCategoryFilters() {
   const urlCat = new URLSearchParams(window.location.search).get('category') || '';
 
+  const CATEGORY_LABELS = {
+    'journals':        'Journals',
+    'notebooks':       'Notebooks',
+    'self-care-cards': 'Self Care Cards',
+    'desk-edit':       'Desk Edit',
+    'gifts':           'Gift Sets',
+  };
+
+  // Direct URL filter — works even when there are no filter-pill buttons
+  if (urlCat) {
+    const label = CATEGORY_LABELS[urlCat] || urlCat;
+
+    // Update page heading and breadcrumb
+    const heading = qs('#shop-heading');
+    if (heading) heading.textContent = label;
+    const crumb = qs('#shop-breadcrumb-current');
+    if (crumb) crumb.textContent = label;
+
+    qsa('[data-filterable]').forEach(grid => {
+      let visibleCount = 0;
+      qsa('[data-category]', grid).forEach(item => {
+        const show = item.dataset.category === urlCat;
+        item.style.display = show ? '' : 'none';
+        if (show) visibleCount++;
+      });
+
+      // Show empty state if no products match
+      const emptyState = qs('#shop-empty-state');
+      if (emptyState) emptyState.style.display = visibleCount === 0 ? '' : 'none';
+    });
+  }
+
   qsa('.category-filters').forEach(filterBar => {
     const buttons = filterBar.querySelectorAll('.cat-btn');
 
@@ -571,7 +603,6 @@ function initCategoryFilters() {
       });
     };
 
-    // Auto-apply URL category on load
     if (urlCat) {
       const match = [...buttons].find(b => b.dataset.category === urlCat);
       if (match) applyFilter(urlCat);
