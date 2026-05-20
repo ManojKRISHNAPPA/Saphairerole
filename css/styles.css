@@ -92,7 +92,8 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   padding: 0 var(--container-pad);
 }
 
-.section { padding: clamp(4rem, 8vw, 8rem) 0; }
+.section { padding: clamp(2.5rem, 5vw, 5rem) 0; }
+.section--featured { padding: clamp(2rem, 4vw, 4rem) 0; }
 .section--cream { background: var(--cream-dark); }
 .section--black { background: var(--navy); }
 .section--dark  { background: #111827; }
@@ -747,16 +748,26 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
 .product-card-cta {
   position: absolute;
   bottom: 0; left: 0; right: 0;
+  display: block;
   background: var(--black);
   color: var(--white);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+  text-decoration: none;
   padding: 0.875rem;
   text-align: center;
   transform: translateY(100%);
   transition: transform 0.35s ease;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+.product-card-media-link {
+  display: block;
+  text-decoration: none;
 }
 .product-card:hover .product-card-cta { transform: translateY(0); }
 
@@ -834,7 +845,7 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   color: var(--white);
   max-width: 720px;
   margin: 0 auto;
-  padding: clamp(3rem, 6vw, 6rem) var(--container-pad);
+  padding: clamp(2.5rem, 4vw, 4rem) var(--container-pad);
 }
 
 .brand-story-content blockquote {
@@ -852,7 +863,7 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
 /* ── Tagline / Intro Section ─────────────────────────────── */
 .tagline-section {
   text-align: center;
-  padding: clamp(5rem, 9vw, 9rem) var(--container-pad);
+  padding: clamp(3rem, 5vw, 5rem) var(--container-pad);
 }
 .tagline-section h1 {
   font-size: clamp(2rem, 4.5vw, 4rem);
@@ -1023,7 +1034,7 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
 /* ── Newsletter ──────────────────────────────────────────── */
 .newsletter-section {
   background: #3D2210;
-  padding: clamp(1.5rem, 3vw, 2.5rem) var(--container-pad);
+  padding: clamp(3rem, 5vw, 4.5rem) var(--container-pad);
   text-align: center;
   position: relative;
 }
@@ -1033,6 +1044,12 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   inset: 0;
   background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 70%);
   pointer-events: none;
+}
+.newsletter-inner {
+  max-width: 520px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 .newsletter-section h2 {
   font-size: clamp(1.4rem, 2.5vw, 2rem);
@@ -1046,11 +1063,12 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   font-size: 0.85rem;
   margin-bottom: 2rem;
 }
-.newsletter-form {
+.newsletter-form { margin: 0 auto; }
+.newsletter-form-row {
   display: flex;
-  max-width: 480px;
-  margin: 0 auto;
   gap: 0;
+  max-width: 460px;
+  margin: 0 auto;
   border: 1px solid rgba(201,168,76,0.4);
 }
 .newsletter-form input {
@@ -1061,7 +1079,9 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   outline: none;
   color: var(--white);
   font-size: 0.88rem;
+  font-family: var(--font-sans);
   letter-spacing: 0.04em;
+  min-width: 0;
 }
 .newsletter-form input::placeholder { color: rgba(255,255,255,0.35); }
 .newsletter-form button {
@@ -1074,8 +1094,17 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   text-transform: uppercase;
   transition: background var(--transition);
   flex-shrink: 0;
+  white-space: nowrap;
+  border: none;
+  cursor: pointer;
 }
 .newsletter-form button:hover { background: var(--gold-dark); }
+.newsletter-fine-print {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.3);
+  margin-top: 1rem;
+  font-family: var(--font-sans);
+}
 
 /* ── Footer ──────────────────────────────────────────────── */
 .footer {
