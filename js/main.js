@@ -410,22 +410,23 @@ function initQtySelectors() {
 
 // ── Add to Cart (detail page) ─────────────────────────────
 function initAddToCart() {
+  // Product detail page "Add to Cart" button
   const addBtn = qs('.btn-add-cart');
-  if (!addBtn) return;
+  if (addBtn) {
+    addBtn.addEventListener('click', () => {
+      const name    = qs('.product-info h1')?.textContent || 'Product';
+      const priceEl = qs('.product-price-current');
+      const price   = priceEl ? parseInt(priceEl.textContent.replace(/[^0-9]/g, '')) : 0;
+      const variant = qs('.variant-options .variant-btn.active')?.textContent || '';
+      const qty     = parseInt(qs('.qty-val')?.value || 1);
+      const id      = 'p_' + name.toLowerCase().replace(/\s+/g,'_');
+      const img     = qs('.product-main-img img')?.src || '';
 
-  addBtn.addEventListener('click', () => {
-    const name    = qs('.product-info h1')?.textContent || 'Product';
-    const priceEl = qs('.product-price-current');
-    const price   = priceEl ? parseInt(priceEl.textContent.replace(/[^0-9]/g, '')) : 0;
-    const variant = qs('.variant-options .variant-btn.active')?.textContent || '';
-    const qty     = parseInt(qs('.qty-val')?.value || 1);
-    const id      = 'p_' + name.toLowerCase().replace(/\s+/g,'_');
-    const img     = qs('.product-main-img img')?.src || '';
+      addToCart({ id, name, price, variant, qty, img });
+    });
+  }
 
-    addToCart({ id, name, price, variant, qty, img });
-  });
-
-  // Quick-add buttons on cards
+  // Quick-add buttons on product cards (shop, wishlist, related, etc.)
   qsa('.product-card-cta[data-quick-add]').forEach(btn => {
     btn.addEventListener('click', e => {
       e.preventDefault();
@@ -434,7 +435,8 @@ function initAddToCart() {
       const name  = card.querySelector('.product-card-name')?.textContent || 'Product';
       const price = parseInt((card.querySelector('.product-card-price')?.textContent || '0').replace(/[^0-9]/g, ''));
       const img   = card.querySelector('.product-img-primary')?.src || '';
-      addToCart({ id: 'p_' + Date.now(), name, price, variant: '', qty: 1, img });
+      const id    = card.dataset.id ? 'p_' + card.dataset.id : 'p_' + Date.now();
+      addToCart({ id, name, price, variant: '', qty: 1, img });
     });
   });
 }
@@ -945,6 +947,104 @@ function initDiscoverMore() {
   initAddToCart();
 }
 
+// ── Cart Page ─────────────────────────────────────────────
+function initCartPage() {
+  const itemsEl  = qs('#cart-page-items');
+  const emptyEl  = qs('#cart-page-empty');
+  if (!itemsEl) return;
+
+  function renderCartPage() {
+    const subtotalEl = qs('#cart-page-subtotal');
+    const shippingEl = qs('#cart-page-shipping');
+    const taxEl      = qs('#cart-page-tax');
+    const totalEl    = qs('#cart-page-total');
+
+    if (cart.length === 0) {
+      itemsEl.innerHTML = '';
+      if (emptyEl) emptyEl.style.display = 'block';
+      if (subtotalEl) subtotalEl.textContent = '₹0';
+      if (taxEl)      taxEl.textContent      = '₹0';
+      if (totalEl)    totalEl.textContent    = '₹0';
+      if (shippingEl) { shippingEl.textContent = '₹99'; shippingEl.style.color = 'inherit'; }
+      return;
+    }
+
+    if (emptyEl) emptyEl.style.display = 'none';
+
+    itemsEl.innerHTML = cart.map(item => `
+      <div class="cart-table-row cart-table-row-grid" data-id="${item.id}" data-variant="${item.variant || ''}">
+        <div class="cart-product-info">
+          <div class="cart-product-img">
+            ${item.img
+              ? `<img src="${item.img}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;">`
+              : `<span style="font-size:1.5rem;opacity:0.3;">◈</span>`}
+          </div>
+          <div>
+            <div class="cart-product-name">${item.name}</div>
+            ${item.variant ? `<div class="cart-product-meta">${item.variant}</div>` : ''}
+          </div>
+        </div>
+        <div class="qty-selector" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;border:1px solid var(--grey-light);padding:0.25rem 0.5rem;">
+          <button class="cart-qty-btn" data-action="dec" data-id="${item.id}" data-variant="${item.variant || ''}"
+            style="background:none;border:none;cursor:pointer;font-size:1rem;color:var(--brown);width:1.5rem;height:1.5rem;display:flex;align-items:center;justify-content:center;">&#8722;</button>
+          <span style="font-family:'Jost',sans-serif;font-size:0.9rem;min-width:1.5rem;text-align:center;">${item.qty}</span>
+          <button class="cart-qty-btn" data-action="inc" data-id="${item.id}" data-variant="${item.variant || ''}"
+            style="background:none;border:none;cursor:pointer;font-size:1rem;color:var(--brown);width:1.5rem;height:1.5rem;display:flex;align-items:center;justify-content:center;">&#43;</button>
+        </div>
+        <span style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;text-align:right;white-space:nowrap;">
+          &#8377;${(item.price * item.qty).toLocaleString('en-IN')}
+        </span>
+        <button class="cart-remove-btn" data-id="${item.id}" data-variant="${item.variant || ''}"
+          aria-label="Remove ${item.name}"
+          style="background:none;border:none;cursor:pointer;color:var(--grey-mid);font-size:1.2rem;text-align:right;padding:0;transition:color 0.2s;">&times;</button>
+      </div>`).join('');
+
+    // Attach row button listeners
+    qsa('.cart-qty-btn', itemsEl).forEach(btn => {
+      btn.addEventListener('click', () => {
+        const delta = btn.dataset.action === 'inc' ? 1 : -1;
+        updateQty(btn.dataset.id, btn.dataset.variant, delta);
+        renderCartDrawer();
+        renderCartPage();
+      });
+    });
+    qsa('.cart-remove-btn', itemsEl).forEach(btn => {
+      btn.addEventListener('click', () => {
+        removeFromCart(btn.dataset.id, btn.dataset.variant);
+        renderCartDrawer();
+        renderCartPage();
+      });
+    });
+
+    // Totals
+    const subtotal = cartTotal();
+    const shipping = subtotal >= 2000 ? 0 : 99;
+    const tax      = Math.round(subtotal * 0.18);
+    const total    = subtotal + shipping + tax;
+
+    if (subtotalEl) subtotalEl.textContent = `₹${subtotal.toLocaleString('en-IN')}`;
+    if (shippingEl) {
+      if (shipping === 0) {
+        shippingEl.textContent   = 'Free (above ₹2,000)';
+        shippingEl.style.color   = 'var(--gold)';
+      } else {
+        shippingEl.textContent   = `₹${shipping}`;
+        shippingEl.style.color   = 'inherit';
+      }
+    }
+    if (taxEl)   taxEl.textContent   = `₹${tax.toLocaleString('en-IN')}`;
+    if (totalEl) totalEl.textContent = `₹${total.toLocaleString('en-IN')}`;
+  }
+
+  renderCartPage();
+}
+
+window.applyCoupon = function() {
+  const code = qs('#coupon-code')?.value?.trim().toUpperCase();
+  if (!code) return;
+  showToast('Invalid or expired coupon code.');
+};
+
 // ── Init ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
@@ -969,6 +1069,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileFilters();
   initWishlistPage();
   initDiscoverMore();
+  initCartPage();
 });
 
 // Expose for inline calls

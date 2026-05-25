@@ -1863,9 +1863,12 @@ textarea.form-control { min-height: 140px; resize: vertical; }
 .cart-product-info { display: flex; gap: 1.25rem; align-items: center; }
 .cart-product-img {
   width: 80px; height: 100px;
-  object-fit: cover;
-  background: var(--cream);
   flex-shrink: 0;
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 .cart-product-name { font-family: var(--font-serif); font-size: 1rem; margin-bottom: 0.25rem; }
 .cart-product-meta { font-size: 0.78rem; color: var(--grey-mid); }
