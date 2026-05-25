@@ -2139,6 +2139,8 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   .footer-legal { gap: 0.4rem 0.875rem; }
   /* Cart table — mobile */
   .cart-table-header { display: none; }
+  .cart-table-row-grid {
+    grid-template-columns: 1fr auto;
     grid-template-areas:
       "info  remove"
       "info  price"

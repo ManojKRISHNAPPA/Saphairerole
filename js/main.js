@@ -976,31 +976,36 @@ function initCartPage() {
     if (emptyEl) emptyEl.style.display = 'none';
 
     itemsEl.innerHTML = cart.map(item => `
-      <div class="cart-table-row cart-table-row-grid" data-id="${item.id}" data-variant="${item.variant || ''}">
-        <div class="cart-product-info">
-          <div class="cart-product-img">
+      <div data-id="${item.id}" data-variant="${item.variant || ''}"
+        style="display:flex;align-items:center;gap:1rem;padding:1.5rem 0;border-bottom:1px solid var(--grey-light);">
+        <!-- Product info -->
+        <div style="flex:1;min-width:0;display:flex;gap:1rem;align-items:center;">
+          <div style="width:80px;height:100px;flex-shrink:0;overflow:hidden;background:var(--cream);display:flex;align-items:center;justify-content:center;">
             ${item.img
               ? `<img src="${item.img}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;">`
               : `<span style="font-size:1.5rem;opacity:0.3;">◈</span>`}
           </div>
-          <div>
-            <div class="cart-product-name">${item.name}</div>
-            ${item.variant ? `<div class="cart-product-meta">${item.variant}</div>` : ''}
+          <div style="min-width:0;">
+            <div style="font-family:var(--font-serif);font-size:1rem;margin-bottom:0.25rem;">${item.name}</div>
+            ${item.variant ? `<div style="font-size:0.78rem;color:var(--grey-mid);">${item.variant}</div>` : ''}
           </div>
         </div>
-        <div class="qty-selector" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;border:1px solid var(--grey-light);padding:0.25rem 0.5rem;">
+        <!-- Qty controls -->
+        <div style="display:flex;align-items:center;gap:0.4rem;border:1px solid var(--grey-light);padding:0.25rem 0.5rem;flex-shrink:0;">
           <button class="cart-qty-btn" data-action="dec" data-id="${item.id}" data-variant="${item.variant || ''}"
             style="background:none;border:none;cursor:pointer;font-size:1rem;color:var(--brown);width:1.5rem;height:1.5rem;display:flex;align-items:center;justify-content:center;">&#8722;</button>
           <span style="font-family:'Jost',sans-serif;font-size:0.9rem;min-width:1.5rem;text-align:center;">${item.qty}</span>
           <button class="cart-qty-btn" data-action="inc" data-id="${item.id}" data-variant="${item.variant || ''}"
             style="background:none;border:none;cursor:pointer;font-size:1rem;color:var(--brown);width:1.5rem;height:1.5rem;display:flex;align-items:center;justify-content:center;">&#43;</button>
         </div>
-        <span style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;text-align:right;white-space:nowrap;">
+        <!-- Price -->
+        <div style="width:100px;text-align:right;font-family:'Cormorant Garamond',serif;font-size:1.05rem;white-space:nowrap;flex-shrink:0;">
           &#8377;${(item.price * item.qty).toLocaleString('en-IN')}
-        </span>
+        </div>
+        <!-- Remove -->
         <button class="cart-remove-btn" data-id="${item.id}" data-variant="${item.variant || ''}"
           aria-label="Remove ${item.name}"
-          style="background:none;border:none;cursor:pointer;color:var(--grey-mid);font-size:1.2rem;text-align:right;padding:0;transition:color 0.2s;">&times;</button>
+          style="background:none;border:none;cursor:pointer;color:var(--grey-mid);font-size:1.2rem;padding:0;width:2rem;text-align:center;flex-shrink:0;transition:color 0.2s;">&times;</button>
       </div>`).join('');
 
     // Attach row button listeners
