@@ -247,8 +247,12 @@ function removeFromCart(id, variant) {
 function updateQty(id, variant, delta) {
   const item = cart.find(i => i.id === id && i.variant === variant);
   if (!item) return;
-  item.qty = Math.max(1, item.qty + delta);
-  saveCart();
+  item.qty += delta;
+  if (item.qty <= 0) {
+    removeFromCart(id, variant);
+  } else {
+    saveCart();
+  }
 }
 
 function cartTotal() {

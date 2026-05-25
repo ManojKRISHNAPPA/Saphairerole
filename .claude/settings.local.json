@@ -9,7 +9,8 @@
       "Bash(sed -n '225,229p' /Users/manojkrishnappa/Second-project/saphaire-role-website/cart.html)",
       "Bash(python3 -m http.server 8080)",
       "Bash(open *)",
-      "Bash(sips *)"
+      "Bash(sips *)",
+      "Bash(python3 *)"
     ]
   }
 }
