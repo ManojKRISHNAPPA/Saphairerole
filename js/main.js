@@ -212,6 +212,14 @@ function initSearch() {
   overlay.addEventListener('click', e => {
     if (e.target === overlay) closeSearch();
   });
+
+  // Navigate to shop with search query on Enter
+  input?.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      const q = input.value.trim();
+      if (q) window.location.href = `shop.html?search=${encodeURIComponent(q)}`;
+    }
+  });
 }
 
 // ── Cart ──────────────────────────────────────────────────
@@ -433,23 +441,37 @@ function initAddToCart() {
 
 // ── Wishlist ──────────────────────────────────────────────
 function initWishlist() {
-  let wishlist = JSON.parse(localStorage.getItem('ss_wishlist') || '[]');
+  let wishlist      = JSON.parse(localStorage.getItem('ss_wishlist') || '[]');
+  let wishlistItems = JSON.parse(localStorage.getItem('ss_wishlist_items') || '[]');
 
   qsa('.product-wishlist-btn, .btn-wishlist').forEach(btn => {
-    const id = btn.dataset.productId || btn.closest('.product-card')?.dataset?.id || 'unknown';
+    const card = btn.closest('.product-card');
+    const id   = btn.dataset.productId || card?.dataset?.id || null;
+    if (!id) return;
+
     if (wishlist.includes(id)) btn.classList.add('active');
 
     btn.addEventListener('click', e => {
       e.preventDefault();
       e.stopPropagation();
       if (wishlist.includes(id)) {
-        wishlist = wishlist.filter(w => w !== id);
+        wishlist      = wishlist.filter(w => w !== id);
+        wishlistItems = wishlistItems.filter(i => i.id !== id);
         btn.classList.remove('active');
       } else {
         wishlist.push(id);
+        const name  = card?.querySelector('.product-card-name')?.textContent?.trim() || '';
+        const img   = card?.querySelector('.product-img-primary')?.src || '';
+        const price = card?.querySelector('.product-card-price')?.textContent?.trim() || '';
+        const href  = card?.querySelector('a[href*="product"]')?.getAttribute('href') || 'shop.html';
+        if (!wishlistItems.find(i => i.id === id)) {
+          wishlistItems.push({ id, name, img, price, href });
+        }
         btn.classList.add('active');
+        showToast(`${name || 'Item'} added to wishlist`);
       }
-      localStorage.setItem('ss_wishlist', JSON.stringify(wishlist));
+      localStorage.setItem('ss_wishlist',       JSON.stringify(wishlist));
+      localStorage.setItem('ss_wishlist_items', JSON.stringify(wishlistItems));
     });
   });
 }
@@ -552,11 +574,47 @@ function initProductPage() {
       window.location.href = 'cart.html';
     });
   }
+
+  // Populate related products
+  const relatedGrid = qs('#pd-related-grid');
+  if (relatedGrid) {
+    const relatedIds = Object.keys(PRODUCTS).filter(k => k !== id).slice(0, 4);
+    relatedGrid.innerHTML = relatedIds.map((relId, idx) => {
+      const rp = PRODUCTS[relId];
+      return `
+        <article class="product-card" data-id="${relId}" data-reveal data-reveal-delay="${idx}">
+          <div class="product-card-image-wrap">
+            <a href="product.html?id=${relId}" class="product-card-media-link">
+              <div class="product-card-media">
+                <img src="${rp.images[0]}" alt="${rp.name}" class="product-img-primary">
+                ${rp.images[1] ? `<img src="${rp.images[1]}" alt="${rp.name} alt view" class="product-img-secondary">` : ''}
+              </div>
+            </a>
+            <button class="product-card-cta" data-quick-add>Add to Cart</button>
+          </div>
+          <button class="product-wishlist-btn" aria-label="Add ${rp.name} to wishlist" data-product-id="${relId}">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="product-card-info">
+            <a href="product.html?id=${relId}">
+              <h3 class="product-card-name">${rp.name}</h3>
+            </a>
+            <p class="product-card-desc">${rp.description[0].substring(0, 80)}…</p>
+            <span class="product-card-price">&#8377;${rp.price.toLocaleString('en-IN')}</span>
+          </div>
+        </article>`;
+    }).join('');
+    initWishlist();
+    initScrollReveal();
+    initAddToCart();
+  }
 }
 
 // ── Category Filters (blog / shop) ───────────────────────
 function initCategoryFilters() {
-  const urlCat = new URLSearchParams(window.location.search).get('category') || '';
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlCat    = urlParams.get('category') || '';
+  const urlSearch = urlParams.get('search') || '';
 
   const CATEGORY_LABELS = {
     'journals':        'Journals',
@@ -565,6 +623,28 @@ function initCategoryFilters() {
     'desk-edit':       'Desk Edit',
     'gifts':           'Gift Sets',
   };
+
+  // Handle search parameter
+  if (urlSearch) {
+    const term = urlSearch.toLowerCase();
+    const heading = qs('#shop-heading');
+    if (heading) heading.textContent = `Search: "${urlSearch}"`;
+    const crumb = qs('#shop-breadcrumb-current');
+    if (crumb) crumb.textContent = `Search: "${urlSearch}"`;
+
+    let visibleCount = 0;
+    qsa('[data-filterable] [data-category]').forEach(item => {
+      const name = item.querySelector('.product-card-name')?.textContent?.toLowerCase() || '';
+      const desc = item.querySelector('.product-card-desc')?.textContent?.toLowerCase() || '';
+      const show = name.includes(term) || desc.includes(term);
+      item.style.display = show ? '' : 'none';
+      if (show) visibleCount++;
+    });
+
+    const emptyState = qs('#shop-empty-state');
+    if (emptyState) emptyState.style.display = visibleCount === 0 ? '' : 'none';
+    return;
+  }
 
   // Direct URL filter — works even when there are no filter-pill buttons
   if (urlCat) {
@@ -785,6 +865,86 @@ function initMobileFilters() {
   handleMQ(mq);
 }
 
+// ── Wishlist Page Renderer ────────────────────────────────
+function initWishlistPage() {
+  const grid    = qs('#wishlist-grid');
+  if (!grid) return;
+
+  const emptyState = qs('#wishlist-empty');
+  const actions    = qs('#wishlist-actions');
+  const items      = JSON.parse(localStorage.getItem('ss_wishlist_items') || '[]');
+
+  if (items.length === 0) {
+    if (emptyState) emptyState.style.display = '';
+    grid.style.display = 'none';
+    if (actions) actions.style.display = 'none';
+    return;
+  }
+
+  if (emptyState) emptyState.style.display = 'none';
+  grid.style.display = 'grid';
+  if (actions) actions.style.display = 'block';
+
+  grid.innerHTML = items.map(item => `
+    <article class="product-card" data-id="${item.id}">
+      <div class="product-card-image-wrap">
+        <a href="${item.href}" class="product-card-media-link">
+          <div class="product-card-media">
+            <img src="${item.img}" alt="${item.name}" class="product-img-primary">
+          </div>
+        </a>
+        <button class="product-card-cta" data-quick-add>Add to Cart</button>
+      </div>
+      <button class="product-wishlist-btn active" aria-label="Remove from wishlist" data-product-id="${item.id}" style="opacity:1;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <div class="product-card-info">
+        <a href="${item.href}"><div class="product-card-name">${item.name}</div></a>
+        <div class="product-card-price">${item.price}</div>
+      </div>
+    </article>`).join('');
+
+  initWishlist();
+  initAddToCart();
+}
+
+// ── Discover More (Wishlist page) ─────────────────────────
+function initDiscoverMore() {
+  const grid = qs('#discover-more-grid');
+  if (!grid) return;
+
+  const ids = Object.keys(PRODUCTS).slice(0, 4);
+  grid.innerHTML = ids.map((id, idx) => {
+    const p = PRODUCTS[id];
+    return `
+      <article class="product-card" data-id="${id}" data-reveal data-reveal-delay="${idx}">
+        <div class="product-card-image-wrap">
+          <a href="product.html?id=${id}" class="product-card-media-link">
+            <div class="product-card-media">
+              <img src="${p.images[0]}" alt="${p.name}" class="product-img-primary">
+              ${p.images[1] ? `<img src="${p.images[1]}" alt="${p.name}" class="product-img-secondary">` : ''}
+            </div>
+          </a>
+          <button class="product-card-cta" data-quick-add>Add to Cart</button>
+        </div>
+        <button class="product-wishlist-btn" aria-label="Add ${p.name} to wishlist" data-product-id="${id}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+        <div class="product-card-info">
+          <a href="product.html?id=${id}">
+            <h3 class="product-card-name">${p.name}</h3>
+          </a>
+          <p class="product-card-desc">${p.description[0].substring(0, 80)}…</p>
+          <span class="product-card-price">&#8377;${p.price.toLocaleString('en-IN')}</span>
+        </div>
+      </article>`;
+  }).join('');
+
+  initWishlist();
+  initScrollReveal();
+  initAddToCart();
+}
+
 // ── Init ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
@@ -807,6 +967,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initLazyLoad();
   initVideoHero();
   initMobileFilters();
+  initWishlistPage();
+  initDiscoverMore();
 });
 
 // Expose for inline calls

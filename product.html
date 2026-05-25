@@ -60,8 +60,7 @@
   <nav class="navbar" id="navbar">
     <div class="navbar-inner container">
       <a href="index.html" class="navbar-logo">
-        <span class="logo-emblem">◈</span>
-        <span class="logo-text">The Sapphire Scroll</span>
+        <img src="images/HORIZONTAL-FULL-COLOR.webp" alt="The Sapphire Scroll">
       </a>
       <ul class="navbar-links">
         <li><a href="shop.html?category=journals">Journals</a></li>
@@ -181,7 +180,8 @@
           </div>
 
           <div class="pd-actions">
-            <a href="contact.html" class="btn btn-dark pd-btn-enquiry">Enquiry Now</a>
+            <button id="pd-add-cart" class="btn btn-gold pd-btn-add">Add to Cart</button>
+            <button id="pd-buy-now" class="btn btn-dark pd-btn-buy">Buy Now</button>
           </div>
 
         </div><!-- /.product-info -->
@@ -195,78 +195,13 @@
     <section class="section section--cream" data-reveal>
       <div class="container">
         <div class="section-header">
-          <span class="label">You May Also Like</span>
-          <h2>Complete the Collection</h2>
+          <span class="label">Complete the Collection</span>
+          <h2>You Might Also Love</h2>
           <div class="gold-divider" aria-hidden="true"></div>
         </div>
 
-        <div class="product-grid grid-4-col">
-
-          <!-- Related 1: Aurora Softcover -->
-          <article class="product-card" data-reveal data-reveal-delay="0">
-            <div class="product-card-media" style="background:linear-gradient(135deg,#d4b8c7 0%,#b8c4d4 45%,#c4d4b8 100%);display:flex;align-items:center;justify-content:center;">
-              <span style="font-family:'Cormorant Garamond',serif;font-size:3rem;color:rgba(92,61,46,0.28);">◈</span>
-            </div>
-            <button class="product-wishlist-btn" aria-label="Add Aurora Softcover to wishlist">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-            <a href="contact.html" class="product-card-cta">Enquiry</a>
-            <div class="product-card-info">
-              <h3 class="product-card-name">Aurora Softcover</h3>
-              <p class="product-card-desc">Pastel linen cover, 192 dot-grid pages, ribbon bookmark</p>
-              <span class="product-card-price">&#8377;1,800</span>
-            </div>
-          </article>
-
-          <!-- Related 2: Squire Rollerball Pen -->
-          <article class="product-card" data-reveal data-reveal-delay="1">
-            <div class="product-card-media" style="background:linear-gradient(160deg,#e8e0d0 0%,#c9a84c 35%,#a07830 65%,#5c3d2e 100%);display:flex;align-items:center;justify-content:center;">
-              <span style="font-family:'Cormorant Garamond',serif;font-size:3rem;color:rgba(26,26,26,0.28);">◈</span>
-            </div>
-            <button class="product-wishlist-btn" aria-label="Add Squire Rollerball Pen to wishlist">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-            <a href="contact.html" class="product-card-cta">Enquiry</a>
-            <div class="product-card-info">
-              <h3 class="product-card-name">Squire Rollerball Pen</h3>
-              <p class="product-card-desc">Hand-turned resin barrel, gold nib, gift-boxed with ink cartridges</p>
-              <span class="product-card-price">&#8377;4,500</span>
-            </div>
-          </article>
-
-          <!-- Related 3: Wax Seal Stamp Set -->
-          <article class="product-card" data-reveal data-reveal-delay="2">
-            <div class="product-card-media" style="background:linear-gradient(135deg,#8b1a1a 0%,#c9a84c 40%,#8b4513 80%,#5c1a1a 100%);display:flex;align-items:center;justify-content:center;">
-              <span style="font-family:'Cormorant Garamond',serif;font-size:3rem;color:rgba(255,255,255,0.4);">◈</span>
-            </div>
-            <span class="product-badge" style="background:var(--brown);">Limited Edition</span>
-            <button class="product-wishlist-btn" aria-label="Add Wax Seal Stamp Set to wishlist">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-            <a href="contact.html" class="product-card-cta">Enquiry</a>
-            <div class="product-card-info">
-              <h3 class="product-card-name">Wax Seal Stamp Set</h3>
-              <p class="product-card-desc">Brass stamp, 5 wax sticks, velvet pouch — correspondence redefined</p>
-              <span class="product-card-price">&#8377;1,400</span>
-            </div>
-          </article>
-
-          <!-- Related 4: The Gift Box — Essentials -->
-          <article class="product-card" data-reveal data-reveal-delay="3">
-            <div class="product-card-media" style="background:linear-gradient(145deg,#111111 0%,#1e1810 30%,#2c2018 55%,#0d0d0d 100%);display:flex;align-items:center;justify-content:center;">
-              <span style="font-family:'Cormorant Garamond',serif;font-size:3rem;color:rgba(201,168,76,0.5);">◈</span>
-            </div>
-            <button class="product-wishlist-btn" aria-label="Add The Gift Box — Essentials to wishlist">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-            <a href="contact.html" class="product-card-cta">Enquiry</a>
-            <div class="product-card-info">
-              <h3 class="product-card-name">The Gift Box — Essentials</h3>
-              <p class="product-card-desc">Curated set: journal, notecard pack, wax seal &amp; pen, gift-wrapped</p>
-              <span class="product-card-price">&#8377;3,800</span>
-            </div>
-          </article>
-
+        <div class="product-grid grid-4-col" id="pd-related-grid">
+          <!-- Populated dynamically by main.js initProductPage() -->
         </div><!-- /.product-grid -->
 
       </div><!-- /.container -->
@@ -291,9 +226,9 @@
           </div>
         </div>
         <div class="footer-col"><h5>Explore</h5><ul>
-          <li><a href="shop.html">All Products</a></li><li><a href="shop.html">Journals</a></li>
-          <li><a href="shop.html">Stationery</a></li><li><a href="shop.html">Pens &amp; Writing</a></li>
-          <li><a href="shop.html">Gift Sets</a></li><li><a href="corporate.html">Corporate Gifting</a></li>
+          <li><a href="shop.html">All Products</a></li><li><a href="shop.html?category=journals">Journals</a></li>
+          <li><a href="shop.html?category=notebooks">Stationery</a></li><li><a href="shop.html?category=desk-edit">Pens &amp; Writing</a></li>
+          <li><a href="shop.html?category=self-care-cards">Gift Sets</a></li><li><a href="corporate.html">Corporate Gifting</a></li>
         </ul></div>
         <div class="footer-col"><h5>Company</h5><ul>
           <li><a href="about.html">Our Story</a></li><li><a href="blog.html">The Journal</a></li>
@@ -303,8 +238,8 @@
     </div>
     <div class="footer-bottom container">
       <div class="footer-legal">
-        <a href="#">Terms &amp; Conditions</a><a href="#">Privacy Policy</a>
-        <a href="#">Shipping Policy</a><a href="#">Returns &amp; Refunds</a>
+        <a href="terms.html">Terms &amp; Conditions</a><a href="privacy.html">Privacy Policy</a>
+        <a href="shipping.html">Shipping Policy</a><a href="returns.html">Returns &amp; Refunds</a>
         <a href="#">Cookie Policy</a><a href="contact.html">Help / FAQ</a>
       </div>
       <p class="footer-copyright">&copy; 2026 The Sapphire Scroll. All rights reserved.</p>
