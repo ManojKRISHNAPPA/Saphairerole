@@ -783,6 +783,7 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
 
 .product-card-info {
   padding: 1.25rem 0 0.5rem;
+  text-align: center;
 }
 .product-card-name {
   font-family: var(--font-serif);

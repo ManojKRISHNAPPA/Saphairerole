@@ -368,13 +368,14 @@ function initAccordions() {
 
 // ── Product Gallery ───────────────────────────────────────
 function initProductGallery() {
-  const mainImg  = qs('.product-main-img img');
-  const thumbs   = qsa('.product-thumb');
+  const mainImg = qs('.product-main-img img');
+  const thumbs  = qsa('.product-thumb');
   if (!mainImg || !thumbs.length) return;
 
   thumbs.forEach((thumb, i) => {
     thumb.addEventListener('click', () => {
-      mainImg.src = thumb.src;
+      const src = thumb.dataset.thumbSrc || thumb.querySelector('img')?.src;
+      if (src) mainImg.src = src;
       thumbs.forEach(t => t.classList.remove('active'));
       thumb.classList.add('active');
     });
@@ -478,6 +479,7 @@ function initWishlist() {
       }
       localStorage.setItem('ss_wishlist',       JSON.stringify(wishlist));
       localStorage.setItem('ss_wishlist_items', JSON.stringify(wishlistItems));
+      if (qs('#wishlist-grid')) initWishlistPage();
     });
   });
 }
@@ -546,7 +548,7 @@ function initProductPage() {
   mainImgEl.src = p.images[0];
   mainImgEl.alt = p.name;
 
-  // Thumbnails
+  // Thumbnails — rendered here; click handlers attached by initProductGallery()
   const thumbsEl = qs('#pd-thumbs');
   if (thumbsEl && p.images.length > 1) {
     thumbsEl.innerHTML = p.images.map((src, i) => `
@@ -555,6 +557,7 @@ function initProductPage() {
         <img src="${src}" alt="${p.name} view ${i + 1}" style="width:100%;height:100%;object-fit:cover;">
       </div>`).join('');
 
+    // Attach click handlers directly (initProductGallery runs before thumbs exist)
     thumbsEl.querySelectorAll('.product-thumb').forEach(thumb => {
       thumb.addEventListener('click', () => {
         mainImgEl.src = thumb.dataset.thumbSrc;
@@ -1062,8 +1065,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initCart();
   initScrollReveal();
   initAccordions();
-  initProductPage();
   initProductGallery();
+  initProductPage();
   initVariantSelectors();
   initQtySelectors();
   initAddToCart();
