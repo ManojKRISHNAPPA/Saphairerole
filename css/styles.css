@@ -1924,12 +1924,12 @@ body.blog-article-arrive main {
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
 }
-.article-card { }
+.article-card { padding: 0 1.25rem 1.5rem; }
 .article-card-img {
   aspect-ratio: 4/3;
   background: var(--cream);
   overflow: hidden;
-  margin-bottom: 1.25rem;
+  margin: 0 -1.25rem 1.25rem;   /* bleed image edge-to-edge, clear padding */
 }
 .article-card-img img {
   width: 100%; height: 100%;
