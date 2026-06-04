@@ -1147,36 +1147,101 @@ body.blog-article-arrive main {
   animation: pageArrive 0.55s cubic-bezier(0.35, 0, 0.15, 1) forwards;
 }
 
-/* ── Blog Card Corner Peel ───────────────────────────────── */
+/* ── Blog Card Sticky-Note Tear Strip ────────────────────── */
 .article-card {
   position: relative;
   background: #ffffff;
   border-radius: 4px;
-  overflow: visible;
-}
-.article-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0;
-  border-color: transparent transparent #F0E8DA transparent;
-  transition: border-width 0.32s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none;
-  z-index: 2;
-  filter: drop-shadow(-2px -2px 4px rgba(28,28,46,0.12));
-  border-radius: 0 0 4px 0;
-}
-.article-card:hover::after {
-  border-width: 0 0 38px 38px;
+  overflow: hidden;
 }
 .article-card-img {
   overflow: hidden;
   border-radius: 4px 4px 0 0;
 }
+
+/* The tear strip itself — hides below the card */
+.tear-strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 62px;
+  transform: translateY(100%);
+  transition: transform 0.44s cubic-bezier(0.22, 0.8, 0.25, 1);
+  transform-origin: bottom center;
+  z-index: 4;
+  text-decoration: none;
+  display: block;
+}
+
+/* The sticky-note face with torn top edge */
+.tear-strip-face {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, #FDF8EC 0%, #F5E8BC 55%, #EDD49A 100%);
+  clip-path: polygon(
+    0% 32%, 1.5% 14%, 3% 30%, 4.5% 10%, 6% 26%, 7.5% 6%, 9% 22%,
+    10.5% 4%, 12% 18%, 13.5% 2%, 15% 20%, 16.5% 5%, 18% 22%,
+    19.5% 1%, 21% 18%, 22.5% 3%, 24% 16%, 25.5% 0%, 27% 15%,
+    28.5% 3%, 30% 18%, 31.5% 1%, 33% 16%, 34.5% 4%, 36% 19%,
+    37.5% 0%, 39% 14%, 40.5% 3%, 42% 17%, 43.5% 1%, 45% 16%,
+    46.5% 4%, 48% 18%, 49.5% 0%, 51% 15%, 52.5% 3%, 54% 17%,
+    55.5% 1%, 57% 16%, 58.5% 4%, 60% 19%, 61.5% 2%, 63% 17%,
+    64.5% 3%, 66% 15%, 67.5% 0%, 69% 18%, 70.5% 4%, 72% 16%,
+    73.5% 1%, 75% 15%, 76.5% 3%, 78% 19%, 79.5% 2%, 81% 16%,
+    82.5% 4%, 84% 18%, 85.5% 0%, 87% 15%, 88.5% 3%, 90% 17%,
+    91.5% 2%, 93% 16%, 94.5% 4%, 96% 18%, 97.5% 3%, 100% 14%,
+    100% 100%, 0% 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 16px;
+  transition: transform 0.44s cubic-bezier(0.22, 0.8, 0.25, 1);
+  transform-origin: bottom center;
+  box-shadow: 0 -6px 24px rgba(28, 28, 46, 0.14);
+}
+
+/* Curl the face slightly on reveal */
+.article-card:hover .tear-strip-face {
+  transform: perspective(600px) rotateX(-4deg);
+}
+
+/* Slide up on card hover */
+.article-card:hover .tear-strip {
+  transform: translateY(0);
+}
+
+.tear-strip-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #1C1C2E;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+.tear-strip-label svg {
+  transition: transform 0.25s ease;
+}
+.article-card:hover .tear-strip-label svg {
+  transform: translateX(4px);
+}
+
+/* Tiny pencil-line shadow along torn edge for depth */
+.tear-strip-face::before {
+  content: '';
+  position: absolute;
+  top: 28%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(180,140,40,0.2), transparent);
+  pointer-events: none;
+}
+
 
 .pd-actions {
   display: grid;

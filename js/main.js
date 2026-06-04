@@ -614,7 +614,41 @@ function initBlogPageTurn() {
   });
 }
 
-// ── Blog Article Page-Arrive Animation ───────────────────
+// ── Sticky-Note Tear Strip (Blog Cards) ──────────────────
+function initTearStrips() {
+  qsa('.article-card').forEach(card => {
+    // Find the article link (title link or read-more link)
+    const titleLink = card.querySelector('h3 a[href]') || card.querySelector('a[href^="blog-"]');
+    if (!titleLink) return;
+
+    const href = titleLink.getAttribute('href');
+
+    // Hide any existing plain "Read More" text link
+    qsa('a[href^="blog-"]', card).forEach(a => {
+      if (!a.closest('h3') && !a.classList.contains('tear-strip')) {
+        a.style.display = 'none';
+      }
+    });
+
+    // Build tear strip
+    const strip = document.createElement('a');
+    strip.href = href;
+    strip.className = 'tear-strip';
+    strip.setAttribute('aria-label', `Read article: ${titleLink.textContent.trim()}`);
+    strip.innerHTML = `
+      <div class="tear-strip-face">
+        <span class="tear-strip-label">
+          Read More
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </span>
+      </div>`;
+
+    card.appendChild(strip);
+  });
+}
+
 function initBlogArticleArrive() {
   // Run on any blog-* article page (not the listing)
   const path = window.location.pathname;
@@ -1234,6 +1268,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initBookOpenAnimation();
   initBlogPageTurn();
   initBlogArticleArrive();
+  initTearStrips();
 });
 
 // Expose for inline calls
