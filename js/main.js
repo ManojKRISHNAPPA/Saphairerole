@@ -506,6 +506,122 @@ function initNewsletter() {
   });
 }
 
+// ── Feature Tile Renderer ─────────────────────────────────
+function getFeatureIcon(text) {
+  const t = text.toLowerCase();
+  if (t.includes('paper') || t.includes('gsm'))
+    return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`;
+  if (t.includes('cover') || t.includes('hardback') || t.includes('binding'))
+    return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`;
+  if (t.includes('size') || t.includes('dimension') || t.includes('compact') || t.includes('inch') || t.includes('cm'))
+    return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>`;
+  if (t.includes('daily') || t.includes('planner') || t.includes('layout'))
+    return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
+  if (t.includes('weekly') || t.includes('reflection') || t.includes('reset') || t.includes('review'))
+    return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.18-8.14"/></svg>`;
+  if (t.includes('monthly') || t.includes('calendar') || t.includes('date'))
+    return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>`;
+  if (t.includes('ribbon') || t.includes('bookmark') || t.includes('marker'))
+    return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>`;
+  if (t.includes('set') || t.includes('deck') || t.includes('card') || t.includes('box') || t.includes('gift'))
+    return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/></svg>`;
+  if (t.includes('page') || t.includes('pages') || t.includes('blank') || t.includes('guided'))
+    return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`;
+  if (t.includes('matte') || t.includes('finish') || t.includes('foil') || t.includes('gold') || t.includes('print'))
+    return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8l1.5 3h3l-2.5 2 1 3-3-2-3 2 1-3-2.5-2h3z"/></svg>`;
+  return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+}
+
+function renderFeatureTile(featureText) {
+  const colonIdx = featureText.indexOf(':');
+  let label, detail;
+  if (colonIdx > -1 && colonIdx < 30) {
+    label  = featureText.slice(0, colonIdx).trim();
+    detail = featureText.slice(colonIdx + 1).trim();
+  } else {
+    const words = featureText.split(' ');
+    label  = words.slice(0, Math.min(3, words.length)).join(' ');
+    detail = featureText;
+  }
+  const icon = getFeatureIcon(featureText);
+  return `<div class="pd-feature-tile">
+    <div class="pd-feature-icon" aria-hidden="true">${icon}</div>
+    <div class="pd-feature-text">
+      <span class="pd-feature-label">${label}</span>
+      <span class="pd-feature-detail">${detail}</span>
+    </div>
+  </div>`;
+}
+
+// ── Book-Open Animation (homepage, once per session) ──────
+function initBookOpenAnimation() {
+  if (!document.querySelector('.hero')) return;
+  if (sessionStorage.getItem('ss_bookOpened')) return;
+
+  document.documentElement.style.overflow = 'hidden';
+  const overlay = document.createElement('div');
+  overlay.id = 'book-open';
+  overlay.setAttribute('aria-hidden', 'true');
+
+  // Decorative spine line
+  const spineL = document.createElement('div');
+  spineL.className = 'book-open-page book-open-left';
+  spineL.innerHTML = `<div style="position:absolute;right:0;top:0;width:2px;height:100%;background:linear-gradient(to bottom,transparent,rgba(201,168,76,0.35),transparent);"></div>`;
+  const spineR = document.createElement('div');
+  spineR.className = 'book-open-page book-open-right';
+  spineR.innerHTML = `<div style="position:absolute;left:0;top:0;width:2px;height:100%;background:linear-gradient(to bottom,transparent,rgba(201,168,76,0.35),transparent);"></div>`;
+
+  overlay.appendChild(spineL);
+  overlay.appendChild(spineR);
+  document.body.appendChild(overlay);
+
+  // Short pause then open
+  setTimeout(() => {
+    overlay.classList.add('opening');
+    sessionStorage.setItem('ss_bookOpened', '1');
+    setTimeout(() => {
+      overlay.classList.add('done');
+      document.documentElement.style.overflow = '';
+      setTimeout(() => overlay.remove(), 400);
+    }, 760);
+  }, 220);
+}
+
+// ── Blog Page-Turn Navigation ─────────────────────────────
+function initBlogPageTurn() {
+  // Only on blog listing page (has .articles-grid)
+  if (!document.querySelector('.articles-grid')) return;
+
+  qsa('a[href]').forEach(link => {
+    const href = link.getAttribute('href') || '';
+    if (!href.startsWith('blog-') || !href.endsWith('.html')) return;
+
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = link.href;
+
+      const overlay = document.createElement('div');
+      overlay.id = 'page-turn';
+      document.body.appendChild(overlay);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          overlay.classList.add('turning');
+          setTimeout(() => { window.location.href = target; }, 480);
+        });
+      });
+    });
+  });
+}
+
+// ── Blog Article Page-Arrive Animation ───────────────────
+function initBlogArticleArrive() {
+  // Run on any blog-* article page (not the listing)
+  const path = window.location.pathname;
+  if (!/blog-[a-z]/.test(path)) return;
+  document.body.classList.add('blog-article-arrive');
+}
+
 // ── Product Page (dynamic) ────────────────────────────────
 function initProductPage() {
   const mainImgEl   = qs('#pd-main-img');
@@ -533,10 +649,14 @@ function initProductPage() {
     descEl.innerHTML = p.description.map(t => `<p>${t}</p>`).join('');
   }
 
-  // Features list
+  // Features grid (spec tiles)
   const featuresEl = qs('#pd-features');
   if (featuresEl) {
-    featuresEl.innerHTML = p.features.map(f => `<li>${f}</li>`).join('');
+    featuresEl.innerHTML = p.features.map(f => renderFeatureTile(f)).join('');
+    // Stagger-reveal tiles
+    qsa('.pd-feature-tile', featuresEl).forEach((tile, i) => {
+      setTimeout(() => tile.classList.add('pf-revealed'), 80 + i * 75);
+    });
   }
 
   // Update page title / breadcrumb
@@ -633,6 +753,14 @@ function initCategoryFilters() {
     'gifts':           'Gift Sets',
   };
 
+  const CATEGORY_META = {
+    'journals':        { heading: 'Journals', subtitle: 'Mindful journals crafted for those who write deliberately.', label: 'The Journal Collection' },
+    'notebooks':       { heading: 'Notebooks', subtitle: 'Blank notebooks for free expression — unlined, undirected, entirely yours.', label: 'The Notebook Collection' },
+    'self-care-cards': { heading: 'Self Care Cards', subtitle: 'Beautifully designed prompt cards to anchor your daily rituals.', label: 'The Ritual Edit' },
+    'desk-edit':       { heading: 'Desk Edit', subtitle: 'Thoughtful accents and bookmarks to elevate your writing space.', label: 'The Desk Collection' },
+    'gifts':           { heading: 'Gift Sets', subtitle: 'Curated gift sets for those who appreciate the art of writing.', label: 'Gifting' },
+  };
+
   // Handle search parameter
   if (urlSearch) {
     const term = urlSearch.toLowerCase();
@@ -655,16 +783,39 @@ function initCategoryFilters() {
     return;
   }
 
-  // Direct URL filter — works even when there are no filter-pill buttons
+  // Direct URL filter
   if (urlCat) {
-    const label = CATEGORY_LABELS[urlCat] || urlCat;
+    const meta = CATEGORY_META[urlCat] || { heading: CATEGORY_LABELS[urlCat] || urlCat, subtitle: '', label: '' };
 
-    // Update page heading and breadcrumb
+    // Update heading, breadcrumb, subtitle, label
     const heading = qs('#shop-heading');
-    if (heading) heading.textContent = label;
-    const crumb = qs('#shop-breadcrumb-current');
-    if (crumb) crumb.textContent = label;
+    if (heading) heading.textContent = meta.heading;
 
+    const crumb = qs('#shop-breadcrumb-current');
+    if (crumb) crumb.textContent = meta.heading;
+
+    const subtitle = qs('#shop-subtitle');
+    if (subtitle && meta.subtitle) subtitle.textContent = meta.subtitle;
+
+    const catLabel = qs('#shop-category-label');
+    if (catLabel && meta.label) {
+      catLabel.textContent = meta.label;
+      catLabel.style.display = 'block';
+    }
+
+    const divider = qs('#shop-gold-divider');
+    if (divider) divider.style.display = 'block';
+
+    // Update document title
+    document.title = `${meta.heading} — The Sapphire Scroll`;
+
+    // Mark active navbar link for the current category
+    qsa('.navbar-links a').forEach(a => {
+      const linkCat = new URLSearchParams(a.search).get('category') || '';
+      a.classList.toggle('active', linkCat === urlCat);
+    });
+
+    // Filter products
     qsa('[data-filterable]').forEach(grid => {
       let visibleCount = 0;
       qsa('[data-category]', grid).forEach(item => {
@@ -673,7 +824,6 @@ function initCategoryFilters() {
         if (show) visibleCount++;
       });
 
-      // Show empty state if no products match
       const emptyState = qs('#shop-empty-state');
       if (emptyState) emptyState.style.display = visibleCount === 0 ? '' : 'none';
     });
@@ -979,36 +1129,35 @@ function initCartPage() {
     if (emptyEl) emptyEl.style.display = 'none';
 
     itemsEl.innerHTML = cart.map(item => `
-      <div data-id="${item.id}" data-variant="${item.variant || ''}"
-        style="display:flex;align-items:center;gap:1rem;padding:1.5rem 0;border-bottom:1px solid var(--grey-light);">
+      <div class="cart-table-row" data-id="${item.id}" data-variant="${item.variant || ''}">
         <!-- Product info -->
-        <div style="flex:1;min-width:0;display:flex;gap:1rem;align-items:center;">
-          <div style="width:80px;height:100px;flex-shrink:0;overflow:hidden;background:var(--cream);display:flex;align-items:center;justify-content:center;">
+        <div class="cart-product-info">
+          <div class="cart-product-img">
             ${item.img
               ? `<img src="${item.img}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;">`
               : `<span style="font-size:1.5rem;opacity:0.3;">◈</span>`}
           </div>
-          <div style="min-width:0;">
-            <div style="font-family:var(--font-serif);font-size:1rem;margin-bottom:0.25rem;">${item.name}</div>
-            ${item.variant ? `<div style="font-size:0.78rem;color:var(--grey-mid);">${item.variant}</div>` : ''}
+          <div>
+            <div class="cart-product-name">${item.name}</div>
+            ${item.variant ? `<div class="cart-product-meta">${item.variant}</div>` : ''}
           </div>
         </div>
-        <!-- Qty controls -->
-        <div style="display:flex;align-items:center;gap:0.4rem;border:1px solid var(--grey-light);padding:0.25rem 0.5rem;flex-shrink:0;">
+        <!-- Qty controls — centred in column -->
+        <div style="display:flex;align-items:center;justify-content:center;gap:0.4rem;border:1px solid var(--grey-light);padding:0.3rem 0.5rem;">
           <button class="cart-qty-btn" data-action="dec" data-id="${item.id}" data-variant="${item.variant || ''}"
             style="background:none;border:none;cursor:pointer;font-size:1rem;color:var(--brown);width:1.5rem;height:1.5rem;display:flex;align-items:center;justify-content:center;">&#8722;</button>
           <span style="font-family:'Jost',sans-serif;font-size:0.9rem;min-width:1.5rem;text-align:center;">${item.qty}</span>
           <button class="cart-qty-btn" data-action="inc" data-id="${item.id}" data-variant="${item.variant || ''}"
             style="background:none;border:none;cursor:pointer;font-size:1rem;color:var(--brown);width:1.5rem;height:1.5rem;display:flex;align-items:center;justify-content:center;">&#43;</button>
         </div>
-        <!-- Price -->
-        <div style="width:100px;text-align:right;font-family:'Cormorant Garamond',serif;font-size:1.05rem;white-space:nowrap;flex-shrink:0;">
+        <!-- Price — right-aligned in column -->
+        <div style="text-align:right;font-family:'Cormorant Garamond',serif;font-size:1.05rem;white-space:nowrap;">
           &#8377;${(item.price * item.qty).toLocaleString('en-IN')}
         </div>
         <!-- Remove -->
         <button class="cart-remove-btn" data-id="${item.id}" data-variant="${item.variant || ''}"
           aria-label="Remove ${item.name}"
-          style="background:none;border:none;cursor:pointer;color:var(--grey-mid);font-size:1.2rem;padding:0;width:2rem;text-align:center;flex-shrink:0;transition:color 0.2s;">&times;</button>
+          style="background:none;border:none;cursor:pointer;color:var(--grey-mid);font-size:1.2rem;padding:0;text-align:center;transition:color 0.2s;">&times;</button>
       </div>`).join('');
 
     // Attach row button listeners
@@ -1082,6 +1231,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initWishlistPage();
   initDiscoverMore();
   initCartPage();
+  initBookOpenAnimation();
+  initBlogPageTurn();
+  initBlogArticleArrive();
 });
 
 // Expose for inline calls

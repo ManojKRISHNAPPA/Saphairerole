@@ -49,10 +49,10 @@
         <img src="images/HORIZONTAL-FULL-COLOR.webp" alt="The Sapphire Scroll">
       </a>
       <ul class="navbar-links">
-        <li><a href="shop.html?category=journals" class="active">Journals</a></li>
-        <li><a href="shop.html">Notebooks</a></li>
-        <li><a href="shop.html">Self Care Cards</a></li>
-        <li><a href="shop.html">Desk Edit</a></li>
+        <li><a href="shop.html?category=journals">Journals</a></li>
+        <li><a href="shop.html?category=notebooks">Notebooks</a></li>
+        <li><a href="shop.html?category=self-care-cards">Self Care Cards</a></li>
+        <li><a href="shop.html?category=desk-edit">Desk Edit</a></li>
         <li><a href="about.html">About Us</a></li>
         <li><a href="contact.html">Enquiry</a></li>
       </ul>
@@ -126,8 +126,10 @@
         <span aria-hidden="true">/</span>
         <span aria-current="page" id="shop-breadcrumb-current">Shop</span>
       </nav>
+      <span id="shop-category-label" class="label" style="display:none;margin-bottom:0.75rem;">The Sapphire Scroll</span>
       <h1 id="shop-heading" style="font-family:'Cormorant Garamond',serif;font-weight:400;letter-spacing:0.06em;margin-bottom:0.75rem;">The Collection</h1>
-      <p style="font-size:0.95rem;color:var(--grey-mid);white-space:nowrap;margin:0 auto 0;font-weight:300;line-height:1.8;">Discover our full range of premium journals, stationery, and writing instruments.</p>
+      <div class="gold-divider" id="shop-gold-divider" style="display:none;" aria-hidden="true"></div>
+      <p id="shop-subtitle" style="font-size:0.95rem;color:var(--grey-mid);margin:0 auto 0;font-weight:300;line-height:1.8;">Discover our full range of premium journals, stationery, and writing instruments.</p>
     </div>
 
     <!-- ============================================================
@@ -322,9 +324,9 @@
           </div>
         </div>
         <div class="footer-col"><h5>Explore</h5><ul>
-          <li><a href="shop.html">All Products</a></li><li><a href="shop.html">Journals</a></li>
-          <li><a href="shop.html">Stationery</a></li><li><a href="shop.html">Pens &amp; Writing</a></li>
-          <li><a href="shop.html">Gift Sets</a></li><li><a href="corporate.html">Corporate Gifting</a></li>
+          <li><a href="shop.html">All Products</a></li><li><a href="shop.html?category=journals">Journals</a></li>
+          <li><a href="shop.html?category=notebooks">Stationery</a></li><li><a href="shop.html?category=desk-edit">Pens &amp; Writing</a></li>
+          <li><a href="shop.html?category=self-care-cards">Gift Sets</a></li><li><a href="corporate.html">Corporate Gifting</a></li>
         </ul></div>
         <div class="footer-col"><h5>Company</h5><ul>
           <li><a href="about.html">Our Story</a></li><li><a href="blog.html">The Journal</a></li>
