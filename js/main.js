@@ -23,13 +23,9 @@ const PRODUCTS = {
       "The Shift turns planning into a mindful ritual, not a task. It's your soft structure for a busy life, a quiet companion that holds your plans, thoughts, and progress with calm certainty.",
     ],
     features: [
-      'Total Pages: 120 pages for structured, consistent planning.',
-      '100 gsm Paper: Smooth, bleed-resistant pages suitable for most pens.',
-      'Hardback cover for durability, stability, and a luxurious hand-feel.',
-      'Compact Size: 5.8 × 8.3 inches for easy carrying.',
-      '99 Daily Planner Pages: Simple daily layouts to organise tasks, priorities, and notes.',
-      '15 Weekly Reflection Pages: A quick weekly reset to review progress and realign.',
-      '5 Monthly Calendar Pages: Minimal monthly overview for planning ahead and tracking key dates.',
+      '168 pages.',
+      '90 GSM paper.',
+      'Hardcover.',
     ],
   },
   'gentle-pause': {
@@ -44,11 +40,9 @@ const PRODUCTS = {
       "With a deep plum cover and geometric gold pattern, it's a beautiful companion for your daily reflections.",
     ],
     features: [
-      'Deep plum hardback cover with geometric gold foil pattern.',
-      '120 guided reflection pages.',
-      '100 gsm acid-free paper.',
-      'Compact size suitable for everyday carry.',
-      'Ribbon bookmark in gold.',
+      '169 pages.',
+      '90 GSM paper.',
+      'Hardcover.',
     ],
   },
   'inner-alchemy': {
@@ -63,11 +57,9 @@ const PRODUCTS = {
       "Unlined, undirected, and entirely yours.",
     ],
     features: [
-      'Ivory hardback cover with botanical illustration.',
-      '120 blank pages for free expression.',
-      '100 gsm acid-free paper.',
-      'Lay-flat binding for comfortable writing.',
-      'Ribbon bookmark.',
+      '198 pages.',
+      '90 GSM paper.',
+      'Hardcover.',
     ],
   },
   'self-discovery': {
@@ -82,11 +74,9 @@ const PRODUCTS = {
       "No prompts. No structure. Just you and the page.",
     ],
     features: [
-      'Forest green hardback cover with gold embossing.',
-      '128 blank pages.',
-      '100 gsm acid-free paper.',
-      'Lay-flat binding.',
-      'Premium ribbon marker.',
+      '198 pages.',
+      '90 GSM paper.',
+      'Hardcover.',
     ],
   },
   'self-care-cards': {
@@ -101,32 +91,13 @@ const PRODUCTS = {
       "Beautiful enough to display on your desk. Meaningful enough to change your day.",
     ],
     features: [
-      '52 beautifully designed self-care prompt cards.',
-      'Printed on 350 gsm premium card stock.',
-      'Matte finish with subtle gold details.',
-      'Boxed for gifting or personal use.',
-      'Card dimensions: 10 × 14 cm.',
-    ],
-  },
-  'bookmark-set': {
-    category: 'Desk Edit',
-    name: 'Watercolour Bookmarks',
-    price: 449,
-    priceFormatted: 'INR 449',
-    inStock: true,
-    images: ['images/bookmark-img1-min.webp', 'images/bookmark-img2-min.webp', 'images/bookmark-img3-min.webp'],
-    description: [
-      "A set of 3 cream and blush watercolour art bookmarks. Gift-ready and beautiful, these bookmarks bring a touch of artistry to every book you open.",
-    ],
-    features: [
-      'Set of 3 watercolour art bookmarks.',
-      'Printed on 300 gsm cotton paper.',
-      'Cream and blush colour palette.',
-      'Wrapped in tissue and ribbon — gift-ready.',
-      'Bookmark dimensions: 5 × 18 cm.',
+      '2.5 x 3.5 inches.',
+      '45 Cards.',
+      '300 GSM.',
     ],
   },
 };
+
 
 // ── State ─────────────────────────────────────────────────
 let cart = JSON.parse(localStorage.getItem('ss_cart') || '[]');
@@ -867,22 +838,25 @@ function initCategoryFilters() {
     const buttons = filterBar.querySelectorAll('.cat-btn');
 
     const applyFilter = (cat) => {
-      buttons.forEach(b => b.classList.toggle('active', b.dataset.category === cat));
+      buttons.forEach(b => b.classList.toggle('active', b.dataset.category === cat || (cat === '' && b.dataset.category === 'all')));
       const grid = filterBar.closest('main')?.querySelector('[data-filterable]')
                 || document.querySelector('[data-filterable]');
       if (!grid) return;
       qsa('[data-category]', grid).forEach(item => {
-        item.style.display = (cat === 'all' || item.dataset.category === cat) ? '' : 'none';
+        item.style.display = (cat === 'all' || cat === '' || item.dataset.category === cat) ? '' : 'none';
       });
     };
 
     if (urlCat) {
-      const match = [...buttons].find(b => b.dataset.category === urlCat);
-      if (match) applyFilter(urlCat);
+      applyFilter(urlCat);
+    } else {
+      applyFilter('all');
     }
 
     buttons.forEach(btn => {
-      btn.addEventListener('click', () => applyFilter(btn.dataset.category));
+      if (btn.tagName !== 'A') {
+        btn.addEventListener('click', () => applyFilter(btn.dataset.category));
+      }
     });
   });
 }
