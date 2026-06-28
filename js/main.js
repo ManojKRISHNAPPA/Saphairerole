@@ -7,8 +7,9 @@ const PRODUCTS = {
   'the-shift': {
     category: 'Journal',
     name: 'The Shift – Productivity Journal',
-    price: 200,
-    priceFormatted: 'INR 200',
+    price: 1399,
+    mrp: 1999,
+    priceFormatted: '₹1,399',
     inStock: true,
     images: [
       'images/the-shift-produt-display-min.webp',
@@ -31,8 +32,9 @@ const PRODUCTS = {
   'gentle-pause': {
     category: 'Journal',
     name: 'The Gentle Pause',
-    price: 1299,
-    priceFormatted: 'INR 1,299',
+    price: 1399,
+    mrp: 1999,
+    priceFormatted: '₹1,399',
     inStock: true,
     images: ['images/gentle-pause-product-display-min.webp', 'images/gentle-pause-1a-1.webp'],
     description: [
@@ -48,8 +50,9 @@ const PRODUCTS = {
   'inner-alchemy': {
     category: 'Notebook',
     name: 'Inner Alchemy',
-    price: 1199,
-    priceFormatted: 'INR 1,199',
+    price: 799,
+    mrp: 1299,
+    priceFormatted: '₹799',
     inStock: true,
     images: ['images/inner-alchemy-product-display-min.webp', 'images/inner-alchemy-img1-min-1.webp'],
     description: [
@@ -65,8 +68,9 @@ const PRODUCTS = {
   'self-discovery': {
     category: 'Notebook',
     name: 'Self Discovery',
-    price: 1299,
-    priceFormatted: 'INR 1,299',
+    price: 799,
+    mrp: 1299,
+    priceFormatted: '₹799',
     inStock: true,
     images: ['images/self-discovery-product-display-min.webp', 'images/seld-discovery-img1-min (1).webp'],
     description: [
@@ -82,8 +86,9 @@ const PRODUCTS = {
   'self-care-cards': {
     category: 'Self Care Cards',
     name: 'The Ritual Edit',
-    price: 799,
-    priceFormatted: 'INR 799',
+    price: 399,
+    mrp: 699,
+    priceFormatted: '₹399',
     inStock: true,
     images: ['images/self-care-cards-display-min.webp', 'images/self-care-card-img-1.webp'],
     description: [
@@ -643,6 +648,20 @@ function initProductPage() {
   set('#pd-price',    p.priceFormatted);
   set('#pd-stock',    p.inStock ? 'In stock' : 'Out of stock');
 
+  // Discount / MRP pricing block
+  const mrpEl      = qs('#pd-mrp');
+  const discountEl = qs('#pd-discount');
+  const mrpNoteEl  = qs('#pd-mrp-note');
+  if (p.mrp && p.mrp > p.price) {
+    const pct = Math.round((p.mrp - p.price) / p.mrp * 100);
+    if (discountEl) discountEl.textContent = `−${pct}%`;
+    if (mrpEl)      mrpEl.textContent = `₹${p.mrp.toLocaleString('en-IN')}`;
+    if (mrpNoteEl)  mrpNoteEl.textContent = `M.R.P. inclusive of all taxes`;
+  } else {
+    if (discountEl) discountEl.style.display = 'none';
+    if (mrpEl)      mrpEl.style.display = 'none';
+  }
+
   const stockEl = qs('#pd-stock');
   if (stockEl) {
     stockEl.className = 'pd-stock ' + (p.inStock ? 'in-stock' : 'out-of-stock');
@@ -744,6 +763,39 @@ function initProductPage() {
   }
 }
 
+// ── Delivery Estimator (checkout / cart) ─────────────────
+function initDeliveryEstimator() {
+  const select = qs('#co-district');
+  const msg    = qs('#co-delivery-msg');
+  if (!select || !msg) return;
+
+  const DELIVERY_DAYS = 7;
+
+  const render = (district) => {
+    if (!district) {
+      msg.innerHTML = 'Select your district to see the delivery date.';
+      msg.classList.remove('pd-delivery-active');
+      return;
+    }
+    const date = new Date();
+    date.setDate(date.getDate() + DELIVERY_DAYS);
+    const when = date.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' });
+    msg.innerHTML =
+      `<strong>FREE delivery</strong> to <strong>${district}</strong> by ` +
+      `<strong>${when}</strong> — within ${DELIVERY_DAYS} days.`;
+    msg.classList.add('pd-delivery-active');
+  };
+
+  // Restore previously chosen district (shared across all products)
+  const saved = localStorage.getItem('ss_district') || '';
+  if (saved) { select.value = saved; render(saved); }
+
+  select.addEventListener('change', () => {
+    localStorage.setItem('ss_district', select.value);
+    render(select.value);
+  });
+}
+
 // ── Category Filters (blog / shop) ───────────────────────
 function initCategoryFilters() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -834,10 +886,20 @@ function initCategoryFilters() {
     });
   }
 
+  // Hide the (unfiltered) featured article when a specific blog category is active
+  const featuredSection = qs('#featured-article-section');
+  const toggleFeatured = (cat) => {
+    if (!featuredSection) return;
+    const showAll = (cat === '' || cat === 'all');
+    featuredSection.style.display = showAll ? '' : 'none';
+  };
+  toggleFeatured(urlCat);
+
   qsa('.category-filters').forEach(filterBar => {
     const buttons = filterBar.querySelectorAll('.cat-btn');
 
     const applyFilter = (cat) => {
+      toggleFeatured(cat);
       buttons.forEach(b => b.classList.toggle('active', b.dataset.category === cat || (cat === '' && b.dataset.category === 'all')));
       const grid = filterBar.closest('main')?.querySelector('[data-filterable]')
                 || document.querySelector('[data-filterable]');
@@ -1239,6 +1301,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initWishlistPage();
   initDiscoverMore();
   initCartPage();
+  initDeliveryEstimator();
   initBookOpenAnimation();
   initBlogPageTurn();
   initBlogArticleArrive();

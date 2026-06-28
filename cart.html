@@ -83,7 +83,7 @@
       <div class="cart-subtotal"><span>Subtotal</span><span class="cart-subtotal-amount">&#8377;0</span></div>
       <p style="font-size:0.75rem;color:var(--grey-mid);margin-bottom:1rem;">Taxes and shipping at checkout.</p>
       <a href="cart.html" class="btn btn-dark" style="width:100%;display:block;text-align:center;margin-bottom:0.75rem;">View Cart</a>
-      <a href="#" class="btn btn-gold" style="width:100%;display:block;text-align:center;">Checkout</a>
+      <a href="checkout.html" class="btn btn-gold" style="width:100%;display:block;text-align:center;">Checkout</a>
     </div>
   </div>
   <div class="cart-overlay"></div>
@@ -163,7 +163,36 @@
             <button onclick="applyCoupon()" style="background:var(--brown);color:#fff;border:none;padding:0.65rem 1rem;font-family:'Jost',sans-serif;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;">Apply</button>
           </div>
 
-          <a href="#" class="btn btn-gold" style="width:100%;display:block;text-align:center;margin-bottom:1rem;">Proceed to Checkout</a>
+          <!-- Delivery / District -->
+          <div class="co-delivery">
+            <label for="co-district" class="co-delivery-label">Deliver to</label>
+            <select id="co-district" class="co-district-select" aria-label="Select your district">
+              <option value="">Select your district…</option>
+              <option>Hyderabad</option>
+              <option>Rangareddy</option>
+              <option>Medchal–Malkajgiri</option>
+              <option>Warangal</option>
+              <option>Karimnagar</option>
+              <option>Nizamabad</option>
+              <option>Bengaluru Urban</option>
+              <option>Mysuru</option>
+              <option>Chennai</option>
+              <option>Coimbatore</option>
+              <option>Mumbai</option>
+              <option>Pune</option>
+              <option>Delhi</option>
+              <option>Gurugram</option>
+              <option>Noida (Gautam Buddh Nagar)</option>
+              <option>Kolkata</option>
+              <option>Ahmedabad</option>
+              <option>Jaipur</option>
+              <option>Lucknow</option>
+              <option>Kochi (Ernakulam)</option>
+            </select>
+            <p class="co-delivery-msg" id="co-delivery-msg">Select your district to see the delivery date.</p>
+          </div>
+
+          <a href="checkout.html" class="btn btn-gold" style="width:100%;display:block;text-align:center;margin-bottom:1rem;">Proceed to Checkout</a>
           <p style="font-size:0.75rem;font-style:italic;color:var(--grey-mid);text-align:center;margin:0;">We accept Razorpay &middot; Stripe &middot; PayU &middot; UPI &middot; Cards &middot; Net Banking</p>
         </div>
 
