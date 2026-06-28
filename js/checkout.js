@@ -96,6 +96,13 @@
     setText('#co-total',    INR(totals.total));
     setText('#co-delivery-est', deliveryWindow());
 
+    // Carry over the PIN entered on the cart page, if any
+    const savedPin = localStorage.getItem('ss_pincode') || '';
+    if (savedPin && form.pincode && !form.pincode.value) form.pincode.value = savedPin;
+
+    // PIN-code → City / District / State autofill (India Post API)
+    initPincodeAutofill(form);
+
     // Pre-fill district chosen earlier (shared key from product/cart flow)
     const savedDistrict = localStorage.getItem('ss_district') || '';
     if (savedDistrict && form.district) form.district.value = savedDistrict;
@@ -126,6 +133,74 @@
 
       startRazorpay(cart, totals, billing, payBtn);
     });
+  }
+
+  // ── PIN-code autofill (India Post — free, no key) ─────────
+  function initPincodeAutofill(form) {
+    const pin    = form.pincode;
+    const status = $('#co-pin-status');
+    const townList = $('#co-town-list');
+    if (!pin) return;
+
+    let lastPin = '';
+
+    const setStatus = (msg, kind) => {
+      if (!status) return;
+      status.textContent = msg || '';
+      status.className = 'co-pin-status' + (kind ? ' co-pin-' + kind : '');
+    };
+
+    async function lookup(code) {
+      if (code === lastPin) return;
+      lastPin = code;
+      setStatus('Looking up location…', 'loading');
+      try {
+        const res  = await fetch(`https://api.postalpincode.in/pincode/${code}`);
+        const data = await res.json();
+        const entry = Array.isArray(data) ? data[0] : null;
+
+        if (!entry || entry.Status !== 'Success' || !entry.PostOffice || !entry.PostOffice.length) {
+          setStatus('PIN not found — please type City, District & State.', 'error');
+          return;
+        }
+
+        const offices = entry.PostOffice;
+        const first   = offices[0];
+
+        // District + State are constant for a PIN → always fill
+        if (form.district) form.district.value = first.District || '';
+        if (form.state)    form.state.value    = first.State || '';
+
+        // Persist so the cart / next visit can reuse it
+        localStorage.setItem('ss_pincode', code);
+        if (first.District) localStorage.setItem('ss_district', first.District);
+
+        // City / locality: offer all post offices as suggestions
+        if (townList) {
+          townList.innerHTML = offices
+            .map(o => `<option value="${o.Name}"></option>`).join('');
+        }
+        // Only set city if empty (don't clobber a manual entry)
+        if (form.city && !form.city.value.trim()) {
+          form.city.value = first.Block && first.Block !== 'NA' ? first.Block : (first.District || first.Name);
+        }
+
+        setStatus(`✓ ${first.District}, ${first.State}`, 'ok');
+      } catch (err) {
+        setStatus('Could not auto-detect — please fill City, District & State.', 'error');
+      }
+    }
+
+    const maybeLookup = () => {
+      const code = (pin.value || '').replace(/\D/g, '').slice(0, 6);
+      if (code.length === 6) lookup(code);
+      else { setStatus(''); lastPin = ''; }
+    };
+
+    pin.addEventListener('input', maybeLookup);
+    pin.addEventListener('blur',  maybeLookup);
+    // If a PIN was restored from saved billing, resolve it on load
+    if ((pin.value || '').replace(/\D/g, '').length === 6) maybeLookup();
   }
 
   // ── Razorpay (client-only) ────────────────────────────────

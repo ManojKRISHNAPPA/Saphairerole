@@ -163,33 +163,13 @@
             <button onclick="applyCoupon()" style="background:var(--brown);color:#fff;border:none;padding:0.65rem 1rem;font-family:'Jost',sans-serif;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;">Apply</button>
           </div>
 
-          <!-- Delivery / District -->
+          <!-- Delivery / PIN code -->
           <div class="co-delivery">
-            <label for="co-district" class="co-delivery-label">Deliver to</label>
-            <select id="co-district" class="co-district-select" aria-label="Select your district">
-              <option value="">Select your district…</option>
-              <option>Hyderabad</option>
-              <option>Rangareddy</option>
-              <option>Medchal–Malkajgiri</option>
-              <option>Warangal</option>
-              <option>Karimnagar</option>
-              <option>Nizamabad</option>
-              <option>Bengaluru Urban</option>
-              <option>Mysuru</option>
-              <option>Chennai</option>
-              <option>Coimbatore</option>
-              <option>Mumbai</option>
-              <option>Pune</option>
-              <option>Delhi</option>
-              <option>Gurugram</option>
-              <option>Noida (Gautam Buddh Nagar)</option>
-              <option>Kolkata</option>
-              <option>Ahmedabad</option>
-              <option>Jaipur</option>
-              <option>Lucknow</option>
-              <option>Kochi (Ernakulam)</option>
-            </select>
-            <p class="co-delivery-msg" id="co-delivery-msg">Select your district to see the delivery date.</p>
+            <label for="co-pincode-cart" class="co-delivery-label">Deliver to</label>
+            <input id="co-pincode-cart" class="co-district-select" type="text" inputmode="numeric"
+                   pattern="[0-9]{6}" maxlength="6" autocomplete="postal-code"
+                   placeholder="Enter 6-digit PIN code" aria-label="Enter your PIN code">
+            <p class="co-delivery-msg" id="co-delivery-msg">Enter your PIN code to check delivery.</p>
           </div>
 
           <a href="checkout.html" class="btn btn-gold" style="width:100%;display:block;text-align:center;margin-bottom:1rem;">Proceed to Checkout</a>

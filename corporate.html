@@ -215,25 +215,25 @@
         <div class="gold-divider"></div>
       </div>
       <p style="text-align:center;color:var(--grey-mid);margin-bottom:2.5rem;">We respond to all enquiries within 2 business days.</p>
-      <form data-validate style="max-width:800px;margin:0 auto;">
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="company-name">Company Name <span style="color:var(--gold)">*</span></label>
-            <input type="text" id="company-name" name="company_name" required placeholder="Your company name">
+      <form data-validate data-form="Corporate & Bulk Orders" style="max-width:800px;margin:0 auto;">
+        <div class="enq-form-grid">
+          <div class="enq-field">
+            <label for="company-name">Company Name <span class="req">*</span></label>
+            <input type="text" id="company-name" name="company_name" required placeholder="Your company name" autocomplete="organization">
           </div>
-          <div class="form-group">
-            <label for="contact-name">Contact Name <span style="color:var(--gold)">*</span></label>
-            <input type="text" id="contact-name" name="contact_name" required placeholder="Your full name">
+          <div class="enq-field">
+            <label for="contact-name">Contact Name <span class="req">*</span></label>
+            <input type="text" id="contact-name" name="contact_name" required placeholder="Your full name" autocomplete="name">
           </div>
-          <div class="form-group">
-            <label for="email">Email Address <span style="color:var(--gold)">*</span></label>
-            <input type="email" id="email" name="email" required placeholder="hello@company.com">
+          <div class="enq-field">
+            <label for="email">Email Address <span class="req">*</span></label>
+            <input type="email" id="email" name="email" required placeholder="hello@company.com" autocomplete="email">
           </div>
-          <div class="form-group">
+          <div class="enq-field">
             <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" placeholder="+91 00000 00000">
+            <input type="tel" id="phone" name="phone" placeholder="+91 00000 00000" autocomplete="tel">
           </div>
-          <div class="form-group">
+          <div class="enq-field">
             <label for="enquiry-type">Type of Enquiry</label>
             <select id="enquiry-type" name="enquiry_type">
               <option value="" disabled selected>Select type…</option>
@@ -245,7 +245,7 @@
               <option value="other">Other</option>
             </select>
           </div>
-          <div class="form-group">
+          <div class="enq-field">
             <label for="quantity">Estimated Quantity</label>
             <select id="quantity" name="quantity">
               <option value="" disabled selected>Select range…</option>
@@ -256,16 +256,16 @@
               <option value="500+">500+</option>
             </select>
           </div>
-          <div class="form-group form-group--full">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5" placeholder="Tell us about your project, timeline, and any special requirements…"></textarea>
+          <div class="enq-field enq-full">
+            <label for="message">Message <span class="req">*</span></label>
+            <textarea id="message" name="message" rows="5" required placeholder="Tell us about your project, timeline, and any special requirements…"></textarea>
           </div>
-          <div class="form-group form-group--full">
+          <div class="enq-field enq-full">
             <label for="brief">Attach Brief (optional)</label>
             <input type="file" id="brief" name="brief" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png">
           </div>
-          <div class="form-group form-group--full">
-            <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;">Submit Enquiry</button>
+          <div class="enq-submit-wrap">
+            <button type="submit" class="btn btn-gold enq-submit">Submit Enquiry</button>
           </div>
         </div>
       </form>
@@ -306,6 +306,10 @@
     </div>
     <p class="footer-craft"><em>Crafted with intention. Written with purpose.</em></p>
   </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <script src="js/config.js"></script>
 
   <script src="js/main.js"></script>
 </body>

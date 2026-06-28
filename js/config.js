@@ -41,6 +41,7 @@ window.SS_CONFIG = {
     serviceId:        'EMAILJS_SERVICE_ID_REPLACE_ME',
     customerTemplate: 'EMAILJS_TEMPLATE_CUSTOMER_REPLACE_ME', // order confirmation → buyer
     ownerTemplate:    'EMAILJS_TEMPLATE_OWNER_REPLACE_ME',    // new order alert → store owner
+    enquiryTemplate:  'EMAILJS_TEMPLATE_ENQUIRY_REPLACE_ME',  // contact/corporate enquiry → company inbox
   },
 
   // ── Order rules (kept in sync with the cart page) ─────────

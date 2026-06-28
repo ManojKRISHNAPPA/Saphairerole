@@ -763,37 +763,62 @@ function initProductPage() {
   }
 }
 
-// ── Delivery Estimator (checkout / cart) ─────────────────
+// ── Delivery Estimator (cart) — PIN-code based ───────────
 function initDeliveryEstimator() {
-  const select = qs('#co-district');
-  const msg    = qs('#co-delivery-msg');
-  if (!select || !msg) return;
+  const pin = qs('#co-pincode-cart');
+  const msg = qs('#co-delivery-msg');
+  if (!pin || !msg) return;
 
   const DELIVERY_DAYS = 7;
+  let lastPin = '';
 
-  const render = (district) => {
-    if (!district) {
-      msg.innerHTML = 'Select your district to see the delivery date.';
-      msg.classList.remove('pd-delivery-active');
-      return;
-    }
-    const date = new Date();
-    date.setDate(date.getDate() + DELIVERY_DAYS);
-    const when = date.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' });
-    msg.innerHTML =
-      `<strong>FREE delivery</strong> to <strong>${district}</strong> by ` +
-      `<strong>${when}</strong> — within ${DELIVERY_DAYS} days.`;
-    msg.classList.add('pd-delivery-active');
+  const deliveryDate = () => {
+    const d = new Date();
+    d.setDate(d.getDate() + DELIVERY_DAYS);
+    return d.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' });
   };
 
-  // Restore previously chosen district (shared across all products)
-  const saved = localStorage.getItem('ss_district') || '';
-  if (saved) { select.value = saved; render(saved); }
+  const setMsg = (html, active) => {
+    msg.innerHTML = html;
+    msg.classList.toggle('pd-delivery-active', !!active);
+  };
 
-  select.addEventListener('change', () => {
-    localStorage.setItem('ss_district', select.value);
-    render(select.value);
-  });
+  async function lookup(code) {
+    if (code === lastPin) return;
+    lastPin = code;
+    setMsg('Checking delivery for ' + code + '…', false);
+    try {
+      const res  = await fetch(`https://api.postalpincode.in/pincode/${code}`);
+      const data = await res.json();
+      const po   = (Array.isArray(data) && data[0] && data[0].Status === 'Success') ? data[0].PostOffice : null;
+      if (!po || !po.length) {
+        setMsg('We could not find that PIN code. Please re-check.', false);
+        return;
+      }
+      const place = `${po[0].District}, ${po[0].State}`;
+      // Persist so checkout can pre-fill
+      localStorage.setItem('ss_pincode', code);
+      localStorage.setItem('ss_district', po[0].District);
+      setMsg(
+        `<strong>FREE delivery</strong> to <strong>${place}</strong> by ` +
+        `<strong>${deliveryDate()}</strong> — within ${DELIVERY_DAYS} days.`, true);
+    } catch (e) {
+      setMsg('Could not check delivery right now. Please try again.', false);
+    }
+  }
+
+  const maybeLookup = () => {
+    const code = (pin.value || '').replace(/\D/g, '').slice(0, 6);
+    if (code.length === 6) lookup(code);
+    else { setMsg('Enter your PIN code to check delivery.', false); lastPin = ''; }
+  };
+
+  // Restore previously entered PIN
+  const savedPin = localStorage.getItem('ss_pincode') || '';
+  if (savedPin) { pin.value = savedPin; maybeLookup(); }
+
+  pin.addEventListener('input', maybeLookup);
+  pin.addEventListener('blur',  maybeLookup);
 }
 
 // ── Category Filters (blog / shop) ───────────────────────
@@ -977,17 +1002,63 @@ function initForms() {
         btn.disabled = true;
       }
 
-      // Simulate submission
-      setTimeout(() => {
+      const showThankYou = () => {
         form.innerHTML = `
           <div style="text-align:center;padding:2rem;color:var(--brown);">
             <div style="font-size:2rem;color:var(--gold);margin-bottom:1rem;">◈</div>
             <h3 style="font-family:var(--font-serif);margin-bottom:0.75rem;">Thank You</h3>
-            <p style="font-size:0.88rem;">We've received your message and will respond within 2 business days.</p>
+            <p style="font-size:0.88rem;">We've received your enquiry and will respond within 2 business days.</p>
           </div>`;
-      }, 1200);
+      };
+      const resetBtn = () => { if (btn) { btn.textContent = original; btn.disabled = false; } };
+
+      sendEnquiryEmail(form).then(sent => {
+        showThankYou();
+        if (!sent) console.warn('[SS] Enquiry email skipped (EmailJS not configured) — form shown as submitted.');
+      }).catch(err => {
+        console.error('[SS] Enquiry email failed', err);
+        resetBtn();
+        showToast('Sorry, your enquiry could not be sent. Please email us directly.', 'error');
+      });
     });
   });
+}
+
+// ── Enquiry email (contact / corporate forms → company inbox)
+function sendEnquiryEmail(form) {
+  const CFG = window.SS_CONFIG || {};
+  const ej  = CFG.emailjs || {};
+  const store = CFG.store || {};
+
+  const ready = typeof emailjs !== 'undefined'
+    && ej.publicKey && !String(ej.publicKey).includes('REPLACE_ME')
+    && ej.serviceId && !String(ej.serviceId).includes('REPLACE_ME')
+    && ej.enquiryTemplate && !String(ej.enquiryTemplate).includes('REPLACE_ME');
+
+  // Not configured yet → resolve false so the UI still confirms politely.
+  if (!ready) return Promise.resolve(false);
+
+  try { emailjs.init({ publicKey: ej.publicKey }); }
+  catch (e) { try { emailjs.init(ej.publicKey); } catch (_) {} }
+
+  // Collect every named field into template params.
+  const data = {};
+  new FormData(form).forEach((val, key) => {
+    if (val instanceof File) return; // skip file uploads (needs paid EmailJS attachments)
+    data[key] = (data[key] ? data[key] + ', ' : '') + val;
+  });
+
+  const params = {
+    ...data,
+    form_source:  form.getAttribute('data-form') || (document.title || 'Website Enquiry'),
+    page_url:     window.location.href,
+    submitted_at: new Date().toLocaleString('en-IN'),
+    to_email:     store.ownerEmail || '',
+    to_name:      store.name || 'The Sapphire Scroll',
+    reply_to:     data.email || data.email_address || '',
+  };
+
+  return emailjs.send(ej.serviceId, ej.enquiryTemplate, params).then(() => true);
 }
 
 // ── Sticky Header Highlight on Scroll ────────────────────
