@@ -54,7 +54,7 @@ const PRODUCTS = {
     mrp: 1299,
     priceFormatted: '₹799',
     inStock: true,
-    images: ['images/inner-alchemy-product-display-min.webp', 'images/inner-alchemy-img1-min-1.webp'],
+    images: ['images/inner-alchemy-new-34.jpg'],
     description: [
       "Inner Alchemy is a blank notebook for those who prefer to set their own rhythm. Minimalist ivory with a delicate botanical illustration on the cover — it invites you to fill every page with whatever your inner world needs.",
       "Unlined, undirected, and entirely yours.",
@@ -72,7 +72,7 @@ const PRODUCTS = {
     mrp: 1299,
     priceFormatted: '₹799',
     inStock: true,
-    images: ['images/self-discovery-product-display-min.webp', 'images/seld-discovery-img1-min (1).webp'],
+    images: ['images/self-discovery-new-1-34.jpg', 'images/self-discovery-new-2-34.jpg'],
     description: [
       "Self Discovery is a blank journal for deep self-knowing. Forest green with gold embossing — it's built for those who are ready to explore who they are and who they are becoming, in their own words and their own way.",
       "No prompts. No structure. Just you and the page.",
@@ -90,7 +90,7 @@ const PRODUCTS = {
     mrp: 699,
     priceFormatted: '₹399',
     inStock: true,
-    images: ['images/self-care-cards-display-min.webp', 'images/self-care-card-img-1.webp'],
+    images: ['images/self-care-new-1-34.jpg', 'images/self-care-new-2-34.jpg', 'images/self-care-new-3-34.jpg'],
     description: [
       "The Ritual Edit is a curated deck of 52 self-care prompt cards designed to anchor your daily rituals. Each card is a gentle invitation — to rest, to reflect, and to tend to yourself with intention.",
       "Beautiful enough to display on your desk. Meaningful enough to change your day.",
@@ -587,6 +587,58 @@ function initBlogPageTurn() {
         });
       });
     });
+  });
+}
+
+// ── Site-wide Page-Turn Transition (notebook flip) ───────
+function initPageFlip() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  // Settle the incoming page in flat
+  document.body.classList.add('pf-arrive');
+  // Restore normal state if the page is shown from the bfcache (back/forward)
+  window.addEventListener('pageshow', e => { if (e.persisted) cleanup(); });
+
+  let animating = false;
+  let stage = null;
+  const cleanup = () => { animating = false; stage?.remove(); stage = null; };
+
+  const isInternalNav = (a) => {
+    const href = a.getAttribute('href');
+    if (!href) return false;
+    if (a.target && a.target !== '_self') return false;
+    if (a.hasAttribute('download') || a.hasAttribute('data-no-flip')) return false;
+    if (/^(#|mailto:|tel:|javascript:)/i.test(href)) return false;
+    let url;
+    try { url = new URL(a.href, location.href); } catch { return false; }
+    if (url.origin !== location.origin) return false;
+    if (!/\.html?$/i.test(url.pathname) && url.pathname !== '/' && !url.pathname.endsWith('/')) return false;
+    // Same page (just a hash / no real navigation) → let the browser handle it
+    if (url.pathname === location.pathname && url.search === location.search) return false;
+    return true;
+  };
+
+  const play = (target) => {
+    animating = true;
+    stage = document.createElement('div');
+    stage.className = 'pf-stage';
+    stage.innerHTML = '<div class="pf-leaf"><span class="pf-mark">◈</span></div>';
+    document.body.appendChild(stage);
+    requestAnimationFrame(() => requestAnimationFrame(() => stage.classList.add('pf-go')));
+    // Navigate as the leaf finishes covering the screen — no flash of the old page
+    setTimeout(() => { window.location.href = target; }, 600);
+    // Safety: if navigation stalls, release the lock
+    setTimeout(() => { if (animating) cleanup(); }, 4000);
+  };
+
+  document.addEventListener('click', (e) => {
+    if (e.defaultPrevented || e.button !== 0) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const a = e.target.closest('a[href]');
+    if (!a || !isInternalNav(a)) return;
+    e.preventDefault();
+    if (animating) return;
+    play(a.href);
   });
 }
 
@@ -1374,8 +1426,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCartPage();
   initDeliveryEstimator();
   initBookOpenAnimation();
-  initBlogPageTurn();
-  initBlogArticleArrive();
+  initPageFlip();
   initTearStrips();
 });
 
