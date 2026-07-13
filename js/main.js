@@ -24,9 +24,10 @@ const PRODUCTS = {
       "It is a functional productivity journal finished with elevated materials, designed to look refined on your desk while supporting serious daily use.",
     ],
     features: [
-      'Page Count: 168 pages for weekly planning, notes, and ongoing priorities.',
-      'Paper Stock: 90 GSM paper for a smooth writing experience in everyday use.',
-      'Cover: Durable hardcover construction with a premium finish built for regular carry.',
+      'Dimensions: 5.8 x 8.3 inches for a balanced desk-friendly format with comfortable writing space.',
+      'Total Number of Pages: 168 pages for weekly planning, notes, and ongoing priorities.',
+      'GSM: 90 GSM FSC-certified paper for a smooth writing experience in everyday use.',
+      'Type of Cover: Durable hardcover construction with premium gold foiling and a refined finish built for regular carry.',
     ],
   },
   'gentle-pause': {
@@ -44,9 +45,10 @@ const PRODUCTS = {
       "It is designed for customers who want a journal that feels luxurious in hand while remaining useful every single day.",
     ],
     features: [
-      'Page Count: 169 pages for planning, journaling, note-taking, and flexible daily use.',
-      'Paper Stock: 90 GSM paper that feels smooth, substantial, and comfortable for long writing sessions.',
-      'Cover: Hardcover format for a sturdy, elevated finish that keeps the journal looking sharp over time.',
+      'Dimensions: 5.8 x 8.3 inches for an elegant everyday journal format that travels well.',
+      'Total Number of Pages: 169 pages for planning, journaling, note-taking, and flexible daily use.',
+      'GSM: 90 GSM FSC-certified paper that feels smooth, substantial, and comfortable for long writing sessions.',
+      'Type of Cover: Hardcover format with premium gold foiling for a sturdy, elevated finish that keeps the journal looking sharp over time.',
     ],
   },
   'inner-alchemy': {
@@ -64,9 +66,10 @@ const PRODUCTS = {
       "This is a practical everyday notebook for anyone who values a refined exterior with complete flexibility inside.",
     ],
     features: [
-      'Page Count: 198 pages for extended note-taking, sketches, drafts, and everyday writing.',
-      'Paper Stock: 90 GSM paper suitable for regular writing with a clean, dependable finish.',
-      'Cover: Hardcover build that adds structure, protection, and a more premium desk presence.',
+      'Dimensions: 5.55 x 8.07 inches for a compact notebook profile that still gives ample writing room.',
+      'Total Number of Pages: 198 pages for extended note-taking, sketches, drafts, and everyday writing.',
+      'GSM: 90 GSM FSC-certified paper suitable for regular writing with a clean, dependable finish.',
+      'Type of Cover: Hardcover build with refined detailing that adds structure, protection, and a premium desk presence.',
     ],
   },
   'self-discovery': {
@@ -84,9 +87,10 @@ const PRODUCTS = {
       "It balances expressive design with day-to-day usefulness, making it easy to return to again and again.",
     ],
     features: [
-      'Page Count: 198 pages for writing, planning, note-taking, and expansive idea development.',
-      'Paper Stock: 90 GSM paper that supports smooth everyday writing and reliable page quality.',
-      'Cover: Hardcover format with embossed detailing for durability and a premium finished look.',
+      'Dimensions: 5.55 x 8.07 inches for easy carrying, daily writing, and long-form thinking.',
+      'Total Number of Pages: 198 pages for writing, planning, note-taking, and expansive idea development.',
+      'GSM: 90 GSM FSC-certified paper that supports smooth everyday writing and reliable page quality.',
+      'Type of Cover: Hardcover format with premium embossed detailing for durability and a refined finished look.',
     ],
   },
   'self-care-cards': {
@@ -104,9 +108,10 @@ const PRODUCTS = {
       "It is ideal for desks, gifting, team conversations, and everyday decision-making when you want structure in a smaller, more flexible form.",
     ],
     features: [
-      'Card Size: 2.5 x 3.5 inches for an easy-to-hold, desk-friendly format.',
-      'Set Format: 45 guided cards for repeat use across planning, prompts, and conversation starters.',
-      'Material: 300 GSM stock for a sturdy, premium feel that lasts through regular handling.',
+      'Dimensions: 2.5 x 3.5 inches for an easy-to-hold, desk-friendly format.',
+      'Total Number of Cards: 45 guided cards for repeat use across planning, prompts, and conversation starters.',
+      'GSM: 300 GSM FSC-certified stock for a sturdy, premium feel that lasts through regular handling.',
+      'Type of Finish: Premium card finish designed for durability, repeat use, and a polished tactile feel.',
     ],
   },
 };
