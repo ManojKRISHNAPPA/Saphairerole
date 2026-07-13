@@ -985,7 +985,7 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
 .pd-price-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 1rem;
   flex-wrap: wrap;
   margin-top: 1.75rem;
@@ -1000,6 +1000,7 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   font-weight: 600;
   line-height: 1;
   color: var(--navy);
+  min-width: 0;
 }
 .pd-stock {
   font-family: var(--font-sans);
@@ -1643,8 +1644,8 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
 /* ── Product Detail ──────────────────────────────────────── */
 .product-detail-layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(2rem, 5vw, 5rem);
+  grid-template-columns: minmax(0, 0.96fr) minmax(0, 1.04fr);
+  gap: clamp(1.5rem, 3vw, 3rem);
   padding-top: calc(var(--navbar-height) + 3rem);
   align-items: start;
 }
