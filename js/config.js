@@ -16,8 +16,8 @@ window.SS_CONFIG = {
     name:    'The Sapphire Scroll',
     url:     'https://www.thesapphirescroll.com',
     // Where the store-owner "new order" notification is sent.
-    ownerEmail: 'contactmanojmech@gmail.com',
-    supportEmail: 'contactmanojmech@gmail.com',
+    ownerEmail: 'info@thesapphirescroll.com',
+    supportEmail: 'info@thesapphirescroll.com',
     // Used on the invoice header. Optional.
     gstin:   '',           // e.g. '36ABCDE1234F1Z5' (leave '' to hide)
     address: 'Jaipur, India',
@@ -37,8 +37,8 @@ window.SS_CONFIG = {
   // Dashboard → Account → API Keys (Public Key),
   // Email Services (Service ID), Email Templates (Template IDs).
   emailjs: {
-    publicKey:        'EMAILJS_PUBLIC_KEY_REPLACE_ME',
-    serviceId:        'EMAILJS_SERVICE_ID_REPLACE_ME',
+    publicKey:        'Nl2kwj66DRE8pLIVp',
+    serviceId:        'service_4xvy5lq',
     customerTemplate: 'EMAILJS_TEMPLATE_CUSTOMER_REPLACE_ME', // order confirmation → buyer
     ownerTemplate:    'EMAILJS_TEMPLATE_OWNER_REPLACE_ME',    // new order alert → store owner
     enquiryTemplate:  'EMAILJS_TEMPLATE_ENQUIRY_REPLACE_ME',  // contact/corporate enquiry → company inbox

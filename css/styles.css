@@ -1969,6 +1969,21 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
 .article-card:hover h3 { color: var(--gold); }
 .article-card p { font-size: 0.83rem; color: var(--grey-mid); }
 
+.blog-article-hero {
+  margin: 0 0 2.5rem;
+  background: var(--cream-dark);
+  border: 1px solid rgba(201,168,76,0.18);
+  overflow: hidden;
+}
+
+.blog-article-hero img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: center;
+}
+
 /* ── Blog Filters ────────────────────────────────────────── */
 .category-filters {
   display: flex;
