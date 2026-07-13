@@ -801,13 +801,6 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
 .product-card-price {
   display: none;
 }
-.product-card-price .sale { color: var(--gold); }
-.product-card-price .original {
-  text-decoration: line-through;
-  color: var(--grey-mid);
-  margin-left: 0.5rem;
-  font-size: 0.8rem;
-}
 
 /* Wishlist toggle on card */
 .product-wishlist-btn {
@@ -991,57 +984,35 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
 }
 .pd-price-row {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
   flex-wrap: wrap;
+  margin-top: 1.75rem;
   margin-bottom: 1.25rem;
-}
-.pd-price-block {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-.pd-price-line {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-.pd-discount {
-  font-family: var(--font-sans);
-  font-size: 1.1rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--gold-dark, #A8893A);
-}
-.pd-mrp {
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  color: var(--grey-mid);
-  text-decoration: line-through;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--grey-light);
 }
 .pd-price-row .product-price-current {
   display: inline-block;
   font-family: var(--font-serif);
-  font-size: 2.1rem;
+  font-size: clamp(2rem, 3vw, 2.4rem);
   font-weight: 600;
   line-height: 1;
   color: var(--navy);
 }
-.pd-mrp-note {
-  font-family: var(--font-sans);
-  font-size: 0.72rem;
-  color: var(--grey-mid);
-  letter-spacing: 0.02em;
-}
 .pd-stock {
   font-family: var(--font-sans);
-  font-size: 0.82rem;
-  font-weight: 400;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
 }
-.pd-stock.in-stock  { color: #2d7a4f; }
-.pd-stock.out-of-stock { color: #c0392b; }
+.pd-stock.in-stock  { color: #2d7a4f; background: rgba(45, 122, 79, 0.06); }
+.pd-stock.out-of-stock { color: #c0392b; background: rgba(192, 57, 43, 0.06); }
 .pd-description { margin: 0 0 1.5rem; }
 .pd-description p {
   font-size: 0.9rem;
@@ -1232,7 +1203,7 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
-  margin-top: 0.5rem;
+  margin-top: 0;
 }
 .pd-btn-add,
 .pd-btn-buy {
@@ -1720,11 +1691,6 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
 
 .product-price-block { display: none; }
 .product-price-current { display: none; }
-.product-price-original {
-  font-size: 1rem;
-  color: var(--grey-mid);
-  text-decoration: line-through;
-}
 .product-short-desc {
   font-size: 0.92rem;
   line-height: 1.8;
