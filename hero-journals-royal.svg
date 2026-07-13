@@ -1,0 +1,183 @@
+<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A rich, royal arrangement of premium leather-bound journals with gilded edges and gold foil, on a deep brown surface lit by warm gold light.">
+  <defs>
+    <linearGradient id="surface" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#241710"/>
+      <stop offset="0.5" stop-color="#3D2A1A"/>
+      <stop offset="1" stop-color="#573A24"/>
+    </linearGradient>
+    <radialGradient id="goldLight" cx="0.27" cy="0.16" r="0.8">
+      <stop offset="0" stop-color="#FCE7A8" stop-opacity="0.32"/>
+      <stop offset="0.5" stop-color="#E8B860" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#E8B860" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vignette" cx="0.5" cy="0.5" r="0.82">
+      <stop offset="0.5" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#120B05" stop-opacity="0.55"/>
+    </radialGradient>
+    <linearGradient id="goldFoil" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F4DA92"/>
+      <stop offset="0.45" stop-color="#C9A24A"/>
+      <stop offset="0.7" stop-color="#EBD088"/>
+      <stop offset="1" stop-color="#B58B36"/>
+    </linearGradient>
+    <linearGradient id="gilt" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#B99A54"/>
+      <stop offset="0.5" stop-color="#EAD79A"/>
+      <stop offset="1" stop-color="#B99A54"/>
+    </linearGradient>
+    <linearGradient id="coverSheen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.12"/>
+      <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="bookShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="10" dy="20" stdDeviation="20" flood-color="#0E0803" flood-opacity="0.55"/>
+    </filter>
+    <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="6" dy="11" stdDeviation="12" flood-color="#0E0803" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Leather journal: cover = currentColor, gilded pages, gold-foil frame + title -->
+    <symbol id="plain" viewBox="0 0 240 320">
+      <rect x="10" y="12" width="222" height="300" rx="9" fill="url(#gilt)"/>
+      <rect x="0" y="0" width="222" height="300" rx="9" fill="currentColor"/>
+      <rect x="0" y="0" width="222" height="300" rx="9" fill="url(#coverSheen)"/>
+      <rect x="0" y="0" width="13" height="300" rx="6" fill="#000000" fill-opacity="0.22"/>
+      <rect x="16" y="16" width="190" height="268" rx="4" fill="none" stroke="url(#goldFoil)" stroke-width="2"/>
+      <rect x="76" y="198" width="70" height="5" rx="2.5" fill="url(#goldFoil)"/>
+      <rect x="66" y="216" width="90" height="3.5" rx="1.8" fill="url(#goldFoil)" fill-opacity="0.7"/>
+    </symbol>
+
+    <g id="flourish" stroke="url(#goldFoil)" stroke-width="1.6" fill="none" stroke-linecap="round">
+      <path d="M2 40 C 2 16, 16 2, 40 2"/>
+      <path d="M8 34 C 20 22, 22 30, 34 20 C 40 15, 44 20, 40 26"/>
+      <path d="M14 30 C 22 26, 24 32, 30 26"/>
+      <circle cx="41" cy="26" r="2.2" fill="#EBD088" stroke="none"/>
+      <circle cx="26" cy="41" r="2.2" fill="#EBD088" stroke="none"/>
+      <path d="M20 46 C 26 40, 30 44, 26 50"/>
+    </g>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#surface)"/>
+  <rect width="1600" height="900" fill="url(#goldLight)"/>
+
+  <!-- 1. Back filler — gold-cloth -->
+  <use href="#plain" width="250" height="345" color="#B08A38" transform="translate(575,92) rotate(-7)" filter="url(#bookShadow)"/>
+
+  <!-- 2. Self Discovery — deep emerald, gold line art -->
+  <g transform="translate(360,150) rotate(-3)" filter="url(#bookShadow)">
+    <rect x="10" y="12" width="290" height="405" rx="9" fill="url(#gilt)"/>
+    <rect x="0" y="0" width="290" height="405" rx="9" fill="#1C4335"/>
+    <rect x="0" y="0" width="290" height="405" rx="9" fill="url(#coverSheen)"/>
+    <rect x="0" y="0" width="14" height="405" rx="7" fill="#000000" fill-opacity="0.24"/>
+    <g stroke="url(#goldFoil)" stroke-width="3.2" fill="none" stroke-linecap="round">
+      <rect x="52" y="70" width="92" height="230" rx="46"/>
+      <rect x="128" y="46" width="112" height="250" rx="56"/>
+      <path d="M98 300 C 98 330, 150 330, 150 300"/>
+      <circle cx="182" cy="150" r="16"/>
+      <path d="M98 118 C 118 108, 128 128, 112 138"/>
+    </g>
+    <text x="42" y="352" font-family="Cormorant Garamond, Georgia, serif" font-size="40" letter-spacing="4" fill="url(#goldFoil)">SELF</text>
+    <text x="42" y="392" font-family="Cormorant Garamond, Georgia, serif" font-size="40" letter-spacing="3" fill="url(#goldFoil)">DISCOVERY</text>
+  </g>
+
+  <!-- 3. Inner Alchemy — oxblood, gold botanical -->
+  <g transform="translate(700,238) rotate(7)" filter="url(#bookShadow)">
+    <rect x="10" y="12" width="258" height="360" rx="9" fill="url(#gilt)"/>
+    <rect x="0" y="0" width="258" height="360" rx="9" fill="#5C2430"/>
+    <rect x="0" y="0" width="258" height="360" rx="9" fill="url(#coverSheen)"/>
+    <rect x="0" y="0" width="12" height="360" rx="6" fill="#000000" fill-opacity="0.2"/>
+    <g stroke="url(#goldFoil)" stroke-width="1.8" fill="url(#goldFoil)" stroke-linecap="round">
+      <path d="M129 250 C 128 210, 120 175, 108 150" fill="none"/>
+      <path d="M129 250 C 130 205, 135 172, 140 150" fill="none"/>
+      <path d="M129 250 C 138 215, 152 190, 168 172" fill="none"/>
+      <path d="M129 250 C 120 220, 104 198, 90 184" fill="none"/>
+      <ellipse cx="106" cy="140" rx="15" ry="20" transform="rotate(-18 106 140)"/>
+      <ellipse cx="142" cy="138" rx="15" ry="21" transform="rotate(14 142 138)"/>
+      <ellipse cx="171" cy="166" rx="12" ry="16" transform="rotate(38 171 166)"/>
+      <circle cx="88" cy="180" r="5"/>
+      <path d="M120 226 l -18 -10 M138 220 l 16 -8" fill="none"/>
+    </g>
+    <text x="129" y="292" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="20" letter-spacing="7" fill="url(#goldFoil)">INNER</text>
+    <text x="129" y="318" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="20" letter-spacing="7" fill="url(#goldFoil)">ALCHEMY</text>
+  </g>
+
+  <!-- 4. The Shift — black-navy, gold border + flourishes -->
+  <g transform="translate(150,252) rotate(4)" filter="url(#bookShadow)">
+    <rect x="10" y="12" width="285" height="398" rx="9" fill="url(#gilt)"/>
+    <rect x="0" y="0" width="285" height="398" rx="9" fill="#131118"/>
+    <rect x="0" y="0" width="285" height="398" rx="9" fill="url(#coverSheen)"/>
+    <rect x="0" y="0" width="13" height="398" rx="6" fill="#000000" fill-opacity="0.3"/>
+    <rect x="22" y="22" width="241" height="354" rx="3" fill="none" stroke="url(#goldFoil)" stroke-width="1.6"/>
+    <use href="#flourish" transform="translate(30,30)"/>
+    <use href="#flourish" transform="translate(255,30) scale(-1,1)"/>
+    <use href="#flourish" transform="translate(30,368) scale(1,-1)"/>
+    <use href="#flourish" transform="translate(255,368) scale(-1,-1)"/>
+    <text x="142" y="206" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="30" letter-spacing="5" fill="url(#goldFoil)">THE SHIFT</text>
+  </g>
+
+  <!-- 5. Caramel leather journal (front) -->
+  <use href="#plain" width="255" height="350" color="#7E5530" transform="translate(430,412) rotate(-2)" filter="url(#bookShadow)"/>
+
+  <!-- 6. Espresso companion (front-left, gold lotus) -->
+  <g transform="translate(200,472) rotate(-4)" filter="url(#bookShadow)">
+    <rect x="10" y="12" width="200" height="272" rx="9" fill="url(#gilt)"/>
+    <rect x="0" y="0" width="200" height="272" rx="9" fill="#38271A"/>
+    <rect x="0" y="0" width="200" height="272" rx="9" fill="url(#coverSheen)"/>
+    <rect x="0" y="0" width="11" height="272" rx="5" fill="#000000" fill-opacity="0.24"/>
+    <g transform="translate(100,150)" stroke="url(#goldFoil)" stroke-width="1.6" fill="none" stroke-linecap="round">
+      <path d="M0 6 C -10 -8, -10 -20, 0 -30 C 10 -20, 10 -8, 0 6"/>
+      <path d="M0 6 C -20 -2, -26 -14, -22 -26 C -8 -22, -2 -10, 0 6"/>
+      <path d="M0 6 C 20 -2, 26 -14, 22 -26 C 8 -22, 2 -10, 0 6"/>
+      <circle cx="0" cy="-14" r="1.8" fill="#EBD088"/>
+    </g>
+    <text x="100" y="192" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="13" letter-spacing="1.5" fill="url(#goldFoil)">The Sapphire</text>
+    <text x="100" y="208" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="13" letter-spacing="1.5" fill="url(#goldFoil)">Scroll</text>
+  </g>
+
+  <!-- 7. Card deck — royal jewel tones -->
+  <g transform="translate(560,560) rotate(-5)">
+    <g filter="url(#softShadow)">
+      <rect x="18" y="24" width="158" height="200" rx="16" fill="#6E2A34" transform="rotate(-20 18 224)"/>
+      <rect x="14" y="18" width="158" height="200" rx="16" fill="#1D4536" transform="rotate(-13 14 218)"/>
+      <rect x="10" y="12" width="158" height="200" rx="16" fill="#B08A38" transform="rotate(-7 10 212)"/>
+      <rect x="6" y="6" width="158" height="200" rx="16" fill="#8A5A2E" transform="rotate(-2 6 206)"/>
+    </g>
+    <g filter="url(#softShadow)">
+      <rect x="0" y="0" width="158" height="200" rx="16" fill="#5E2530"/>
+      <rect x="0" y="0" width="158" height="200" rx="16" fill="url(#coverSheen)"/>
+      <rect x="8" y="8" width="142" height="184" rx="11" fill="none" stroke="url(#goldFoil)" stroke-width="1" stroke-opacity="0.6"/>
+      <defs><path id="danceArc" d="M 26 62 A 54 54 0 0 1 132 62"/></defs>
+      <text font-family="Jost, sans-serif" font-size="8.5" letter-spacing="1.6" fill="url(#goldFoil)">
+        <textPath href="#danceArc" startOffset="50%" text-anchor="middle">DANCE LIKE NOBODY'S WATCHING</textPath>
+      </text>
+      <g stroke="url(#goldFoil)" stroke-width="1.4" fill="#EBD088">
+        <circle cx="70" cy="86" r="3"/><path d="M73 86 V 72" fill="none"/>
+        <circle cx="86" cy="90" r="3"/><path d="M89 90 V 74" fill="none"/><path d="M73 72 C 80 70, 86 72, 89 74" fill="none" stroke-width="1.2"/>
+      </g>
+      <g stroke="url(#goldFoil)" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(79,140)">
+        <rect x="-40" y="-14" width="80" height="46" rx="6"/>
+        <circle cx="-22" cy="9" r="12"/><circle cx="-22" cy="9" r="4"/>
+        <circle cx="22" cy="9" r="12"/><circle cx="22" cy="9" r="4"/>
+        <rect x="-9" y="-2" width="18" height="12" rx="2"/>
+        <path d="M-40 -14 C -30 -26, 30 -26, 40 -14"/>
+        <path d="M-7 22 h 14 M-7 26 h 14" stroke-width="1.1"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Negative-space headline (right) -->
+  <g transform="translate(1075,300)">
+    <text font-family="Jost, sans-serif" font-size="15" letter-spacing="6" fill="url(#goldFoil)">THE SAPPHIRE SCROLL</text>
+    <rect x="0" y="26" width="52" height="1.8" fill="url(#goldFoil)"/>
+    <text x="-2" y="92" font-family="Cormorant Garamond, Georgia, serif" font-size="58" fill="#F4EAD2">Journals crafted</text>
+    <text x="-2" y="152" font-family="Cormorant Garamond, Georgia, serif" font-size="58" fill="#F4EAD2">for the <tspan font-style="italic" fill="url(#goldFoil)">mindful life.</tspan></text>
+    <text x="0" y="206" font-family="Jost, sans-serif" font-size="17" fill="#E4D3B4" opacity="0.85">Intentional stationery for those who live,</text>
+    <text x="0" y="232" font-family="Jost, sans-serif" font-size="17" fill="#E4D3B4" opacity="0.85">reflect, and grow deliberately.</text>
+    <g transform="translate(0,272)">
+      <rect x="0" y="0" width="200" height="46" rx="2" fill="url(#goldFoil)"/>
+      <text x="100" y="29" text-anchor="middle" font-family="Jost, sans-serif" font-size="14" letter-spacing="2" fill="#2A1E12">EXPLORE THE COLLECTION</text>
+    </g>
+  </g>
+
+  <rect width="1600" height="900" fill="url(#vignette)"/>
+</svg>

@@ -1,0 +1,176 @@
+<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" role="img" aria-label="An editorial arrangement of premium hardcover journals and a fanned card deck on a warm beige surface, lit by soft window light.">
+  <defs>
+    <linearGradient id="surface" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F0E6D5"/>
+      <stop offset="0.55" stop-color="#E7D9C2"/>
+      <stop offset="1" stop-color="#DCCBB1"/>
+    </linearGradient>
+    <radialGradient id="window" cx="0.26" cy="0.16" r="0.75">
+      <stop offset="0" stop-color="#FFFEF9" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#FFFEF9" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vignette" cx="0.5" cy="0.52" r="0.8">
+      <stop offset="0.55" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#3A2E1C" stop-opacity="0.13"/>
+    </radialGradient>
+    <linearGradient id="coverSheen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.10"/>
+      <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="bookShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="9" dy="17" stdDeviation="17" flood-color="#584833" flood-opacity="0.30"/>
+    </filter>
+    <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="5" dy="9" stdDeviation="10" flood-color="#584833" flood-opacity="0.26"/>
+    </filter>
+
+    <!-- Plain journal: cover = currentColor, gold-foil frame + embossed title -->
+    <symbol id="plain" viewBox="0 0 240 320">
+      <rect x="10" y="12" width="222" height="300" rx="9" fill="#ECE2D0"/>
+      <rect x="0" y="0" width="222" height="300" rx="9" fill="currentColor"/>
+      <rect x="0" y="0" width="222" height="300" rx="9" fill="url(#coverSheen)"/>
+      <rect x="0" y="0" width="13" height="300" rx="6" fill="#000000" fill-opacity="0.13"/>
+      <rect x="16" y="16" width="190" height="268" rx="4" fill="none" stroke="#C9A84C" stroke-width="1.6" stroke-opacity="0.5"/>
+      <rect x="76" y="198" width="70" height="5" rx="2.5" fill="#C9A84C" fill-opacity="0.85"/>
+      <rect x="66" y="216" width="90" height="3.5" rx="1.8" fill="#C9A84C" fill-opacity="0.5"/>
+    </symbol>
+
+    <!-- Ornate corner flourish for The Shift -->
+    <g id="flourish" stroke="#C9A84C" stroke-width="1.4" fill="none" stroke-linecap="round">
+      <path d="M2 40 C 2 16, 16 2, 40 2"/>
+      <path d="M8 34 C 20 22, 22 30, 34 20 C 40 15, 44 20, 40 26"/>
+      <path d="M14 30 C 22 26, 24 32, 30 26"/>
+      <circle cx="41" cy="26" r="2" fill="#C9A84C" stroke="none"/>
+      <circle cx="26" cy="41" r="2" fill="#C9A84C" stroke="none"/>
+      <path d="M20 46 C 26 40, 30 44, 26 50"/>
+    </g>
+  </defs>
+
+  <!-- Surface -->
+  <rect width="1600" height="900" fill="url(#surface)"/>
+  <rect width="1600" height="900" fill="url(#window)"/>
+
+  <!-- 1. Back filler — taupe -->
+  <use href="#plain" width="250" height="345" color="#C3B398" transform="translate(575,92) rotate(-7)" filter="url(#bookShadow)"/>
+
+  <!-- 2. Self Discovery — forest green, gold single-line art -->
+  <g transform="translate(360,150) rotate(-3)" filter="url(#bookShadow)">
+    <rect x="10" y="12" width="290" height="405" rx="9" fill="#E7DcC8"/>
+    <rect x="0" y="0" width="290" height="405" rx="9" fill="#254A38"/>
+    <rect x="0" y="0" width="290" height="405" rx="9" fill="url(#coverSheen)"/>
+    <rect x="0" y="0" width="14" height="405" rx="7" fill="#000000" fill-opacity="0.16"/>
+    <g stroke="#C4A868" stroke-width="3" fill="none" stroke-linecap="round" stroke-opacity="0.92">
+      <rect x="52" y="70" width="92" height="230" rx="46"/>
+      <rect x="128" y="46" width="112" height="250" rx="56"/>
+      <path d="M98 300 C 98 330, 150 330, 150 300"/>
+      <circle cx="182" cy="150" r="16"/>
+      <path d="M98 118 C 118 108, 128 128, 112 138"/>
+    </g>
+    <text x="42" y="352" font-family="Cormorant Garamond, Georgia, serif" font-size="40" letter-spacing="4" fill="#C9A968">SELF</text>
+    <text x="42" y="392" font-family="Cormorant Garamond, Georgia, serif" font-size="40" letter-spacing="3" fill="#C9A968">DISCOVERY</text>
+  </g>
+
+  <!-- 3. Inner Alchemy — cream, botanical -->
+  <g transform="translate(700,238) rotate(7)" filter="url(#bookShadow)">
+    <rect x="10" y="12" width="258" height="360" rx="9" fill="#E7DcC8"/>
+    <rect x="0" y="0" width="258" height="360" rx="9" fill="#F4EDDE"/>
+    <rect x="0" y="0" width="258" height="360" rx="9" fill="url(#coverSheen)"/>
+    <rect x="0" y="0" width="12" height="360" rx="6" fill="#000000" fill-opacity="0.06"/>
+    <g stroke="#2C2822" stroke-width="1.6" fill="#2C2822" stroke-linecap="round">
+      <path d="M129 250 C 128 210, 120 175, 108 150" fill="none"/>
+      <path d="M129 250 C 130 205, 135 172, 140 150" fill="none"/>
+      <path d="M129 250 C 138 215, 152 190, 168 172" fill="none"/>
+      <path d="M129 250 C 120 220, 104 198, 90 184" fill="none"/>
+      <ellipse cx="106" cy="140" rx="15" ry="20" transform="rotate(-18 106 140)"/>
+      <ellipse cx="142" cy="138" rx="15" ry="21" transform="rotate(14 142 138)"/>
+      <ellipse cx="171" cy="166" rx="12" ry="16" transform="rotate(38 171 166)"/>
+      <circle cx="88" cy="180" r="5"/>
+      <path d="M120 226 l -18 -10 M138 220 l 16 -8" fill="none"/>
+    </g>
+    <text x="129" y="292" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="20" letter-spacing="7" fill="#2C2822">INNER</text>
+    <text x="129" y="318" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="20" letter-spacing="7" fill="#2C2822">ALCHEMY</text>
+  </g>
+
+  <!-- 4. The Shift — near-black navy, gold border + flourishes -->
+  <g transform="translate(150,252) rotate(4)" filter="url(#bookShadow)">
+    <rect x="10" y="12" width="285" height="398" rx="9" fill="#E7DcC8"/>
+    <rect x="0" y="0" width="285" height="398" rx="9" fill="#16181F"/>
+    <rect x="0" y="0" width="285" height="398" rx="9" fill="url(#coverSheen)"/>
+    <rect x="0" y="0" width="13" height="398" rx="6" fill="#000000" fill-opacity="0.22"/>
+    <rect x="22" y="22" width="241" height="354" rx="3" fill="none" stroke="#C9A84C" stroke-width="1.3" stroke-opacity="0.85"/>
+    <use href="#flourish" x="0" y="0" transform="translate(30,30)"/>
+    <use href="#flourish" x="0" y="0" transform="translate(255,30) scale(-1,1)"/>
+    <use href="#flourish" x="0" y="0" transform="translate(30,368) scale(1,-1)"/>
+    <use href="#flourish" x="0" y="0" transform="translate(255,368) scale(-1,-1)"/>
+    <text x="142" y="206" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="30" letter-spacing="5" fill="#C9A968">THE SHIFT</text>
+  </g>
+
+  <!-- 5. Sand plain journal (front-center-left) -->
+  <use href="#plain" width="255" height="350" color="#DBC8A4" transform="translate(430,412) rotate(-2)" filter="url(#bookShadow)"/>
+
+  <!-- 6. Cream companion (front-left, lotus mark) -->
+  <g transform="translate(200,472) rotate(-4)" filter="url(#bookShadow)">
+    <rect x="10" y="12" width="200" height="272" rx="9" fill="#E7DcC8"/>
+    <rect x="0" y="0" width="200" height="272" rx="9" fill="#FBF8F0"/>
+    <rect x="0" y="0" width="200" height="272" rx="9" fill="url(#coverSheen)"/>
+    <g transform="translate(100,150)" stroke="#C9A84C" stroke-width="1.4" fill="none" stroke-linecap="round">
+      <path d="M0 6 C -10 -8, -10 -20, 0 -30 C 10 -20, 10 -8, 0 6"/>
+      <path d="M0 6 C -20 -2, -26 -14, -22 -26 C -8 -22, -2 -10, 0 6"/>
+      <path d="M0 6 C 20 -2, 26 -14, 22 -26 C 8 -22, 2 -10, 0 6"/>
+      <circle cx="0" cy="-14" r="1.8" fill="#C9A84C"/>
+    </g>
+    <text x="100" y="192" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="13" letter-spacing="1.5" fill="#8A6D3B">The Sapphire</text>
+    <text x="100" y="208" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="13" letter-spacing="1.5" fill="#8A6D3B">Scroll</text>
+  </g>
+
+  <!-- 7. Card deck — "Dance like nobody's watching" -->
+  <g transform="translate(560,560) rotate(-5)">
+    <!-- fanned cards behind -->
+    <g filter="url(#softShadow)">
+      <rect x="18" y="24" width="158" height="200" rx="16" fill="#6B4A9E" transform="rotate(-20 18 224)"/>
+      <rect x="14" y="18" width="158" height="200" rx="16" fill="#E79FB6" transform="rotate(-13 14 218)"/>
+      <rect x="10" y="12" width="158" height="200" rx="16" fill="#83C0A4" transform="rotate(-7 10 212)"/>
+      <rect x="6" y="6" width="158" height="200" rx="16" fill="#E7963B" transform="rotate(-2 6 206)"/>
+    </g>
+    <!-- top teal card -->
+    <g filter="url(#softShadow)">
+      <rect x="0" y="0" width="158" height="200" rx="16" fill="#1F8E8E"/>
+      <rect x="0" y="0" width="158" height="200" rx="16" fill="url(#coverSheen)"/>
+      <defs><path id="danceArc" d="M 26 62 A 54 54 0 0 1 132 62"/></defs>
+      <text font-family="Jost, sans-serif" font-size="8.5" letter-spacing="1.6" fill="#EAF7F5">
+        <textPath href="#danceArc" startOffset="50%" text-anchor="middle">DANCE LIKE NOBODY'S WATCHING</textPath>
+      </text>
+      <!-- music notes -->
+      <g stroke="#EAF7F5" stroke-width="1.4" fill="#EAF7F5">
+        <circle cx="70" cy="86" r="3"/><path d="M73 86 V 72" fill="none"/>
+        <circle cx="86" cy="90" r="3"/><path d="M89 90 V 74" fill="none"/><path d="M73 72 C 80 70, 86 72, 89 74" fill="none" stroke-width="1.2"/>
+      </g>
+      <!-- boombox line art -->
+      <g stroke="#EAF7F5" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(79,140)">
+        <path d="M-34 -14 h 68" opacity="0.7"/>
+        <rect x="-40" y="-14" width="80" height="46" rx="6"/>
+        <circle cx="-22" cy="9" r="12"/><circle cx="-22" cy="9" r="4"/>
+        <circle cx="22" cy="9" r="12"/><circle cx="22" cy="9" r="4"/>
+        <rect x="-9" y="-2" width="18" height="12" rx="2"/>
+        <path d="M-40 -14 C -30 -26, 30 -26, 40 -14" opacity="0.85"/>
+        <path d="M-7 22 h 14 M-7 26 h 14" stroke-width="1.1" opacity="0.8"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Negative-space headline (right) -->
+  <g transform="translate(1075,300)">
+    <text font-family="Jost, sans-serif" font-size="15" letter-spacing="6" fill="#A8893A">THE SAPPHIRE SCROLL</text>
+    <rect x="0" y="26" width="52" height="1.6" fill="#C9A84C"/>
+    <text x="-2" y="92" font-family="Cormorant Garamond, Georgia, serif" font-size="58" fill="#20202F">Journals crafted</text>
+    <text x="-2" y="152" font-family="Cormorant Garamond, Georgia, serif" font-size="58" fill="#20202F">for the <tspan font-style="italic" fill="#5C3D2E">mindful life.</tspan></text>
+    <text x="0" y="206" font-family="Jost, sans-serif" font-size="17" fill="#5C3D2E" opacity="0.85">Intentional stationery for those who live,</text>
+    <text x="0" y="232" font-family="Jost, sans-serif" font-size="17" fill="#5C3D2E" opacity="0.85">reflect, and grow deliberately.</text>
+    <g transform="translate(0,272)">
+      <rect x="0" y="0" width="200" height="46" rx="2" fill="#C9A84C"/>
+      <text x="100" y="29" text-anchor="middle" font-family="Jost, sans-serif" font-size="14" letter-spacing="2" fill="#1C1C2E">EXPLORE THE COLLECTION</text>
+    </g>
+  </g>
+
+  <rect width="1600" height="900" fill="url(#vignette)"/>
+</svg>

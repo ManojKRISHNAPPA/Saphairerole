@@ -1132,58 +1132,6 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   .pd-features-grid { grid-template-columns: 1fr; }
 }
 
-/* ── Book-Open Overlay (homepage) ────────────────────────── */
-#book-open {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  display: flex;
-  pointer-events: none;
-}
-.book-open-page {
-  flex: 0 0 50%;
-  height: 100%;
-  background: #FAF6EF;
-}
-.book-open-left {
-  transform-origin: left center;
-  transform: perspective(1400px) rotateY(0deg);
-  box-shadow: 4px 0 60px rgba(28,28,46,0.18);
-  transition: transform 0.72s cubic-bezier(0.7, 0, 0.25, 1);
-}
-.book-open-right {
-  transform-origin: right center;
-  transform: perspective(1400px) rotateY(0deg);
-  box-shadow: -4px 0 60px rgba(28,28,46,0.18);
-  transition: transform 0.72s cubic-bezier(0.7, 0, 0.25, 1);
-}
-#book-open.opening .book-open-left  { transform: perspective(1400px) rotateY(-92deg); }
-#book-open.opening .book-open-right { transform: perspective(1400px) rotateY(92deg); }
-#book-open.done { opacity: 0; transition: opacity 0.35s ease 0.05s; }
-
-/* ── Page-Turn Navigation (blog → article) ───────────────── */
-#page-turn {
-  position: fixed;
-  inset: 0;
-  z-index: 99998;
-  background: linear-gradient(95deg, #F5EFE6 0%, #FAF6EF 50%, #F0E8DA 100%);
-  transform-origin: right center;
-  transform: perspective(1400px) rotateY(90deg);
-  pointer-events: none;
-  box-shadow: -12px 0 60px rgba(28,28,46,0.25);
-  transition: transform 0.45s cubic-bezier(0.65, 0, 0.2, 1);
-}
-#page-turn.turning { transform: perspective(1400px) rotateY(0deg); }
-
-/* ── Blog Article Page-Arrive ────────────────────────────── */
-@keyframes pageArrive {
-  from { opacity: 0.7; transform: perspective(1400px) rotateY(-14deg) translateX(-8px); }
-  to   { opacity: 1;   transform: perspective(1400px) rotateY(0deg)   translateX(0); }
-}
-body.blog-article-arrive main {
-  animation: pageArrive 0.55s cubic-bezier(0.35, 0, 0.15, 1) forwards;
-}
-
 /* ── Blog Card Sticky-Note Tear Strip ────────────────────── */
 .article-card {
   position: relative;
@@ -2793,98 +2741,66 @@ textarea.form-control { min-height: 140px; resize: vertical; }
 /* New mockup products are pre-padded to a true 3:4 canvas, so the
    default object-fit: cover fills the card perfectly with no crop. */
 
-/* ============================================================
-   SITE-WIDE PAGE-TURN TRANSITION (notebook page flip)
-   Works on desktop + mobile; -webkit- prefixes for Safari/iOS.
-   ============================================================ */
-.pf-stage {
-  position: fixed;
-  inset: 0;
-  top: 0; left: 0; right: 0; bottom: 0;   /* inset fallback for older mobile */
-  z-index: 99998;
-  pointer-events: none;
-  -webkit-perspective: 1800px;
-          perspective: 1800px;
-  -webkit-perspective-origin: right center;
-          perspective-origin: right center;
-}
-/* The turning leaf — a sheet of paper hinged on the right edge.
-   Starts edge-on at 90° so it is visible from the first frame in
-   every engine (no reliance on backface-visibility). */
-.pf-leaf {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  -webkit-transform-origin: right center;
-          transform-origin: right center;
-  -webkit-transform: rotateY(90deg);
-          transform: rotateY(90deg);
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-  background:
-    repeating-linear-gradient(0deg, transparent 0 31px, rgba(92,61,46,0.05) 31px 32px),
-    linear-gradient(100deg, #EFE7D9 0%, #F8F3EB 45%, #FCF9F3 75%, #F1E9DB 100%);
-  box-shadow: -24px 0 80px rgba(28,28,46,0.30);
-  will-change: transform;
-}
-/* faint emblem watermark on the page */
-.pf-leaf .pf-mark {
-  position: absolute;
-  top: 50%; left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  font-family: var(--font-serif);
-  font-size: clamp(4rem, 12vw, 9rem);
-  color: rgba(201,168,76,0.10);
-  line-height: 1;
-}
-/* moving light sheen catching the curl */
-.pf-leaf::before {
-  content: '';
-  position: absolute;
-  inset: 0; top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(105deg,
-    rgba(255,255,255,0) 28%,
-    rgba(255,255,255,0.55) 46%,
-    rgba(255,255,255,0) 62%);
-  mix-blend-mode: screen;
-  opacity: 0.9;
-}
-/* darker leading edge (the page's lifting shadow) */
-.pf-leaf::after {
-  content: '';
-  position: absolute;
-  top: 0; bottom: 0; left: 0;
-  width: 140px;
-  background: linear-gradient(90deg, rgba(28,28,46,0.20), rgba(28,28,46,0) 100%);
-}
-.pf-stage.pf-go .pf-leaf {
-  -webkit-animation: pfTurn 0.6s cubic-bezier(0.52, 0.02, 0.24, 1) forwards;
-          animation: pfTurn 0.6s cubic-bezier(0.52, 0.02, 0.24, 1) forwards;
-}
-@-webkit-keyframes pfTurn {
-  from { -webkit-transform: rotateY(90deg); }
-  to   { -webkit-transform: rotateY(0deg); }
-}
-@keyframes pfTurn {
-  from { -webkit-transform: rotateY(90deg); transform: rotateY(90deg); }
-  to   { -webkit-transform: rotateY(0deg);  transform: rotateY(0deg); }
+/* Global no-motion mode: disable all CSS transitions and animations. */
+*, *::before, *::after {
+  transition: none !important;
+  animation: none !important;
 }
 
-/* New page settles in flat on arrival */
-@-webkit-keyframes pfArrive {
-  from { opacity: 0; -webkit-transform: translateY(10px); }
-  to   { opacity: 1; -webkit-transform: translateY(0); }
-}
-@keyframes pfArrive {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-body.pf-arrive main {
-  -webkit-animation: pfArrive 0.5s cubic-bezier(0.33, 0, 0.2, 1) both;
-          animation: pfArrive 0.5s cubic-bezier(0.33, 0, 0.2, 1) both;
+html {
+  scroll-behavior: auto;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .pf-stage { display: none !important; }
-  body.pf-arrive main { -webkit-animation: none; animation: none; }
+/* Minimal motion preset: re-enable only essential, subtle effects. */
+@media (prefers-reduced-motion: no-preference) {
+  main {
+    animation: ssPageFadeIn 220ms cubic-bezier(0.22, 0.61, 0.36, 1) !important;
+  }
+
+  .product-card {
+    transition: transform 170ms cubic-bezier(0.22, 0.61, 0.36, 1),
+                box-shadow 170ms cubic-bezier(0.22, 0.61, 0.36, 1) !important;
+  }
+  .product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(28, 28, 46, 0.12);
+  }
+
+  .btn,
+  .btn-gold,
+  .btn-outline-gold,
+  .btn-outline-white,
+  .btn-dark,
+  .btn-brown,
+  .coupon-input button {
+    transition: background-color 140ms cubic-bezier(0.22, 0.61, 0.36, 1),
+                border-color 140ms cubic-bezier(0.22, 0.61, 0.36, 1),
+                color 140ms cubic-bezier(0.22, 0.61, 0.36, 1) !important;
+  }
+  .btn-gold:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .search-overlay,
+  .cart-overlay {
+    transition: opacity 200ms cubic-bezier(0.22, 0.61, 0.36, 1),
+                visibility 200ms cubic-bezier(0.22, 0.61, 0.36, 1) !important;
+  }
+  .cart-drawer {
+    transition: transform 210ms cubic-bezier(0.22, 0.61, 0.36, 1),
+                opacity 210ms cubic-bezier(0.22, 0.61, 0.36, 1) !important;
+  }
+
+  .pd-feature-tile {
+    transition: opacity 180ms cubic-bezier(0.22, 0.61, 0.36, 1),
+                transform 180ms cubic-bezier(0.22, 0.61, 0.36, 1),
+                border-color 140ms cubic-bezier(0.22, 0.61, 0.36, 1),
+                background-color 140ms cubic-bezier(0.22, 0.61, 0.36, 1) !important;
+  }
+}
+
+@keyframes ssPageFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

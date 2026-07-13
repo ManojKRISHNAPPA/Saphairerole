@@ -18,10 +18,10 @@ const PRODUCTS = {
       'images/the-shift-img3.webp',
     ],
     description: [
-      "The Shift is created for those seasons of life when you're ready for more clarity, more intention, and more flow — without the pressure to \"perform\" productivity.",
-      "This journal gently guides you into a rhythm that feels natural, not forced. Instead of overwhelming you with complex systems, The Shift helps you organise your day in a way that feels doable, grounding, and aligned with what truly matters to you.",
-      "Imagine beginning each morning by simply laying out your priorities, setting your intentions, and taking a moment to breathe before the day begins. Imagine ending the week by checking in with yourself — What worked? What didn't? What felt good? — and letting that reflection shape the week ahead.",
-      "The Shift turns planning into a mindful ritual, not a task. It's your soft structure for a busy life, a quiet companion that holds your plans, thoughts, and progress with calm certainty.",
+      "The Shift is built for modern schedules where planning needs to be clear, fast, and dependable.",
+      "Its layout helps you map priorities, break work into actionable steps, and stay consistent from Monday to Sunday.",
+      "Whether you are a student, founder, designer, or manager, The Shift gives your day a premium structure without unnecessary complexity.",
+      "It is a functional planning tool finished with luxury materials, made to perform beautifully on your desk every day.",
     ],
     features: [
       '168 pages.',
@@ -38,8 +38,8 @@ const PRODUCTS = {
     inStock: true,
     images: ['images/gentle-pause-product-display-min.webp', 'images/gentle-pause-1a-1.webp'],
     description: [
-      "The Gentle Pause is a journal for those moments when you need to slow down and breathe. Designed with intention, it invites you to pause, reflect, and reconnect with what matters.",
-      "With a deep plum cover and geometric gold pattern, it's a beautiful companion for your daily reflections.",
+      "The Gentle Pause combines elegant form with practical page design for notes, planning, and thoughtful writing.",
+      "With a deep plum cover and geometric gold pattern, it is a refined everyday journal for work and personal use.",
     ],
     features: [
       '169 pages.',
@@ -56,8 +56,8 @@ const PRODUCTS = {
     inStock: true,
     images: ['images/inner-alchemy-new-34.jpg'],
     description: [
-      "Inner Alchemy is a blank notebook for those who prefer to set their own rhythm. Minimalist ivory with a delicate botanical illustration on the cover — it invites you to fill every page with whatever your inner world needs.",
-      "Unlined, undirected, and entirely yours.",
+      "Inner Alchemy is a premium blank notebook for ideas, meetings, sketches, and daily writing.",
+      "Minimal ivory styling with a botanical cover detail keeps it versatile for both personal and professional use.",
     ],
     features: [
       '198 pages.',
@@ -74,8 +74,8 @@ const PRODUCTS = {
     inStock: true,
     images: ['images/self-discovery-new-1-34.jpg', 'images/self-discovery-new-2-34.jpg'],
     description: [
-      "Self Discovery is a blank journal for deep self-knowing. Forest green with gold embossing — it's built for those who are ready to explore who they are and who they are becoming, in their own words and their own way.",
-      "No prompts. No structure. Just you and the page.",
+      "Self Discovery is a versatile blank journal designed for writing, planning, and long-form thinking.",
+      "Forest green with gold embossing delivers a luxury finish while keeping the inside fully flexible for any workflow.",
     ],
     features: [
       '198 pages.',
@@ -84,7 +84,7 @@ const PRODUCTS = {
     ],
   },
   'self-care-cards': {
-    category: 'Self Care Cards',
+    category: 'Guided Cards',
     name: 'The Ritual Edit',
     price: 399,
     mrp: 699,
@@ -92,8 +92,8 @@ const PRODUCTS = {
     inStock: true,
     images: ['images/self-care-new-1-34.jpg', 'images/self-care-new-2-34.jpg', 'images/self-care-new-3-34.jpg'],
     description: [
-      "The Ritual Edit is a curated deck of 52 self-care prompt cards designed to anchor your daily rituals. Each card is a gentle invitation — to rest, to reflect, and to tend to yourself with intention.",
-      "Beautiful enough to display on your desk. Meaningful enough to change your day.",
+      "The Ritual Edit is a set of 52 guided cards designed to support planning, focus, communication, and creative momentum.",
+      "Compact, premium, and practical - ideal for desks, team sessions, and everyday decision-making.",
     ],
     features: [
       '2.5 x 3.5 inches.',
@@ -193,7 +193,10 @@ function initSearch() {
   input?.addEventListener('keydown', e => {
     if (e.key === 'Enter') {
       const q = input.value.trim();
-      if (q) window.location.href = `shop.html?search=${encodeURIComponent(q)}`;
+      if (q) {
+        const target = `shop.html?search=${encodeURIComponent(q)}`;
+        window.location.href = target;
+      }
     }
   });
 }
@@ -529,119 +532,6 @@ function renderFeatureTile(featureText) {
   </div>`;
 }
 
-// ── Book-Open Animation (homepage, once per session) ──────
-function initBookOpenAnimation() {
-  if (!document.querySelector('.hero')) return;
-  if (sessionStorage.getItem('ss_bookOpened')) return;
-
-  document.documentElement.style.overflow = 'hidden';
-  const overlay = document.createElement('div');
-  overlay.id = 'book-open';
-  overlay.setAttribute('aria-hidden', 'true');
-
-  // Decorative spine line
-  const spineL = document.createElement('div');
-  spineL.className = 'book-open-page book-open-left';
-  spineL.innerHTML = `<div style="position:absolute;right:0;top:0;width:2px;height:100%;background:linear-gradient(to bottom,transparent,rgba(201,168,76,0.35),transparent);"></div>`;
-  const spineR = document.createElement('div');
-  spineR.className = 'book-open-page book-open-right';
-  spineR.innerHTML = `<div style="position:absolute;left:0;top:0;width:2px;height:100%;background:linear-gradient(to bottom,transparent,rgba(201,168,76,0.35),transparent);"></div>`;
-
-  overlay.appendChild(spineL);
-  overlay.appendChild(spineR);
-  document.body.appendChild(overlay);
-
-  // Short pause then open
-  setTimeout(() => {
-    overlay.classList.add('opening');
-    sessionStorage.setItem('ss_bookOpened', '1');
-    setTimeout(() => {
-      overlay.classList.add('done');
-      document.documentElement.style.overflow = '';
-      setTimeout(() => overlay.remove(), 400);
-    }, 760);
-  }, 220);
-}
-
-// ── Blog Page-Turn Navigation ─────────────────────────────
-function initBlogPageTurn() {
-  // Only on blog listing page (has .articles-grid)
-  if (!document.querySelector('.articles-grid')) return;
-
-  qsa('a[href]').forEach(link => {
-    const href = link.getAttribute('href') || '';
-    if (!href.startsWith('blog-') || !href.endsWith('.html')) return;
-
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const target = link.href;
-
-      const overlay = document.createElement('div');
-      overlay.id = 'page-turn';
-      document.body.appendChild(overlay);
-
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          overlay.classList.add('turning');
-          setTimeout(() => { window.location.href = target; }, 480);
-        });
-      });
-    });
-  });
-}
-
-// ── Site-wide Page-Turn Transition (notebook flip) ───────
-function initPageFlip() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  // Settle the incoming page in flat
-  document.body.classList.add('pf-arrive');
-  // Restore normal state if the page is shown from the bfcache (back/forward)
-  window.addEventListener('pageshow', e => { if (e.persisted) cleanup(); });
-
-  let animating = false;
-  let stage = null;
-  const cleanup = () => { animating = false; stage?.remove(); stage = null; };
-
-  const isInternalNav = (a) => {
-    const href = a.getAttribute('href');
-    if (!href) return false;
-    if (a.target && a.target !== '_self') return false;
-    if (a.hasAttribute('download') || a.hasAttribute('data-no-flip')) return false;
-    if (/^(#|mailto:|tel:|javascript:)/i.test(href)) return false;
-    let url;
-    try { url = new URL(a.href, location.href); } catch { return false; }
-    if (url.origin !== location.origin) return false;
-    if (!/\.html?$/i.test(url.pathname) && url.pathname !== '/' && !url.pathname.endsWith('/')) return false;
-    // Same page (just a hash / no real navigation) → let the browser handle it
-    if (url.pathname === location.pathname && url.search === location.search) return false;
-    return true;
-  };
-
-  const play = (target) => {
-    animating = true;
-    stage = document.createElement('div');
-    stage.className = 'pf-stage';
-    stage.innerHTML = '<div class="pf-leaf"><span class="pf-mark">◈</span></div>';
-    document.body.appendChild(stage);
-    requestAnimationFrame(() => requestAnimationFrame(() => stage.classList.add('pf-go')));
-    // Navigate as the leaf finishes covering the screen — no flash of the old page
-    setTimeout(() => { window.location.href = target; }, 600);
-    // Safety: if navigation stalls, release the lock
-    setTimeout(() => { if (animating) cleanup(); }, 4000);
-  };
-
-  document.addEventListener('click', (e) => {
-    if (e.defaultPrevented || e.button !== 0) return;
-    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    const a = e.target.closest('a[href]');
-    if (!a || !isInternalNav(a)) return;
-    e.preventDefault();
-    if (animating) return;
-    play(a.href);
-  });
-}
-
 // ── Sticky-Note Tear Strip (Blog Cards) ──────────────────
 function initTearStrips() {
   qsa('.article-card').forEach(card => {
@@ -675,13 +565,6 @@ function initTearStrips() {
 
     card.appendChild(strip);
   });
-}
-
-function initBlogArticleArrive() {
-  // Run on any blog-* article page (not the listing)
-  const path = window.location.pathname;
-  if (!/blog-[a-z]/.test(path)) return;
-  document.body.classList.add('blog-article-arrive');
 }
 
 // ── Product Page (dynamic) ────────────────────────────────
@@ -882,15 +765,15 @@ function initCategoryFilters() {
   const CATEGORY_LABELS = {
     'journals':        'Journals',
     'notebooks':       'Notebooks',
-    'self-care-cards': 'Self Care Cards',
+    'self-care-cards': 'Guided Cards',
     'desk-edit':       'Desk Edit',
     'gifts':           'Gift Sets',
   };
 
   const CATEGORY_META = {
-    'journals':        { heading: 'Journals', subtitle: 'Mindful journals crafted for those who write deliberately.', label: 'The Journal Collection' },
-    'notebooks':       { heading: 'Notebooks', subtitle: 'Blank notebooks for free expression — unlined, undirected, entirely yours.', label: 'The Notebook Collection' },
-    'self-care-cards': { heading: 'Self Care Cards', subtitle: 'Beautifully designed prompt cards to anchor your daily rituals.', label: 'The Ritual Edit' },
+    'journals':        { heading: 'Journals', subtitle: 'Luxury journals built for planning, focus, and high-performance routines.', label: 'The Journal Collection' },
+    'notebooks':       { heading: 'Notebooks', subtitle: 'Premium blank notebooks for notes, strategy, ideas, and creative work.', label: 'The Notebook Collection' },
+    'self-care-cards': { heading: 'Guided Cards', subtitle: 'Practical card sets for prompts, planning, and everyday clarity.', label: 'The Ritual Edit' },
     'desk-edit':       { heading: 'Desk Edit', subtitle: 'Thoughtful accents and bookmarks to elevate your writing space.', label: 'The Desk Collection' },
     'gifts':           { heading: 'Gift Sets', subtitle: 'Curated gift sets for those who appreciate the art of writing.', label: 'Gifting' },
   };
@@ -1425,8 +1308,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initDiscoverMore();
   initCartPage();
   initDeliveryEstimator();
-  initBookOpenAnimation();
-  initPageFlip();
   initTearStrips();
 });
 
