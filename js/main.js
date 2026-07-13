@@ -18,15 +18,15 @@ const PRODUCTS = {
       'images/the-shift-img3.webp',
     ],
     description: [
-      "The Shift is built for modern schedules where planning needs to be clear, fast, and dependable.",
-      "Its layout helps you map priorities, break work into actionable steps, and stay consistent from Monday to Sunday.",
-      "Whether you are a student, founder, designer, or manager, The Shift gives your day a premium structure without unnecessary complexity.",
-      "It is a functional planning tool finished with luxury materials, made to perform beautifully on your desk every day.",
+      "The Shift is built for modern schedules where planning needs to be clear, fast, and dependable from the first task to the final review.",
+      "Its guided layout helps you map priorities, break work into actionable steps, and keep momentum steady across the full week.",
+      "Whether you are a student, founder, designer, or manager, The Shift gives your day premium structure without visual clutter or unnecessary complexity.",
+      "It is a functional productivity journal finished with elevated materials, designed to look refined on your desk while supporting serious daily use.",
     ],
     features: [
-      '168 pages.',
-      '90 GSM paper.',
-      'Hardcover.',
+      'Page Count: 168 pages for weekly planning, notes, and ongoing priorities.',
+      'Paper Stock: 90 GSM paper for a smooth writing experience in everyday use.',
+      'Cover: Durable hardcover construction with a premium finish built for regular carry.',
     ],
   },
   'gentle-pause': {
@@ -38,13 +38,15 @@ const PRODUCTS = {
     inStock: true,
     images: ['images/gentle-pause-product-display-min.webp', 'images/gentle-pause-1a-1.webp'],
     description: [
-      "The Gentle Pause combines elegant form with practical page design for notes, planning, and thoughtful writing.",
-      "With a deep plum cover and geometric gold pattern, it is a refined everyday journal for work and personal use.",
+      "The Gentle Pause combines elegant form with practical page design for notes, planning, reflective writing, and everyday organisation.",
+      "Its deep plum cover and geometric gold pattern give it a polished, considered presence suited to both personal and professional spaces.",
+      "Inside, the layout stays versatile enough for journaling, lists, meeting notes, or quiet end-of-day reviews.",
+      "It is designed for customers who want a journal that feels luxurious in hand while remaining useful every single day.",
     ],
     features: [
-      '169 pages.',
-      '90 GSM paper.',
-      'Hardcover.',
+      'Page Count: 169 pages for planning, journaling, note-taking, and flexible daily use.',
+      'Paper Stock: 90 GSM paper that feels smooth, substantial, and comfortable for long writing sessions.',
+      'Cover: Hardcover format for a sturdy, elevated finish that keeps the journal looking sharp over time.',
     ],
   },
   'inner-alchemy': {
@@ -56,13 +58,15 @@ const PRODUCTS = {
     inStock: true,
     images: ['images/inner-alchemy-new-34.jpg'],
     description: [
-      "Inner Alchemy is a premium blank notebook for ideas, meetings, sketches, and daily writing.",
-      "Minimal ivory styling with a botanical cover detail keeps it versatile for both personal and professional use.",
+      "Inner Alchemy is a premium blank notebook created for ideas, meetings, sketches, free writing, and day-to-day capture.",
+      "Its clean ivory styling and botanical cover detail give it a soft luxury feel without limiting how you use it.",
+      "Because the inside stays fully open-ended, it works equally well for strategy notes, classroom use, journaling, or creative development.",
+      "This is a practical everyday notebook for anyone who values a refined exterior with complete flexibility inside.",
     ],
     features: [
-      '198 pages.',
-      '90 GSM paper.',
-      'Hardcover.',
+      'Page Count: 198 pages for extended note-taking, sketches, drafts, and everyday writing.',
+      'Paper Stock: 90 GSM paper suitable for regular writing with a clean, dependable finish.',
+      'Cover: Hardcover build that adds structure, protection, and a more premium desk presence.',
     ],
   },
   'self-discovery': {
@@ -74,13 +78,15 @@ const PRODUCTS = {
     inStock: true,
     images: ['images/self-discovery-new-1-34.jpg', 'images/self-discovery-new-2-34.jpg'],
     description: [
-      "Self Discovery is a versatile blank journal designed for writing, planning, and long-form thinking.",
-      "Forest green with gold embossing delivers a luxury finish while keeping the inside fully flexible for any workflow.",
+      "Self Discovery is a versatile blank journal designed for writing, planning, brainstorming, and long-form thinking.",
+      "The forest green cover with gold embossing delivers a luxury finish while keeping the interior fully flexible for any workflow.",
+      "Use it for personal writing, study notes, meeting capture, or big-picture planning without being locked into a fixed structure.",
+      "It balances expressive design with day-to-day usefulness, making it easy to return to again and again.",
     ],
     features: [
-      '198 pages.',
-      '90 GSM paper.',
-      'Hardcover.',
+      'Page Count: 198 pages for writing, planning, note-taking, and expansive idea development.',
+      'Paper Stock: 90 GSM paper that supports smooth everyday writing and reliable page quality.',
+      'Cover: Hardcover format with embossed detailing for durability and a premium finished look.',
     ],
   },
   'self-care-cards': {
@@ -92,13 +98,15 @@ const PRODUCTS = {
     inStock: true,
     images: ['images/self-care-new-1-34.jpg', 'images/self-care-new-2-34.jpg', 'images/self-care-new-3-34.jpg'],
     description: [
-      "The Ritual Edit is a set of 52 guided cards designed to support planning, focus, communication, and creative momentum.",
-      "Compact, premium, and practical - ideal for desks, team sessions, and everyday decision-making.",
+      "The Ritual Edit is a set of 45 guided cards designed to support planning, focus, communication, and creative momentum in a compact format.",
+      "Each card is easy to pick up, use, and return to, making the set suitable for solo reflection, collaborative sessions, or quick desk prompts.",
+      "The size is portable, the finish feels premium, and the format keeps the experience practical rather than overwhelming.",
+      "It is ideal for desks, gifting, team conversations, and everyday decision-making when you want structure in a smaller, more flexible form.",
     ],
     features: [
-      '2.5 x 3.5 inches.',
-      '45 Cards.',
-      '300 GSM.',
+      'Card Size: 2.5 x 3.5 inches for an easy-to-hold, desk-friendly format.',
+      'Set Format: 45 guided cards for repeat use across planning, prompts, and conversation starters.',
+      'Material: 300 GSM stock for a sturdy, premium feel that lasts through regular handling.',
     ],
   },
 };
@@ -582,20 +590,6 @@ function initProductPage() {
   set('#pd-name',     p.name);
   set('#pd-price',    p.priceFormatted);
   set('#pd-stock',    p.inStock ? 'In stock' : 'Out of stock');
-
-  // Discount / MRP pricing block
-  const mrpEl      = qs('#pd-mrp');
-  const discountEl = qs('#pd-discount');
-  const mrpNoteEl  = qs('#pd-mrp-note');
-  if (p.mrp && p.mrp > p.price) {
-    const pct = Math.round((p.mrp - p.price) / p.mrp * 100);
-    if (discountEl) discountEl.textContent = `−${pct}%`;
-    if (mrpEl)      mrpEl.textContent = `₹${p.mrp.toLocaleString('en-IN')}`;
-    if (mrpNoteEl)  mrpNoteEl.textContent = `M.R.P. inclusive of all taxes`;
-  } else {
-    if (discountEl) discountEl.style.display = 'none';
-    if (mrpEl)      mrpEl.style.display = 'none';
-  }
 
   const stockEl = qs('#pd-stock');
   if (stockEl) {
