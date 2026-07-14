@@ -12,10 +12,11 @@ const PRODUCTS = {
     priceFormatted: '₹1,399',
     inStock: true,
     images: [
-      'images/the-shift-produt-display-min.webp',
-      'images/the-shift-img1-min.webp',
-      'images/the-shift-img2.webp',
-      'images/the-shift-img3.webp',
+      'images/product-portraits/the-shift-1.jpg',
+      'images/product-portraits/the-shift-2.jpg',
+      'images/product-portraits/the-shift-3.jpg',
+      'images/product-portraits/the-shift-4.jpg',
+      'images/product-portraits/the-shift-5.jpg',
     ],
     description: [
       "The Shift is built for modern schedules where planning needs to be clear, fast, and dependable from the first task to the final review.",
@@ -37,7 +38,14 @@ const PRODUCTS = {
     mrp: 1999,
     priceFormatted: '₹1,399',
     inStock: true,
-    images: ['images/gentle-pause-product-display-min.webp', 'images/gentle-pause-1a-1.webp'],
+    images: [
+      'images/product-portraits/gentle-pause-1.png',
+      'images/product-portraits/gentle-pause-6.png',
+      'images/product-portraits/gentle-pause-2.png',
+      'images/product-portraits/gentle-pause-3.png',
+      'images/product-portraits/gentle-pause-4.png',
+      'images/product-portraits/gentle-pause-5.png',
+    ],
     description: [
       "The Gentle Pause combines elegant form with practical page design for notes, planning, reflective writing, and everyday organisation.",
       "Its deep plum cover and geometric gold pattern give it a polished, considered presence suited to both personal and professional spaces.",
@@ -58,7 +66,12 @@ const PRODUCTS = {
     mrp: 1299,
     priceFormatted: '₹799',
     inStock: true,
-    images: ['images/inner-alchemy-new-34.jpg'],
+    images: [
+      'images/product-portraits/inner-alchemy-1.jpg',
+      'images/product-portraits/inner-alchemy-2.png',
+      'images/product-portraits/inner-alchemy-3.png',
+      'images/product-portraits/inner-alchemy-4.png',
+    ],
     description: [
       "Inner Alchemy is a premium blank notebook created for ideas, meetings, sketches, free writing, and day-to-day capture.",
       "Its clean ivory styling and botanical cover detail give it a soft luxury feel without limiting how you use it.",
@@ -79,7 +92,12 @@ const PRODUCTS = {
     mrp: 1299,
     priceFormatted: '₹799',
     inStock: true,
-    images: ['images/self-discovery-new-1-34.jpg', 'images/self-discovery-new-2-34.jpg'],
+    images: [
+      'images/product-portraits/self-discovery-1.png',
+      'images/product-portraits/self-discovery-2.png',
+      'images/product-portraits/self-discovery-3.png',
+      'images/product-portraits/self-discovery-4.png',
+    ],
     description: [
       "Self Discovery is a versatile blank journal designed for writing, planning, brainstorming, and long-form thinking.",
       "The forest green cover with gold embossing delivers a luxury finish while keeping the interior fully flexible for any workflow.",
@@ -100,7 +118,11 @@ const PRODUCTS = {
     mrp: 699,
     priceFormatted: '₹399',
     inStock: true,
-    images: ['images/self-care-new-1-34.jpg', 'images/self-care-new-2-34.jpg', 'images/self-care-new-3-34.jpg'],
+    images: [
+      'images/product-portraits/self-care-cards-1.jpg',
+      'images/product-portraits/self-care-cards-2.jpg',
+      'images/product-portraits/self-care-cards-3.png',
+    ],
     description: [
       "The Ritual Edit is a set of 45 guided cards designed to support planning, focus, communication, and creative momentum in a compact format.",
       "Each card is easy to pick up, use, and return to, making the set suitable for solo reflection, collaborative sessions, or quick desk prompts.",
@@ -632,7 +654,7 @@ function initProductPage() {
     thumbsEl.innerHTML = p.images.map((src, i) => `
       <div class="product-thumb ${i === 0 ? 'active' : ''}" role="listitem" tabindex="0"
            data-thumb-src="${src}" aria-label="View image ${i + 1}">
-        <img src="${src}" alt="${p.name} view ${i + 1}" style="width:100%;height:100%;object-fit:cover;">
+        <img src="${src}" alt="${p.name} view ${i + 1}" class="product-thumb-img">
       </div>`).join('');
 
     // Attach click handlers directly (initProductGallery runs before thumbs exist)
