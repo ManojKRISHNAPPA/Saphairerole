@@ -996,11 +996,12 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
 }
 .pd-price-row .product-price-current {
   display: inline-block;
-  font-family: var(--font-serif);
-  font-size: clamp(2rem, 3vw, 2.4rem);
-  font-weight: 600;
+  font-family: var(--font-sans);
+  font-size: clamp(1.95rem, 2.9vw, 2.25rem);
+  font-weight: 500;
+  letter-spacing: 0;
   line-height: 1;
-  color: var(--navy);
+  color: var(--brown);
   min-width: 0;
 }
 .pd-stock {
@@ -2592,7 +2593,7 @@ textarea.form-control { min-height: 140px; resize: vertical; }
 .co-line-name { font-family: var(--font-serif); font-size: 0.95rem; color: var(--black); }
 .co-line-variant { font-size: 0.72rem; color: var(--grey-mid); }
 .co-line-qty { font-size: 0.72rem; color: var(--grey-mid); }
-.co-line-price { font-family: var(--font-serif); font-size: 0.95rem; white-space: nowrap; }
+.co-line-price { font-family: var(--font-sans); font-size: 0.95rem; font-weight: 500; color: var(--brown); white-space: nowrap; }
 
 .co-totals { border-top: 1px solid var(--grey-light); padding-top: 1rem; }
 .co-total-line {
@@ -2601,7 +2602,7 @@ textarea.form-control { min-height: 140px; resize: vertical; }
 }
 .co-total-line.co-grand {
   margin-top: 0.5rem; padding-top: 0.85rem; border-top: 1px solid var(--grey-light);
-  font-family: var(--font-serif); font-size: 1.25rem; font-weight: 600; color: var(--navy, #1C1C2E);
+  font-family: var(--font-sans); font-size: 1.2rem; font-weight: 500; letter-spacing: 0; color: var(--brown);
 }
 .co-delivery-note {
   margin-top: 1rem; font-size: 0.8rem; color: var(--grey-mid); text-align: center;
