@@ -38,10 +38,10 @@ window.SS_CONFIG = {
   // Email Services (Service ID), Email Templates (Template IDs).
   emailjs: {
     publicKey:        'Nl2kwj66DRE8pLIVp',
-    serviceId:        'service_4xvy5lq',
-    customerTemplate: 'EMAILJS_TEMPLATE_CUSTOMER_REPLACE_ME', // order confirmation → buyer
-    ownerTemplate:    'EMAILJS_TEMPLATE_OWNER_REPLACE_ME',    // new order alert → store owner
-    enquiryTemplate:  'EMAILJS_TEMPLATE_ENQUIRY_REPLACE_ME',  // contact/corporate enquiry → company inbox
+    serviceId:        'service_h22032m',
+    customerTemplate: 'template_order_customer',              // order confirmation → buyer
+    ownerTemplate:    'template_order_owner',                 // new order alert → store owner
+    enquiryTemplate:  'template_fjxyquo',                     // contact/corporate enquiry → company inbox
   },
 
   // ── Order rules (kept in sync with the cart page) ─────────
@@ -50,5 +50,6 @@ window.SS_CONFIG = {
     shippingFlat:          99,   // ₹ — flat shipping below the threshold
     taxRate:               0.18, // 18% GST
     deliveryDays:          7,
+    allowManualWithoutPayment: true, // temporary fallback until Razorpay is configured
   },
 };

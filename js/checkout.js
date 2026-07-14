@@ -21,6 +21,15 @@
   const INR = (n) => '₹' + Number(n || 0).toLocaleString('en-IN');
   const rules = (CFG.order || {});
 
+  function hasValidRazorpayKey() {
+    const keyId = CFG.razorpay && CFG.razorpay.keyId;
+    return !!keyId && !String(keyId).includes('REPLACE_ME');
+  }
+
+  function manualCheckoutEnabled() {
+    return rules.allowManualWithoutPayment === true;
+  }
+
   // ── Cart + totals ─────────────────────────────────────────
   function getCart() {
     try { return JSON.parse(localStorage.getItem('ss_cart') || '[]'); }
@@ -95,6 +104,12 @@
     setText('#co-tax',      INR(totals.tax));
     setText('#co-total',    INR(totals.total));
     setText('#co-delivery-est', deliveryWindow());
+
+    if (manualCheckoutEnabled() && !hasValidRazorpayKey()) {
+      if (payBtn) payBtn.textContent = 'Place Order';
+      const note = $('.co-secure-note');
+      if (note) note.textContent = 'Payment is not configured yet. Orders will be submitted and confirmed manually.';
+    }
 
     // Carry over the PIN entered on the cart page, if any
     const savedPin = localStorage.getItem('ss_pincode') || '';
@@ -207,12 +222,28 @@
   function startRazorpay(cart, totals, billing, payBtn) {
     const rzpCfg = CFG.razorpay || {};
 
-    if (typeof Razorpay === 'undefined') {
-      alert('Payment library failed to load. Please check your connection and retry.');
+    if (!hasValidRazorpayKey()) {
+      if (manualCheckoutEnabled()) {
+        const order = buildOrder(orderNumber(), cart, totals, billing, {
+          razorpay_payment_id: 'Pending manual confirmation',
+        });
+        order.paymentStatus = 'pending_manual';
+        order.paymentMethod = 'manual';
+        if (payBtn) {
+          payBtn.disabled = true;
+          payBtn.dataset.label = payBtn.textContent;
+          payBtn.textContent = 'Submitting order…';
+        }
+        completeOrder(order);
+        return;
+      }
+
+      alert('Razorpay key is not configured yet. Add your Key ID in js/config.js to enable live payments.');
       return;
     }
-    if (!rzpCfg.keyId || rzpCfg.keyId.includes('REPLACE_ME')) {
-      alert('Razorpay key is not configured yet. Add your Key ID in js/config.js to enable live payments.');
+
+    if (typeof Razorpay === 'undefined') {
+      alert('Payment library failed to load. Please check your connection and retry.');
       return;
     }
 
@@ -243,12 +274,9 @@
       },
       handler: function (response) {
         const order = buildOrder(orderId, cart, totals, billing, response);
-        localStorage.setItem('ss_last_order', JSON.stringify(order));
-        // Fire confirmation emails (non-blocking — never hold up the buyer)
-        sendOrderEmails(order).finally(() => {
-          localStorage.removeItem('ss_cart'); // clear cart after successful purchase
-          window.location.href = 'thankyou.html';
-        });
+        order.paymentStatus = 'paid';
+        order.paymentMethod = 'razorpay';
+        completeOrder(order);
       },
     };
 
@@ -263,6 +291,14 @@
       if (payBtn) { payBtn.disabled = false; payBtn.textContent = payBtn.dataset.label || 'Pay Securely'; }
       alert('Could not start payment. ' + err.message);
     }
+  }
+
+  function completeOrder(order) {
+    localStorage.setItem('ss_last_order', JSON.stringify(order));
+    sendOrderEmails(order).finally(() => {
+      localStorage.removeItem('ss_cart');
+      window.location.href = 'thankyou.html';
+    });
   }
 
   function buildOrder(orderId, cart, totals, billing, rzpResponse) {
@@ -354,7 +390,7 @@
 
     const setText = (sel, val) => { const el = $(sel); if (el) el.textContent = val; };
     setText('#ty-order-id',   order.orderId);
-    setText('#ty-payment-id', order.paymentId || '—');
+    setText('#ty-payment-id', order.paymentId || (order.paymentStatus === 'pending_manual' ? 'Pending manual confirmation' : '—'));
     setText('#ty-email',      order.billing.email);
     setText('#ty-delivery',   order.deliveryEstimate);
     setText('#ty-total',      INR(order.totals.total));
