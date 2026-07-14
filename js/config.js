@@ -42,6 +42,7 @@ window.SS_CONFIG = {
     customerTemplate: 'template_order_customer',              // order confirmation → buyer
     ownerTemplate:    'template_order_owner',                 // new order alert → store owner
     enquiryTemplate:  'template_fjxyquo',                     // contact/corporate enquiry → company inbox
+    newsletterTemplate:'template_fjxyquo',                    // newsletter signup alert → company inbox
   },
 
   // ── Order rules (kept in sync with the cart page) ─────────
