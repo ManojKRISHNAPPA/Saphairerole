@@ -20,6 +20,7 @@
   const $   = (sel, ctx = document) => ctx.querySelector(sel);
   const INR = (n) => '₹' + Number(n || 0).toLocaleString('en-IN');
   const rules = (CFG.order || {});
+  const WELCOME_COUPON = Object.freeze({ code: 'WELCOME10', percent: 10 });
 
   function hasValidRazorpayKey() {
     const keyId = CFG.razorpay && CFG.razorpay.keyId;
@@ -36,13 +37,38 @@
     catch { return []; }
   }
 
+  function getActiveCoupon() {
+    try {
+      const coupon = JSON.parse(localStorage.getItem('ss_coupon') || 'null');
+      if (!coupon) return null;
+      if (coupon.code !== WELCOME_COUPON.code) return null;
+      const percent = Number(coupon.percent || 0);
+      if (!Number.isFinite(percent) || percent <= 0) return null;
+      return { ...coupon, percent };
+    } catch {
+      return null;
+    }
+  }
+
   function computeTotals(cart) {
     const subtotal = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+    const coupon   = getActiveCoupon();
+    const discount = coupon ? Math.round(subtotal * (coupon.percent / 100)) : 0;
+    const taxableSubtotal = Math.max(subtotal - discount, 0);
     const shipping = subtotal >= (rules.freeShippingThreshold ?? 2000)
       ? 0 : (rules.shippingFlat ?? 99);
-    const tax   = Math.round(subtotal * (rules.taxRate ?? 0.18));
-    const total = subtotal + shipping + tax;
-    return { subtotal, shipping, tax, total };
+    const tax   = Math.round(taxableSubtotal * (rules.taxRate ?? 0.18));
+    const total = taxableSubtotal + shipping + tax;
+    return {
+      subtotal,
+      discount,
+      discountCode: coupon ? coupon.code : '',
+      discountPercent: coupon ? coupon.percent : 0,
+      taxableSubtotal,
+      shipping,
+      tax,
+      total,
+    };
   }
 
   function orderNumber() {
@@ -100,6 +126,7 @@
     }
     const setText = (sel, val) => { const el = $(sel); if (el) el.textContent = val; };
     setText('#co-subtotal', INR(totals.subtotal));
+    setText('#co-discount', '−' + INR(totals.discount));
     setText('#co-shipping', totals.shipping === 0 ? 'Free' : INR(totals.shipping));
     setText('#co-tax',      INR(totals.tax));
     setText('#co-total',    INR(totals.total));
@@ -338,6 +365,8 @@
       shipping_address: `${b.address}, ${b.city}, ${b.district}, ${b.state} - ${b.pincode}`,
       items:           itemsAsText(order.items),
       subtotal:        INR(order.totals.subtotal),
+      discount:        '−' + INR(order.totals.discount || 0),
+      discount_code:   order.totals.discountCode || '—',
       shipping:        order.totals.shipping === 0 ? 'Free' : INR(order.totals.shipping),
       tax:             INR(order.totals.tax),
       total:           INR(order.totals.total),
@@ -404,6 +433,7 @@
         </div>`).join('');
     }
     setText('#ty-subtotal', INR(order.totals.subtotal));
+    setText('#ty-discount', '−' + INR(order.totals.discount || 0));
     setText('#ty-shipping', order.totals.shipping === 0 ? 'Free' : INR(order.totals.shipping));
     setText('#ty-tax',      INR(order.totals.tax));
     setText('#ty-grand',    INR(order.totals.total));
@@ -500,6 +530,7 @@
     // Totals
     const totalsRows = [
       ['Subtotal', INR(order.totals.subtotal)],
+      ['Discount' + (order.totals.discountCode ? ' (' + order.totals.discountCode + ')' : ''), '−' + INR(order.totals.discount || 0)],
       ['Shipping', order.totals.shipping === 0 ? 'Free' : INR(order.totals.shipping)],
       ['GST (18%)', INR(order.totals.tax)],
     ];

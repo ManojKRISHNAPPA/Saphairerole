@@ -153,10 +153,34 @@ const PRODUCTS = {
 
 // ── State ─────────────────────────────────────────────────
 let cart = JSON.parse(localStorage.getItem('ss_cart') || '[]');
+const WELCOME_COUPON = Object.freeze({ code: 'WELCOME10', percent: 10 });
+let refreshCartPage = null;
 
 // ── Helpers ───────────────────────────────────────────────
 const qs  = (sel, ctx = document) => ctx.querySelector(sel);
 const qsa = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+
+function getActiveCoupon() {
+  try {
+    const coupon = JSON.parse(localStorage.getItem('ss_coupon') || 'null');
+    if (!coupon) return null;
+    if (coupon.code !== WELCOME_COUPON.code) return null;
+    const percent = Number(coupon.percent || 0);
+    if (!Number.isFinite(percent) || percent <= 0) return null;
+    return { ...coupon, percent };
+  } catch {
+    return null;
+  }
+}
+
+function setActiveCoupon(coupon) {
+  localStorage.setItem('ss_coupon', JSON.stringify(coupon));
+}
+
+function couponDiscountAmount(subtotal, coupon) {
+  if (!coupon || subtotal <= 0) return 0;
+  return Math.round(subtotal * (coupon.percent / 100));
+}
 
 function saveCart() {
   localStorage.setItem('ss_cart', JSON.stringify(cart));
@@ -513,23 +537,108 @@ function initWishlist() {
 // ── Newsletter ────────────────────────────────────────────
 function initNewsletter() {
   qsa('.newsletter-form').forEach(form => {
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', async e => {
       e.preventDefault();
-      const input = form.querySelector('input[type="email"]');
-      if (!input?.value) return;
-      const btn = form.querySelector('button');
+      const emailInput = form.querySelector('input[type="email"]');
+      const nameInput  = form.querySelector('input[name="name"], input[name="firstName"], input[autocomplete="name"], input[autocomplete="given-name"]');
+      const btn = form.querySelector('button[type="submit"], button');
+
+      const email = (emailInput?.value || '').trim();
+      const name  = (nameInput?.value || '').trim();
+      if (!email) return;
+
+      const original = btn?.textContent || 'Subscribe';
       if (btn) {
-        const original = btn.textContent;
-        btn.textContent = 'Subscribed ✓';
-        btn.style.background = '#4a7c59';
-        setTimeout(() => {
-          btn.textContent = original;
-          btn.style.background = '';
-          input.value = '';
-        }, 3000);
+        btn.textContent = 'Subscribing...';
+        btn.disabled = true;
+      }
+
+      try {
+        const sent = await sendNewsletterEmails({ email, name, form });
+        if (sent) {
+          if (btn) {
+            btn.textContent = 'Subscribed ✓';
+            btn.style.background = '#4a7c59';
+          }
+          showToast('Subscribed successfully. Please check your inbox.');
+          if (emailInput) emailInput.value = '';
+          if (nameInput) nameInput.value = '';
+        } else {
+          if (btn) {
+            btn.textContent = 'Saved ✓';
+            btn.style.background = '#4a7c59';
+          }
+          showToast('Subscription saved. Email service not configured yet.');
+        }
+      } catch (err) {
+        console.error('[SS] Newsletter subscribe failed', err);
+        showToast('Could not subscribe right now. Please try again.', 'error');
+      } finally {
+        if (btn) {
+          setTimeout(() => {
+            btn.textContent = original;
+            btn.disabled = false;
+            btn.style.background = '';
+          }, 2500);
+        }
       }
     });
   });
+}
+
+function sendNewsletterEmails({ email, name, form }) {
+  const CFG = window.SS_CONFIG || {};
+  const ej  = CFG.emailjs || {};
+  const store = CFG.store || {};
+
+  const ready = typeof emailjs !== 'undefined'
+    && ej.publicKey && !String(ej.publicKey).includes('REPLACE_ME')
+    && ej.serviceId && !String(ej.serviceId).includes('REPLACE_ME');
+
+  if (!ready) return Promise.resolve(false);
+
+  try { emailjs.init({ publicKey: ej.publicKey }); }
+  catch (e) { try { emailjs.init(ej.publicKey); } catch (_) {} }
+
+  const ownerTemplate = ej.newsletterOwnerTemplate || ej.newsletterTemplate || ej.enquiryTemplate;
+  const customerTemplate = ej.newsletterCustomerTemplate || ej.newsletterTemplate;
+
+  const paramsBase = {
+    subscriber_email: email,
+    subscriber_name: name || 'Subscriber',
+    form_source: form?.getAttribute('data-form') || 'Newsletter Signup',
+    page_url: window.location.href,
+    subscribed_at: new Date().toLocaleString('en-IN'),
+    store_name: store.name || 'The Sapphire Scroll',
+  };
+
+  const sends = [];
+
+  if (ownerTemplate && !String(ownerTemplate).includes('REPLACE_ME') && store.ownerEmail) {
+    sends.push(
+      emailjs.send(ej.serviceId, ownerTemplate, {
+        ...paramsBase,
+        to_email: store.ownerEmail,
+        to_name: store.name || 'The Sapphire Scroll',
+        reply_to: email,
+      })
+    );
+  }
+
+  if (customerTemplate && !String(customerTemplate).includes('REPLACE_ME')) {
+    sends.push(
+      emailjs.send(ej.serviceId, customerTemplate, {
+        ...paramsBase,
+        to_email: email,
+        to_name: name || 'Subscriber',
+        reply_to: store.supportEmail || store.ownerEmail || '',
+      })
+    );
+  }
+
+  if (!sends.length) return Promise.resolve(false);
+
+  return Promise.allSettled(sends).then(results => results.some(r => r.status === 'fulfilled'));
 }
 
 // ── Timed Promo Popup ────────────────────────────────────
@@ -585,9 +694,18 @@ function initTimedPromoPopup() {
 
   overlay.querySelector('.promo-popup-form')?.addEventListener('submit', (e) => {
     e.preventDefault();
+    const firstName = overlay.querySelector('input[name="firstName"]')?.value?.trim() || '';
     const email = overlay.querySelector('input[name="email"]')?.value?.trim();
     if (!email) return;
-    showToast('Offer unlocked. Welcome to The Sapphire Scroll.');
+    setActiveCoupon({
+      code: WELCOME_COUPON.code,
+      percent: WELCOME_COUPON.percent,
+      email,
+      firstName,
+      source: 'popup',
+      unlockedAt: Date.now(),
+    });
+    showToast('Offer unlocked. Coupon WELCOME10 applied.');
     closePopup();
   });
 
@@ -1346,8 +1464,16 @@ function initCartPage() {
   const emptyEl  = qs('#cart-page-empty');
   if (!itemsEl) return;
 
+  function syncCouponInput() {
+    const couponInput = qs('#coupon-code');
+    if (!couponInput) return;
+    const coupon = getActiveCoupon();
+    couponInput.value = coupon ? coupon.code : '';
+  }
+
   function renderCartPage() {
     const subtotalEl = qs('#cart-page-subtotal');
+    const discountEl = qs('#cart-page-discount');
     const shippingEl = qs('#cart-page-shipping');
     const taxEl      = qs('#cart-page-tax');
     const totalEl    = qs('#cart-page-total');
@@ -1356,6 +1482,7 @@ function initCartPage() {
       itemsEl.innerHTML = '';
       if (emptyEl) emptyEl.style.display = 'block';
       if (subtotalEl) subtotalEl.textContent = '₹0';
+      if (discountEl) discountEl.textContent = '−₹0';
       if (taxEl)      taxEl.textContent      = '₹0';
       if (totalEl)    totalEl.textContent    = '₹0';
       if (shippingEl) { shippingEl.textContent = '₹99'; shippingEl.style.color = 'inherit'; }
@@ -1415,11 +1542,18 @@ function initCartPage() {
 
     // Totals
     const subtotal = cartTotal();
+    const coupon   = getActiveCoupon();
+    const discount = couponDiscountAmount(subtotal, coupon);
+    const taxable  = Math.max(subtotal - discount, 0);
     const shipping = subtotal >= 2000 ? 0 : 99;
-    const tax      = Math.round(subtotal * 0.18);
-    const total    = subtotal + shipping + tax;
+    const tax      = Math.round(taxable * 0.18);
+    const total    = taxable + shipping + tax;
 
     if (subtotalEl) subtotalEl.textContent = `₹${subtotal.toLocaleString('en-IN')}`;
+    if (discountEl) {
+      discountEl.textContent = `−₹${discount.toLocaleString('en-IN')}`;
+      discountEl.style.color = discount > 0 ? 'var(--gold)' : 'inherit';
+    }
     if (shippingEl) {
       if (shipping === 0) {
         shippingEl.textContent   = 'Free (above ₹2,000)';
@@ -1433,13 +1567,29 @@ function initCartPage() {
     if (totalEl) totalEl.textContent = `₹${total.toLocaleString('en-IN')}`;
   }
 
+  refreshCartPage = renderCartPage;
+  syncCouponInput();
   renderCartPage();
 }
 
 window.applyCoupon = function() {
   const code = qs('#coupon-code')?.value?.trim().toUpperCase();
   if (!code) return;
-  showToast('Invalid or expired coupon code.');
+  if (code !== WELCOME_COUPON.code) {
+    showToast('Invalid or expired coupon code.');
+    return;
+  }
+
+  setActiveCoupon({
+    code: WELCOME_COUPON.code,
+    percent: WELCOME_COUPON.percent,
+    source: 'manual',
+    unlockedAt: Date.now(),
+  });
+  const couponInput = qs('#coupon-code');
+  if (couponInput) couponInput.value = WELCOME_COUPON.code;
+  showToast('Coupon applied: 10% off.');
+  refreshCartPage?.();
 };
 
 // ── Init ──────────────────────────────────────────────────
