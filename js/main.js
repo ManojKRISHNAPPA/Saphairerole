@@ -1216,8 +1216,8 @@ function initVideoHero() {
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   const saveData = !!(connection && connection.saveData);
   const slowNetwork = !!(connection && /2g/.test(connection.effectiveType || ''));
-  const mobileView = window.matchMedia('(max-width: 768px)').matches;
-  const shouldSkipVideo = mobileView || saveData || slowNetwork;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const shouldSkipVideo = saveData || slowNetwork || reducedMotion;
 
   if (shouldSkipVideo) {
     video.pause();
