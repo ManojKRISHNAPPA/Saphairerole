@@ -28,6 +28,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" href="saphire-role.mp4" as="video" type="video/mp4">
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
@@ -120,11 +121,13 @@
     <!-- ============================================================
          PAGE HERO
     ============================================================ -->
-    <section class="page-hero" aria-label="Our Story" style="min-height:70vh;position:relative;display:flex;align-items:center;overflow:hidden;">
+    <section class="page-hero about-hero" aria-label="Our Story" style="min-height:70vh;position:relative;display:flex;align-items:center;overflow:hidden;">
       <div class="page-hero-bg" aria-hidden="true" style="position:absolute;inset:0;">
-        <img src="images/about-us-display-min.webp" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 55%;">
+        <video class="about-hero-video" autoplay muted loop playsinline preload="auto" poster="images/about-us-display-min.webp" style="width:100%;height:100%;object-fit:cover;object-position:center 55%;">
+          <source src="saphire-role.mp4" type="video/mp4">
+        </video>
       </div>
-      <div class="page-hero-overlay" aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(28,28,46,0.35) 0%, rgba(28,28,46,0.65) 100%);"></div>
+      <div class="page-hero-overlay" aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(28,28,46,0.22) 0%, rgba(28,28,46,0.48) 100%);"></div>
       <div class="page-hero-content container" style="position:relative;z-index:2;text-align:center;padding-top:calc(var(--navbar-height) + 3rem);padding-bottom:4rem;">
         <span style="font-family:'Jost',sans-serif;font-size:0.7rem;letter-spacing:0.35em;text-transform:uppercase;color:#C9A84C;display:block;margin-bottom:1.5rem;">Our Story</span>
         <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,6vw,4.5rem);font-weight:300;color:#FFFFFF;line-height:1.1;margin:0 0 1.5rem;max-width:720px;margin-left:auto;margin-right:auto;">
@@ -165,7 +168,7 @@
           <div class="gold-divider" aria-hidden="true"></div>
         </div>
         <p style="font-family:'Jost',sans-serif;font-size:1rem;font-weight:300;color:#5C3D2E;line-height:1.9;max-width:920px;margin:0 auto 2.25rem;text-align:center;">
-          That moment cemented our mission to redefine the essence of luxury stationery. We recognized an industry rich with options but starved of genuine meaning, and chose to change that. Every collection we design is built upon three unwavering principles.
+          That moment cemented our mission to redefine the essence of luxury stationery. We recognized an industry rich with options but starved of genuine meaning, and chose to fundamentally change that. Every collection we design — from our structured focus notebooks to our open canvases for wild imagination — is built upon three unwavering principles.
         </p>
         <div class="values-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2.5rem;margin-top:3rem;">
 
@@ -179,7 +182,7 @@
               </svg>
             </div>
             <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;color:#1A1A1A;margin-bottom:0.75rem;letter-spacing:0.02em;">Intentionality</h4>
-            <p style="font-family:'Jost',sans-serif;font-size:0.92rem;font-weight:300;color:#5C3D2E;line-height:1.85;">Every tactile choice — the weight of the paper, the stitch of the binding, the subtle curve of the corner — is selected with purpose to deliver a seamless and enduring experience.</p>
+            <p style="font-family:'Jost',sans-serif;font-size:0.92rem;font-weight:300;color:#5C3D2E;line-height:1.85;">Every tactile choice — the weight of the paper, the stitch of the binding, the subtle curve of the corner — is chosen with purpose, ensuring a user experience that is beautiful, enduring, and seamless.</p>
           </div>
 
           <!-- Value 2 -->
@@ -193,7 +196,7 @@
               </svg>
             </div>
             <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;color:#1A1A1A;margin-bottom:0.75rem;letter-spacing:0.02em;">Craftsmanship</h4>
-            <p style="font-family:'Jost',sans-serif;font-size:0.92rem;font-weight:300;color:#5C3D2E;line-height:1.85;">We treat every piece as an heirloom — a vessel made to carry important thought across years and improve with age and use.</p>
+            <p style="font-family:'Jost',sans-serif;font-size:0.92rem;font-weight:300;color:#5C3D2E;line-height:1.85;">We treat every single piece as an heirloom, a vessel meant to carry the weight of important thought across generations, improving with age and use.</p>
           </div>
 
           <!-- Value 3 -->
@@ -206,19 +209,7 @@
               </svg>
             </div>
             <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;color:#1A1A1A;margin-bottom:0.75rem;letter-spacing:0.02em;">Elevation</h4>
-            <p style="font-family:'Jost',sans-serif;font-size:0.92rem;font-weight:300;color:#5C3D2E;line-height:1.85;">We transform daily writing into a deliberate ritual — graceful, focused, and deeply satisfying.</p>
-          </div>
-
-          <!-- Value 4 -->
-          <div class="value-card" style="text-align:center;padding:2.5rem 1.75rem;background:#FFFFFF;border:1px solid var(--grey-light);" data-reveal data-reveal-delay="300">
-            <div class="value-icon" style="display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;" aria-hidden="true">
-              <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="8" r="6"/>
-                <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
-              </svg>
-            </div>
-            <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;color:#1A1A1A;margin-bottom:0.75rem;letter-spacing:0.02em;">A Lasting Standard</h4>
-            <p style="font-family:'Jost',sans-serif;font-size:0.92rem;font-weight:300;color:#5C3D2E;line-height:1.85;">We don’t simply create tools for writing; we create environments for excellence that stand proudly on your desk as a reminder of focused intent meeting artistry.</p>
+            <p style="font-family:'Jost',sans-serif;font-size:0.92rem;font-weight:300;color:#5C3D2E;line-height:1.85;">We transform the daily necessity of engagement into a personal ritual — an act that is deliberate, graceful, and deeply satisfying.</p>
           </div>
 
         </div>
@@ -234,20 +225,20 @@
 
           <!-- Left: Text -->
           <div>
-            <span class="label">How We Make It</span>
-            <h2 id="craft-heading">Craft before commerce.</h2>
+            <span class="label">Our Promise</span>
+            <h2 id="craft-heading">Environments for excellence.</h2>
             <div class="gold-divider" aria-hidden="true"></div>
             <p style="font-family:'Jost',sans-serif;font-size:0.97rem;font-weight:300;color:#5C3D2E;line-height:1.9;margin-bottom:1.5rem;">
-              Every journal begins at the source. Our paper is selected from two heritage mills — one in Rajasthan, one in Kerala — both of which have been producing cotton-rag sheets for over four decades. We specify grammage, texture, and acid-free treatment at the mill level, before a single sheet is cut.
+              We don’t simply create tools for writing; we create environments for excellence. Each product from The Sapphire Scroll is an invitation to slow your thinking, deepen your dreams, and build lasting meaning through thoughtful design.
             </p>
             <p style="font-family:'Jost',sans-serif;font-size:0.97rem;font-weight:300;color:#5C3D2E;line-height:1.9;">
-              Binding is done entirely by hand using a Japanese stab-stitch technique adapted by our lead bookbinder, who trained in Kyoto. Leather covers are sourced from a single certified tannery in Tamil Nadu that uses vegetable-tanning methods requiring no heavy metals. Every finished journal passes a twelve-point quality inspection before it is wrapped and dispatched.
+              They are not meant to be filed away; they are meant to stand proudly on your desk — quiet, elegant reminders of the power unleashed when focused intent meets artistry.
             </p>
           </div>
 
           <!-- Right: Visual -->
           <div style="aspect-ratio:4/5;overflow:hidden;" aria-hidden="true">
-            <img src="images/product-portraits/inner-alchemy-1.jpg" alt="Inner Alchemy journal on kraft paper" style="width:100%;height:100%;object-fit:cover;">
+            <img src="images/product-portraits/inner-alchemy-1.webp" alt="Inner Alchemy journal on kraft paper" style="width:100%;height:100%;object-fit:cover;">
           </div>
 
         </div>

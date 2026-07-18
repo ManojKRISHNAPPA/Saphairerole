@@ -12,11 +12,11 @@ const PRODUCTS = {
     priceFormatted: '₹1,399',
     inStock: true,
     images: [
-      'images/product-portraits/the-shift-1.jpg',
-      'images/product-portraits/the-shift-2.jpg',
-      'images/product-portraits/the-shift-3.jpg',
-      'images/product-portraits/the-shift-4.jpg',
-      'images/product-portraits/the-shift-5.jpg',
+      'images/product-portraits/the-shift-1.webp',
+      'images/product-portraits/the-shift-2.webp',
+      'images/product-portraits/the-shift-3.webp',
+      'images/product-portraits/the-shift-4.webp',
+      'images/product-portraits/the-shift-5.webp',
     ],
     description: [
       "The Shift is created for those seasons of life when you're ready for more clarity, more intention, and more flow — without the pressure to perform productivity.",
@@ -42,12 +42,12 @@ const PRODUCTS = {
     priceFormatted: '₹1,399',
     inStock: true,
     images: [
-      'images/product-portraits/gentle-pause-1.png',
-      'images/product-portraits/gentle-pause-6.png',
-      'images/product-portraits/gentle-pause-2.png',
-      'images/product-portraits/gentle-pause-3.png',
-      'images/product-portraits/gentle-pause-4.png',
-      'images/product-portraits/gentle-pause-5.png',
+      'images/product-portraits/gentle-pause-1.webp',
+      'images/product-portraits/gentle-pause-6.webp',
+      'images/product-portraits/gentle-pause-2.webp',
+      'images/product-portraits/gentle-pause-3.webp',
+      'images/product-portraits/gentle-pause-4.webp',
+      'images/product-portraits/gentle-pause-5.webp',
     ],
     description: [
       "The Gentle Pause is a softly structured self-reflection journal designed to help you return to yourself — one page, one breath, one quiet moment at a time.",
@@ -75,10 +75,10 @@ const PRODUCTS = {
     priceFormatted: '₹799',
     inStock: true,
     images: [
-      'images/product-portraits/inner-alchemy-1.jpg',
-      'images/product-portraits/inner-alchemy-2.png',
-      'images/product-portraits/inner-alchemy-3.png',
-      'images/product-portraits/inner-alchemy-4.png',
+      'images/product-portraits/inner-alchemy-1.webp',
+      'images/product-portraits/inner-alchemy-2.webp',
+      'images/product-portraits/inner-alchemy-3.webp',
+      'images/product-portraits/inner-alchemy-4.webp',
     ],
     description: [
       "Inner Alchemy is your quiet space to slow down — where thoughts settle, ideas soften into clarity, and the noise of the day can fade.",
@@ -87,6 +87,8 @@ const PRODUCTS = {
       "Every blank page is a gentle reminder that you don't need a perfect plan — you only need room to begin.",
     ],
     features: [
+      'Total Pages: 190 unlined pages for flexible journaling and planning.',
+      'Size: 5.8 x 8.3 inches for easy carrying and desk use.',
       'Format: Open, unstructured blank-page journal for flexible daily use.',
       'Use Cases: Brain-dumps, meeting notes, ideation, sketches, and reflective writing.',
       'Experience: A calming, grounding writing space with zero rules.',
@@ -101,22 +103,24 @@ const PRODUCTS = {
     priceFormatted: '₹799',
     inStock: true,
     images: [
-      'images/product-portraits/self-discovery-1.png',
-      'images/product-portraits/self-discovery-2.png',
-      'images/product-portraits/self-discovery-3.png',
-      'images/product-portraits/self-discovery-4.png',
+      'images/product-portraits/self-discovery-1.webp',
+      'images/product-portraits/self-discovery-2.webp',
+      'images/product-portraits/self-discovery-3.webp',
+      'images/product-portraits/self-discovery-4.webp',
     ],
     description: [
-      "Self Discovery is the journal you reach for when your mind feels full and you need a place to pour everything out without judgment or structure.",
-      "Designed for people who think best when they write — from brain dumps and meeting notes to unplanned ideas and personal reflection.",
-      "With 249 unlined pages, it gives you freedom without prompts, templates, or rules — just a clean space that meets you where you are.",
-      "It is a journey inward: a companion for clarity, creativity, personal growth, and the quiet work of becoming.",
+      "Inner Alchemy is your quiet space to slow down — where thoughts settle, ideas soften into clarity, and the noise of the day can fade.",
+      "Write without rules, structure, or needing the right words — for brain dumps, meeting notes, sketches, planning, or reflective writing.",
+      "It's a companion for full-mind days when you need a clean page to breathe and for quiet evenings when writing becomes release.",
+      "Every blank page is a gentle reminder that you don't need a perfect plan — you only need room to begin.",
     ],
     features: [
-      'Pages: 249 unlined pages with complete freedom to shape each page your way.',
-      'Format: No prompts, no templates, no rules — fully open writing space.',
-      'Use Cases: Reflection, planning, meeting notes, idea capture, and creative writing.',
-      'Positioning: A long-form companion for clarity, emotional release, and growth.',
+      'Total Pages: 190 unlined pages for flexible journaling and planning.',
+      'Size: 5.8 x 8.3 inches for easy carrying and desk use.',
+      'Format: Open, unstructured blank-page journal for flexible daily use.',
+      'Use Cases: Brain-dumps, meeting notes, ideation, sketches, and reflective writing.',
+      'Experience: A calming, grounding writing space with zero rules.',
+      'Purpose: Helps reconnect with your inner world through simple, intentional writing.',
     ],
   },
   'self-care-cards': {
@@ -127,9 +131,9 @@ const PRODUCTS = {
     priceFormatted: '₹399',
     inStock: true,
     images: [
-      'images/product-portraits/self-care-cards-1.jpg',
-      'images/product-portraits/self-care-cards-2.jpg',
-      'images/product-portraits/self-care-cards-3.png',
+      'images/product-portraits/self-care-cards-1.webp',
+      'images/product-portraits/self-care-cards-2.webp',
+      'images/product-portraits/self-care-cards-3.webp',
     ],
     description: [
       "The Ritual Edit is a gentle doorway back to yourself — a set of grounding practices to help you understand emotions and reconnect inward.",
@@ -528,6 +532,77 @@ function initNewsletter() {
   });
 }
 
+// ── Timed Promo Popup ────────────────────────────────────
+function initTimedPromoPopup() {
+  const path = window.location.pathname.toLowerCase();
+  const skipOn = ['checkout.html', 'thankyou.html', 'cart.html'];
+  if (skipOn.some(p => path.endsWith(p))) return;
+
+  const seenKey = 'ss_promo_popup_seen_at';
+  const now = Date.now();
+  const seenAt = Number(localStorage.getItem(seenKey) || 0);
+  const cooldownMs = 24 * 60 * 60 * 1000;
+  if (seenAt && now - seenAt < cooldownMs) return;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'promo-popup-overlay';
+  overlay.setAttribute('aria-hidden', 'true');
+  overlay.innerHTML = `
+    <div class="promo-popup" role="dialog" aria-modal="true" aria-label="Limited-time offer">
+      <button class="promo-close" type="button" aria-label="Close">&times;</button>
+      <span class="label">Welcome Offer</span>
+      <h3>Get 10% Off</h3>
+      <p>Join our inner circle for exclusive launches, journaling prompts, and member-only offers.</p>
+      <form class="promo-popup-form" novalidate>
+        <input type="text" name="firstName" placeholder="First name" autocomplete="given-name">
+        <input type="email" name="email" placeholder="Email" autocomplete="email" required>
+        <button class="btn btn-dark" type="submit">Get 10% Off</button>
+      </form>
+      <p class="promo-popup-note">By signing up, you agree to receive occasional updates from The Sapphire Scroll.</p>
+    </div>`;
+
+  const markSeen = () => {
+    localStorage.setItem(seenKey, String(Date.now()));
+  };
+
+  const closePopup = () => {
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    markSeen();
+    setTimeout(() => overlay.remove(), 260);
+    document.removeEventListener('keydown', onEsc);
+  };
+
+  const onEsc = (e) => {
+    if (e.key === 'Escape') closePopup();
+  };
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closePopup();
+  });
+
+  overlay.querySelector('.promo-close')?.addEventListener('click', closePopup);
+
+  overlay.querySelector('.promo-popup-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = overlay.querySelector('input[name="email"]')?.value?.trim();
+    if (!email) return;
+    showToast('Offer unlocked. Welcome to The Sapphire Scroll.');
+    closePopup();
+  });
+
+  const delayMs = 7000;
+  setTimeout(() => {
+    if (!document.body) return;
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => {
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+    });
+    document.addEventListener('keydown', onEsc);
+  }, delayMs);
+}
+
 // ── Feature Tile Renderer ─────────────────────────────────
 function getFeatureIcon(text) {
   const t = text.toLowerCase();
@@ -655,6 +730,9 @@ function initProductPage() {
   // Main image
   mainImgEl.src = p.images[0];
   mainImgEl.alt = p.name;
+  mainImgEl.setAttribute('loading', 'eager');
+  mainImgEl.setAttribute('decoding', 'async');
+  mainImgEl.setAttribute('fetchpriority', 'high');
 
   // Thumbnails — rendered here; click handlers attached by initProductGallery()
   const thumbsEl = qs('#pd-thumbs');
@@ -662,7 +740,7 @@ function initProductPage() {
     thumbsEl.innerHTML = p.images.map((src, i) => `
       <div class="product-thumb ${i === 0 ? 'active' : ''}" role="listitem" tabindex="0"
            data-thumb-src="${src}" aria-label="View image ${i + 1}">
-        <img src="${src}" alt="${p.name} view ${i + 1}" class="product-thumb-img">
+        <img src="${src}" alt="${p.name} view ${i + 1}" class="product-thumb-img" loading="lazy" decoding="async">
       </div>`).join('');
 
     // Attach click handlers directly (initProductGallery runs before thumbs exist)
@@ -703,8 +781,8 @@ function initProductPage() {
           <div class="product-card-image-wrap">
             <a href="product.html?id=${relId}" class="product-card-media-link">
               <div class="product-card-media">
-                <img src="${rp.images[0]}" alt="${rp.name}" class="product-img-primary">
-                ${rp.images[1] ? `<img src="${rp.images[1]}" alt="${rp.name} alt view" class="product-img-secondary">` : ''}
+                <img src="${rp.images[0]}" alt="${rp.name}" class="product-img-primary" loading="lazy" decoding="async">
+                ${rp.images[1] ? `<img src="${rp.images[1]}" alt="${rp.name} alt view" class="product-img-secondary" loading="lazy" decoding="async">` : ''}
               </div>
             </a>
             <button class="product-card-cta" data-quick-add>Add to Cart</button>
@@ -1046,6 +1124,20 @@ function initActiveSectionHighlight() {
 
 // ── Lazy Loading Fallback ─────────────────────────────────
 function initLazyLoad() {
+  // Native lazy loading + async decode where supported.
+  qsa('img').forEach(img => {
+    if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
+
+    const isPriority =
+      img.id === 'pd-main-img' ||
+      !!img.closest('.hero') ||
+      !!img.closest('.navbar');
+
+    if (!img.hasAttribute('loading') && !isPriority) {
+      img.setAttribute('loading', 'lazy');
+    }
+  });
+
   if ('loading' in HTMLImageElement.prototype) return; // native support
 
   const imgObserver = new IntersectionObserver((entries) => {
@@ -1061,6 +1153,31 @@ function initLazyLoad() {
   });
 
   qsa('img[data-src]').forEach(img => imgObserver.observe(img));
+}
+
+// ── Mobile Image Budget (skip hover-only images) ──────────
+function initResponsiveImageBudget() {
+  const mq = window.matchMedia('(max-width: 768px)');
+
+  const apply = (isMobile) => {
+    qsa('.product-img-secondary').forEach(img => {
+      if (isMobile) {
+        if (img.getAttribute('src')) {
+          img.dataset.secondarySrc = img.getAttribute('src');
+          img.removeAttribute('src');
+        }
+      } else {
+        if (!img.getAttribute('src') && img.dataset.secondarySrc) {
+          img.setAttribute('src', img.dataset.secondarySrc);
+          img.setAttribute('decoding', 'async');
+          img.setAttribute('loading', 'lazy');
+        }
+      }
+    });
+  };
+
+  apply(mq.matches);
+  mq.addEventListener('change', (e) => apply(e.matches));
 }
 
 // ── Toast Notification ────────────────────────────────────
@@ -1095,6 +1212,21 @@ function showToast(message, type = 'success') {
 function initVideoHero() {
   const video = qs('.hero-video');
   if (!video) return;
+
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const saveData = !!(connection && connection.saveData);
+  const slowNetwork = !!(connection && /2g/.test(connection.effectiveType || ''));
+  const mobileView = window.matchMedia('(max-width: 768px)').matches;
+  const shouldSkipVideo = mobileView || saveData || slowNetwork;
+
+  if (shouldSkipVideo) {
+    video.pause();
+    video.removeAttribute('autoplay');
+    video.setAttribute('preload', 'none');
+    video.style.display = 'none';
+    qs('.hero-fallback')?.style.removeProperty('display');
+    return;
+  }
 
   video.addEventListener('error', () => {
     video.style.display = 'none';
@@ -1154,7 +1286,7 @@ function initWishlistPage() {
       <div class="product-card-image-wrap">
         <a href="${item.href}" class="product-card-media-link">
           <div class="product-card-media">
-            <img src="${item.img}" alt="${item.name}" class="product-img-primary">
+            <img src="${item.img}" alt="${item.name}" class="product-img-primary" loading="lazy" decoding="async">
           </div>
         </a>
         <button class="product-card-cta" data-quick-add>Add to Cart</button>
@@ -1185,8 +1317,8 @@ function initDiscoverMore() {
         <div class="product-card-image-wrap">
           <a href="product.html?id=${id}" class="product-card-media-link">
             <div class="product-card-media">
-              <img src="${p.images[0]}" alt="${p.name}" class="product-img-primary">
-              ${p.images[1] ? `<img src="${p.images[1]}" alt="${p.name}" class="product-img-secondary">` : ''}
+              <img src="${p.images[0]}" alt="${p.name}" class="product-img-primary" loading="lazy" decoding="async">
+              ${p.images[1] ? `<img src="${p.images[1]}" alt="${p.name}" class="product-img-secondary" loading="lazy" decoding="async">` : ''}
             </div>
           </a>
           <button class="product-card-cta" data-quick-add>Add to Cart</button>
@@ -1248,7 +1380,7 @@ function initCartPage() {
           </div>
         </div>
         <!-- Qty controls — centred in column -->
-        <div style="display:flex;align-items:center;justify-content:center;gap:0.4rem;border:1px solid var(--grey-light);padding:0.3rem 0.5rem;">
+        <div class="cart-qty-wrap" style="display:flex;align-items:center;justify-content:center;gap:0.4rem;border:1px solid var(--grey-light);padding:0.3rem 0.5rem;">
           <button class="cart-qty-btn" data-action="dec" data-id="${item.id}" data-variant="${item.variant || ''}"
             style="background:none;border:none;cursor:pointer;font-size:1rem;color:var(--brown);width:1.5rem;height:1.5rem;display:flex;align-items:center;justify-content:center;">&#8722;</button>
           <span style="font-family:'Jost',sans-serif;font-size:0.9rem;min-width:1.5rem;text-align:center;">${item.qty}</span>
@@ -1256,11 +1388,11 @@ function initCartPage() {
             style="background:none;border:none;cursor:pointer;font-size:1rem;color:var(--brown);width:1.5rem;height:1.5rem;display:flex;align-items:center;justify-content:center;">&#43;</button>
         </div>
         <!-- Price — right-aligned in column -->
-        <div style="text-align:right;font-family:'Cormorant Garamond',serif;font-size:1.05rem;white-space:nowrap;">
+        <div class="cart-price" style="text-align:right;font-family:'Cormorant Garamond',serif;font-size:1.05rem;white-space:nowrap;">
           &#8377;${(item.price * item.qty).toLocaleString('en-IN')}
         </div>
         <!-- Remove -->
-        <button class="cart-remove-btn" data-id="${item.id}" data-variant="${item.variant || ''}"
+        <button class="cart-remove cart-remove-btn" data-id="${item.id}" data-variant="${item.variant || ''}"
           aria-label="Remove ${item.name}"
           style="background:none;border:none;cursor:pointer;color:var(--grey-mid);font-size:1.2rem;padding:0;text-align:center;transition:color 0.2s;">&times;</button>
       </div>`).join('');
@@ -1326,10 +1458,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initAddToCart();
   initWishlist();
   initNewsletter();
+  initTimedPromoPopup();
   initCategoryFilters();
   initSort();
   initForms();
   initActiveSectionHighlight();
+  initResponsiveImageBudget();
   initLazyLoad();
   initVideoHero();
   initMobileFilters();

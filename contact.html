@@ -306,11 +306,62 @@
       .enquiry-split { grid-template-columns: 1fr; }
       .enquiry-panel-left-inner { padding: 3rem 2rem; }
       .enquiry-panel-right { padding: 3rem 2rem; }
+      .enq-contact-item a,
+      .enq-contact-item address,
+      .enq-contact-item p {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
     }
     @media (max-width: 600px) {
       .enq-form-grid { grid-template-columns: 1fr; }
       .enq-full { grid-column: 1; }
       .enquiry-hero-title { font-size: 2.8rem; }
+
+      .enquiry-hero-inner {
+        padding: calc(var(--navbar-height) + 2rem) 1rem 3rem;
+      }
+
+      .enquiry-panel-left-inner {
+        padding: 2.5rem 1.15rem;
+      }
+
+      .enq-corner {
+        width: 34px;
+        height: 34px;
+      }
+      .enq-corner--tl { top: 0.9rem; left: 0.9rem; }
+      .enq-corner--tr { top: 0.9rem; right: 0.9rem; }
+      .enq-corner--bl { bottom: 0.9rem; left: 0.9rem; }
+      .enq-corner--br { bottom: 0.9rem; right: 0.9rem; }
+
+      .enq-quote {
+        font-size: 1.95rem;
+        line-height: 1.45;
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+      }
+
+      .enq-contact-items {
+        gap: 1.35rem;
+      }
+
+      .enq-contact-item a,
+      .enq-contact-item address,
+      .enq-contact-item p {
+        font-size: 0.96rem;
+        line-height: 1.6;
+      }
+
+      .enq-social {
+        gap: 0.85rem;
+        flex-wrap: wrap;
+      }
+
+      .enq-social a {
+        width: 2.3rem;
+        height: 2.3rem;
+      }
     }
   </style>
 </head>

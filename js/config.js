@@ -20,7 +20,7 @@ window.SS_CONFIG = {
     supportEmail: 'info@thesapphirescroll.com',
     // Used on the invoice header. Optional.
     gstin:   '',           // e.g. '36ABCDE1234F1Z5' (leave '' to hide)
-    address: 'Jaipur, India',
+    address: '',
   },
 
   // ── Razorpay (client-only Checkout) ───────────────────────
