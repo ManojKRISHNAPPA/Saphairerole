@@ -1759,7 +1759,7 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   gap: clamp(1.5rem, 3vw, 3rem);
   width: min(100%, 1120px);
   margin: 0 auto;
-  padding-top: calc(var(--navbar-height) + 3rem);
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
   align-items: start;
   justify-content: center;
 }
@@ -2564,7 +2564,28 @@ textarea.form-control { min-height: 140px; resize: vertical; }
 
 /* ── 640px Breakpoint ────────────────────────────────────── */
 @media (max-width: 640px) {
-  :root { --container-pad: 1rem; }
+  :root { --container-pad: clamp(1rem, 4.5vw, 1.25rem); }
+
+  .container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .section,
+  .section--featured,
+  .section--compact {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .btn {
+    width: 100%;
+    min-width: 0;
+    padding: 0.82rem 1rem;
+    white-space: normal;
+    letter-spacing: 0.14em;
+    text-align: center;
+  }
 
   .navbar-logo img {
     height: 32px;
@@ -2573,13 +2594,15 @@ textarea.form-control { min-height: 140px; resize: vertical; }
 
   /* Hero mobile — video stays full screen */
   .hero { height: 100svh; min-height: 560px; }
-  .hero-content-center { padding: calc(var(--navbar-height) + 1rem) 1rem 2rem; }
-  .hero-content-center .btn { width: 100%; justify-content: center; }
+  .hero-content-center { padding: calc(var(--navbar-height) + 1rem) var(--container-pad) 2rem; }
+  .hero-content-center .btn { justify-content: center; }
 
   /* Typography scale down */
   .tagline-section h1 { font-size: 1.9rem; }
   /* Grids → single column */
-  .product-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .product-grid { grid-template-columns: 1fr; gap: 1.75rem; }
+  .product-card-info { padding: 1rem 0 0.25rem; }
+  .product-card-desc { max-width: 22rem; margin-left: auto; margin-right: auto; }
   .articles-grid,
   .articles-grid[style] { grid-template-columns: 1fr !important; display: grid !important; }
   .grid-2-col,
@@ -2652,6 +2675,38 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   .product-thumbs { flex-wrap: wrap; }
   .product-thumb  { width: 60px; height: 75px; }
 
+  .shop-header {
+    padding: calc(var(--navbar-height) + 2rem) var(--container-pad) 2rem;
+  }
+
+  .shop-header h1 {
+    margin-bottom: 0.5rem !important;
+  }
+
+  .product-detail-layout {
+    gap: 1.5rem;
+    padding-top: 1rem;
+  }
+
+  .product-gallery,
+  .product-info {
+    max-width: 100%;
+  }
+
+  .product-info h1 {
+    font-size: clamp(1.8rem, 9vw, 2.35rem);
+    letter-spacing: 0.02em;
+  }
+
+  .pd-price-row {
+    gap: 0.7rem;
+    margin-bottom: 1rem;
+  }
+
+  .pd-actions {
+    grid-template-columns: 1fr;
+  }
+
   /* Hero */
   .hero-logo { padding: 0.75rem 1.25rem; font-size: 0.8rem; }
 
@@ -2699,6 +2754,66 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   .error-number { font-size: clamp(5rem, 25vw, 10rem); }
   .error-page > div[style*="flex"] { flex-direction: column; width: 100%; }
   .error-page .btn { width: 100%; text-align: center; }
+}
+
+@media (min-width: 641px) and (max-width: 900px) {
+  .product-detail-layout {
+    padding-top: 1.5rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .search-overlay {
+    padding: 1.25rem;
+  }
+
+  .search-input-wrap input {
+    font-size: clamp(1.35rem, 8vw, 1.75rem);
+    min-width: 0;
+  }
+
+  .cart-drawer-header,
+  .cart-drawer-items,
+  .cart-drawer-footer {
+    padding-left: var(--container-pad);
+    padding-right: var(--container-pad);
+  }
+
+  .cart-item {
+    gap: 0.8rem;
+  }
+
+  .cart-item-img {
+    width: 68px;
+    height: 86px;
+  }
+
+  .newsletter-form-row,
+  .coupon-input {
+    flex-direction: column;
+    border: none;
+    gap: 0.65rem;
+  }
+
+  .newsletter-form > div[style*="display:flex"] {
+    flex-direction: column !important;
+    gap: 0.65rem !important;
+    max-width: 100% !important;
+  }
+
+  .newsletter-form input,
+  .coupon-input input {
+    border: 1px solid rgba(201,168,76,0.4);
+  }
+
+  .newsletter-form input[style] {
+    border: 1px solid rgba(201,168,76,0.4) !important;
+  }
+
+  .newsletter-form button,
+  .coupon-input button {
+    width: 100%;
+  }
 }
 
 @media (max-width: 400px) {
