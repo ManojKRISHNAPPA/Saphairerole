@@ -25,7 +25,7 @@ const PRODUCTS = {
       "Whether you're building habits, juggling roles, or searching for balance, The Shift helps you stay steady without losing yourself in the rush.",
     ],
     features: [
-      'Total Pages: 120 pages for structured, consistent planning.',
+      'Total Pages: 175 pages for structured, consistent planning.',
       'Paper: 100 GSM smooth, bleed-resistant pages suitable for most pens.',
       'Cover: Hardback cover for durability, stability, and a luxurious hand-feel.',
       'Size: 5.8 x 8.3 inches for easy carrying and desk use.',
@@ -56,7 +56,7 @@ const PRODUCTS = {
       "With vision, daily, weekly, and yearly reflection pages, it becomes a companion on your journey back to yourself.",
     ],
     features: [
-      'Pages: 119 pages designed for gentle, thoughtful journaling.',
+      'Pages: 169 pages designed for gentle, thoughtful journaling.',
       'Paper: 100 GSM premium inner pages for a smooth, satisfying writing experience.',
       'Cover: Hardback cover for durability, stability, and a luxurious hand-feel.',
       'Size: 5.8 x 8.3 inches — ideal for desk, bedside, or daily bag.',
