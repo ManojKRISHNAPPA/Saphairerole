@@ -27,6 +27,12 @@
     return !!keyId && !String(keyId).includes('REPLACE_ME');
   }
 
+  function razorpayApiBaseUrl() {
+    const baseUrl = CFG.razorpay && CFG.razorpay.apiBaseUrl;
+    if (!baseUrl || String(baseUrl).includes('REPLACE_ME')) return '';
+    return String(baseUrl).replace(/\/+$/, '');
+  }
+
   function manualCheckoutEnabled() {
     return rules.allowManualWithoutPayment === true;
   }
@@ -246,7 +252,7 @@
   }
 
   // ── Razorpay (client-only) ────────────────────────────────
-  function startRazorpay(cart, totals, billing, payBtn) {
+  async function startRazorpay(cart, totals, billing, payBtn) {
     const rzpCfg = CFG.razorpay || {};
 
     if (!hasValidRazorpayKey()) {
@@ -277,10 +283,20 @@
     const orderId = orderNumber();
     if (payBtn) { payBtn.disabled = true; payBtn.dataset.label = payBtn.textContent; payBtn.textContent = 'Opening secure payment…'; }
 
+    let backendOrder = null;
+    try {
+      backendOrder = await createRazorpayOrder(orderId, cart, totals, billing);
+    } catch (err) {
+      if (payBtn) { payBtn.disabled = false; payBtn.textContent = payBtn.dataset.label || 'Pay Securely'; }
+      alert('Could not create secure payment order. ' + err.message);
+      return;
+    }
+
     const options = {
       key:      rzpCfg.keyId,
-      amount:   Math.round(totals.total * 100), // paise
+      amount:   backendOrder ? backendOrder.amount : Math.round(totals.total * 100), // paise
       currency: rzpCfg.currency || 'INR',
+      order_id: backendOrder ? backendOrder.id : undefined,
       name:     (CFG.store && CFG.store.name) || 'The Sapphire Scroll',
       description: `Order ${orderId}`,
       image:    'images/LOGO-ICON-COLOR.webp',
@@ -299,10 +315,22 @@
           if (payBtn) { payBtn.disabled = false; payBtn.textContent = payBtn.dataset.label || 'Pay Securely'; }
         },
       },
-      handler: function (response) {
+      handler: async function (response) {
+        if (razorpayApiBaseUrl()) {
+          if (payBtn) payBtn.textContent = 'Verifying payment…';
+          try {
+            await verifyRazorpayPayment(response);
+          } catch (err) {
+            if (payBtn) { payBtn.disabled = false; payBtn.textContent = payBtn.dataset.label || 'Pay Securely'; }
+            alert('Payment verification failed. Please contact support with your payment ID.');
+            return;
+          }
+        }
+
         const order = buildOrder(orderId, cart, totals, billing, response);
-        order.paymentStatus = 'paid';
+        order.paymentStatus = razorpayApiBaseUrl() ? 'verified' : 'paid';
         order.paymentMethod = 'razorpay';
+        order.razorpayOrderId = response.razorpay_order_id || (backendOrder && backendOrder.id) || '';
         completeOrder(order);
       },
     };
@@ -317,6 +345,52 @@
     } catch (err) {
       if (payBtn) { payBtn.disabled = false; payBtn.textContent = payBtn.dataset.label || 'Pay Securely'; }
       alert('Could not start payment. ' + err.message);
+    }
+  }
+
+  async function createRazorpayOrder(orderId, cart, totals, billing) {
+    const apiBaseUrl = razorpayApiBaseUrl();
+    if (!apiBaseUrl) return null;
+
+    const res = await fetch(apiBaseUrl + '/create-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        orderId,
+        amount: totals.total,
+        currency: (CFG.razorpay && CFG.razorpay.currency) || 'INR',
+        cart: cart.map(i => ({ name: i.name, variant: i.variant || '', qty: i.qty, price: i.price })),
+        billing: {
+          name: billing.name,
+          email: billing.email,
+          phone: billing.phone,
+          district: billing.district,
+          pincode: billing.pincode,
+        },
+      }),
+    });
+
+    let data = null;
+    try { data = await res.json(); } catch { /* ignore malformed response */ }
+    if (!res.ok || !data || !data.id) {
+      throw new Error((data && data.error) || 'Please retry.');
+    }
+    return data;
+  }
+
+  async function verifyRazorpayPayment(response) {
+    const apiBaseUrl = razorpayApiBaseUrl();
+    if (!apiBaseUrl) return;
+
+    const res = await fetch(apiBaseUrl + '/verify-payment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(response),
+    });
+    let data = null;
+    try { data = await res.json(); } catch { /* ignore malformed response */ }
+    if (!res.ok || !data || data.verified !== true) {
+      throw new Error((data && data.error) || 'Signature mismatch.');
     }
   }
 

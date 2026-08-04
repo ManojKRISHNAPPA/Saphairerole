@@ -1,8 +1,9 @@
 # Checkout Setup — Razorpay + EmailJS
 
-This store uses a **client-only** checkout (no backend), which works on GitHub
-Pages. All keys below are *public/publishable* and safe to commit. **Never** put
-a Razorpay **Key Secret** or an EmailJS **Private Key** in these files.
+This store uses GitHub Pages for the static website. Public keys live in the
+site config, while the Razorpay **Key Secret** must stay in a backend such as a
+Cloudflare Worker. **Never** put a Razorpay **Key Secret** or an EmailJS
+**Private Key** in these files.
 
 All configuration lives in **`js/config.js`**.
 
@@ -19,13 +20,31 @@ razorpay: {
   keyId: 'rzp_live_xxxxxxxxxxxxx',
   currency: 'INR',
   themeColor: '#1C1C2E',
+   apiBaseUrl: 'https://your-worker.your-account.workers.dev',
 }
 ```
 
-**Reconciliation:** Because there is no server to verify the payment
-signature, confirm/settle orders from the **Razorpay Dashboard** (and/or set up
-a **Webhook** → Settings → Webhooks pointing at any logging endpoint you like).
-The amount charged equals the cart **Total** (subtotal + shipping + 18% GST).
+### Secure Razorpay backend with Cloudflare Worker
+
+Use `cloudflare/razorpay-worker.js` as the Worker code. In Cloudflare, add these
+Worker environment variables/secrets:
+
+```text
+RAZORPAY_KEY_ID=rzp_live_xxxxxxxxxxxxx
+RAZORPAY_KEY_SECRET=your_secret_from_razorpay_dashboard
+ALLOWED_ORIGIN=https://www.thesapphirescroll.com
+```
+
+After deploying the Worker, paste the Worker URL into `js/config.js` →
+`razorpay.apiBaseUrl`. The site will call:
+
+```text
+/create-order
+/verify-payment
+```
+
+If `apiBaseUrl` is left blank, checkout falls back to the older client-only
+Razorpay flow and cannot verify signatures automatically.
 
 ---
 

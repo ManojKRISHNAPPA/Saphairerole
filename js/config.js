@@ -28,9 +28,12 @@ window.SS_CONFIG = {
   // Use the TEST key (rzp_test_…) until you go live, then swap
   // for the LIVE key (rzp_live_…).
   razorpay: {
-    keyId:    'rzp_test_REPLACE_ME',
+    keyId:    'rzp_live_RmF3i4Hfjovo7B',
     currency: 'INR',
     themeColor: '#1C1C2E',   // navy — matches the brand
+    // Optional secure backend for creating Razorpay Orders and verifying signatures.
+    // Example: 'https://sapphire-razorpay-api.yourname.workers.dev'
+    apiBaseUrl: 'https://little-cake-2bae.contactmanojmech.workers.dev',
   },
 
   // ── EmailJS ───────────────────────────────────────────────
