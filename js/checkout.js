@@ -355,23 +355,29 @@
       throw new Error('Open checkout from the live website or a local server, not file://.');
     }
 
-    const res = await fetch(apiBaseUrl + '/create-order', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        orderId,
-        amount: totals.total,
-        currency: (CFG.razorpay && CFG.razorpay.currency) || 'INR',
-        cart: cart.map(i => ({ name: i.name, variant: i.variant || '', qty: i.qty, price: i.price })),
-        billing: {
-          name: billing.name,
-          email: billing.email,
-          phone: billing.phone,
-          district: billing.district,
-          pincode: billing.pincode,
-        },
-      }),
-    });
+    const endpoint = apiBaseUrl + '/create-order';
+    let res;
+    try {
+      res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderId,
+          amount: totals.total,
+          currency: (CFG.razorpay && CFG.razorpay.currency) || 'INR',
+          cart: cart.map(i => ({ name: i.name, variant: i.variant || '', qty: i.qty, price: i.price })),
+          billing: {
+            name: billing.name,
+            email: billing.email,
+            phone: billing.phone,
+            district: billing.district,
+            pincode: billing.pincode,
+          },
+        }),
+      });
+    } catch (err) {
+      throw new Error(`Browser blocked the payment API request from ${window.location.origin} to ${endpoint}. ${err.message}`);
+    }
 
     let data = null;
     try { data = await res.json(); } catch { /* ignore malformed response */ }
