@@ -109,7 +109,7 @@ const PRODUCTS = {
       'images/product-portraits/self-discovery-4.webp',
     ],
     description: [
-      "Inner Alchemy is your quiet space to slow down — where thoughts settle, ideas soften into clarity, and the noise of the day can fade.",
+      "Self Discovery is your quiet space to slow down — where thoughts settle, ideas soften into clarity, and the noise of the day can fade.",
       "Write without rules, structure, or needing the right words — for brain dumps, meeting notes, sketches, planning, or reflective writing.",
       "It's a companion for full-mind days when you need a clean page to breathe and for quiet evenings when writing becomes release.",
       "Every blank page is a gentle reminder that you don't need a perfect plan — you only need room to begin.",
