@@ -351,6 +351,9 @@
   async function createRazorpayOrder(orderId, cart, totals, billing) {
     const apiBaseUrl = razorpayApiBaseUrl();
     if (!apiBaseUrl) return null;
+    if (window.location.protocol === 'file:') {
+      throw new Error('Open checkout from the live website or a local server, not file://.');
+    }
 
     const res = await fetch(apiBaseUrl + '/create-order', {
       method: 'POST',

@@ -10,6 +10,10 @@ export default {
     const url = new URL(request.url);
 
     try {
+      if (request.method === 'GET' && (url.pathname === '/' || url.pathname === '/health')) {
+        return json({ ok: true, service: 'razorpay-worker' }, corsHeaders);
+      }
+
       if (request.method === 'POST' && url.pathname === '/create-order') {
         return json(await createOrder(request, env), corsHeaders);
       }
@@ -26,7 +30,19 @@ export default {
 };
 
 function cors(origin, allowedOrigin) {
-  const allowOrigin = allowedOrigin && origin === allowedOrigin ? origin : (allowedOrigin || origin || '*');
+  const allowedOrigins = String(allowedOrigin || '')
+    .split(',')
+    .map(value => value.trim())
+    .filter(Boolean);
+  if (!allowedOrigins.length) {
+    allowedOrigins.push('https://www.thesapphirescroll.com', 'https://thesapphirescroll.com');
+  }
+  if (allowedOrigins.includes('https://www.thesapphirescroll.com') &&
+      !allowedOrigins.includes('https://thesapphirescroll.com')) {
+    allowedOrigins.push('https://thesapphirescroll.com');
+  }
+
+  const allowOrigin = allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
   return {
     'Access-Control-Allow-Origin': allowOrigin,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
