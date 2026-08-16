@@ -726,6 +726,53 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   gap: clamp(1.25rem, 2.5vw, 2rem);
 }
 
+/* ── Product Carousel (homepage featured slider) ─────────── */
+.product-carousel {
+  position: relative;
+}
+.product-grid--slider {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.product-grid--slider::-webkit-scrollbar {
+  display: none;
+}
+.product-grid--slider > .product-card {
+  flex: 0 0 calc((100% - 2 * clamp(1.25rem, 2.5vw, 2rem)) / 3);
+  scroll-snap-align: start;
+}
+.product-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--grey-light);
+  background: var(--white);
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+.product-carousel-arrow:hover {
+  background: var(--navy);
+  color: var(--white);
+}
+.product-carousel-prev { left: -22px; }
+.product-carousel-next { right: -22px; }
+@media (max-width: 900px) {
+  .product-grid--slider > .product-card { flex: 0 0 80%; }
+  .product-carousel-prev { left: 0.25rem; }
+  .product-carousel-next { right: 0.25rem; }
+}
+
 /* Wrapper for image + hover CTA — ensures CTA clips to image area */
 .product-card-image-wrap {
   position: relative;
@@ -751,6 +798,10 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   object-fit: cover;
   object-position: center center;
   transition: transform 0.8s ease, opacity var(--transition);
+}
+/* Square source photos (e.g. Inner Alchemy) get clipped by the 3:4 card crop — show them uncropped */
+.product-card-media img.product-img-contain {
+  object-fit: contain;
 }
 .product-card:hover .product-card-media img {
   transform: scale(1.04);
@@ -1617,9 +1668,15 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
 }
 #shop-category-label {
   margin-bottom: 0.85rem;
+  font-size: 0.95rem;
+  color: var(--navy);
 }
 #shop-gold-divider {
   margin: 1rem auto 1.25rem;
+}
+#shop-subtitle {
+  font-size: 1.25rem;
+  color: var(--navy);
 }
 @keyframes shopHeaderIn {
   from { opacity: 0; transform: translateY(10px); }
@@ -1639,11 +1696,11 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   justify-content: center;
   gap: 0.5rem;
   margin-bottom: 1rem;
-  font-size: 0.78rem;
-  color: var(--grey-mid);
+  font-size: 0.92rem;
+  color: var(--navy);
 }
 .breadcrumb a:hover { color: var(--gold); }
-.breadcrumb span { color: var(--grey-mid); font-size: 0.7rem; }
+.breadcrumb span { color: var(--navy); font-size: 0.85rem; }
 
 .shop-layout {
   display: grid;
@@ -1773,11 +1830,13 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
 }
 
 .product-main-img {
+  position: relative;
   aspect-ratio: 3/4;
   background: var(--cream);
   overflow: hidden;
   margin-bottom: 0.75rem;
   cursor: zoom-in;
+  touch-action: pan-y;
 }
 .product-main-img img {
   width: 100%; height: 100%;
@@ -1785,6 +1844,38 @@ p { font-size: 1rem; line-height: 1.85; color: var(--brown); }
   transition: transform 0.6s ease;
 }
 .product-main-img:hover img { transform: scale(1.06); }
+
+.product-gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--grey-light);
+  background: rgba(255,255,255,0.85);
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--transition), background var(--transition), color var(--transition);
+}
+.product-main-img:hover .product-gallery-arrow,
+.product-gallery-arrow:focus-visible {
+  opacity: 1;
+}
+.product-gallery-arrow:hover {
+  background: var(--navy);
+  color: var(--white);
+}
+.product-gallery-prev { left: 0.75rem; }
+.product-gallery-next { right: 0.75rem; }
+@media (max-width: 700px) {
+  .product-gallery-arrow { opacity: 1; }
+}
 
 .product-thumbs {
   display: flex;

@@ -43,11 +43,11 @@ const PRODUCTS = {
     inStock: true,
     images: [
       'images/product-portraits/gentle-pause-1.webp',
-      'images/product-portraits/gentle-pause-6.webp',
       'images/product-portraits/gentle-pause-2.webp',
       'images/product-portraits/gentle-pause-3.webp',
       'images/product-portraits/gentle-pause-4.webp',
       'images/product-portraits/gentle-pause-5.webp',
+      'images/product-portraits/gentle-pause-6.webp',
     ],
     description: [
       "The Gentle Pause is a softly structured self-reflection journal designed to help you return to yourself — one page, one breath, one quiet moment at a time.",
@@ -74,6 +74,8 @@ const PRODUCTS = {
     mrp: 1299,
     priceFormatted: '₹799',
     inStock: true,
+    imageFit: 'contain', // square source image — avoid off-center crop
+    imageBg: '#DEDAD5', // matches the image's own background so contain-fit shows no seam
     images: [
       'images/product-portraits/inner-alchemy-1.webp',
       'images/product-portraits/inner-alchemy-2.webp',
@@ -842,12 +844,24 @@ function initProductPage() {
 
   // Update page title / breadcrumb
   document.title = `${p.name} — The Sapphire Scroll`;
-  const breadcrumbCurrent = qs('[aria-current="page"]');
+  const breadcrumbCurrent = qs('#pd-breadcrumb-current');
   if (breadcrumbCurrent) breadcrumbCurrent.textContent = p.name;
+
+  const CATEGORY_SLUGS = { 'Journal': 'journals', 'Notebook': 'notebooks', 'Guided Cards': 'self-care-cards', 'Desk Edit': 'desk-edit', 'Gift Sets': 'gifts' };
+  const CATEGORY_BREADCRUMB_LABELS = { 'journals': 'Journals', 'notebooks': 'Notebooks', 'self-care-cards': 'Guided Cards', 'desk-edit': 'Desk Edit', 'gifts': 'Gift Sets' };
+  const breadcrumbCategory = qs('#pd-breadcrumb-category');
+  if (breadcrumbCategory) {
+    const slug = CATEGORY_SLUGS[p.category] || '';
+    breadcrumbCategory.textContent = CATEGORY_BREADCRUMB_LABELS[slug] || p.category;
+    breadcrumbCategory.href = `shop.html?category=${slug}`;
+  }
 
   // Main image
   mainImgEl.src = p.images[0];
   mainImgEl.alt = p.name;
+  mainImgEl.style.objectFit = p.imageFit || 'cover';
+  const imgWrapEl = qs('#pd-img-wrap');
+  if (imgWrapEl) imgWrapEl.style.background = p.imageBg || '';
   mainImgEl.setAttribute('loading', 'eager');
   mainImgEl.setAttribute('decoding', 'async');
   mainImgEl.setAttribute('fetchpriority', 'high');
@@ -860,15 +874,37 @@ function initProductPage() {
            data-thumb-src="${src}" aria-label="View image ${i + 1}">
         <img src="${src}" alt="${p.name} view ${i + 1}" class="product-thumb-img" loading="lazy" decoding="async">
       </div>`).join('');
+  }
 
-    // Attach click handlers directly (initProductGallery runs before thumbs exist)
-    thumbsEl.querySelectorAll('.product-thumb').forEach(thumb => {
-      thumb.addEventListener('click', () => {
-        mainImgEl.src = thumb.dataset.thumbSrc;
-        thumbsEl.querySelectorAll('.product-thumb').forEach(t => t.classList.remove('active'));
-        thumb.classList.add('active');
+  // Sliding navigation — prev/next arrows, thumbnail clicks, and touch swipe share one active index
+  if (p.images.length > 1) {
+    let activeIndex = 0;
+    const goToImage = (index) => {
+      activeIndex = (index + p.images.length) % p.images.length;
+      mainImgEl.src = p.images[activeIndex];
+      thumbsEl.querySelectorAll('.product-thumb').forEach((t, i) => {
+        t.classList.toggle('active', i === activeIndex);
       });
+    };
+
+    thumbsEl.querySelectorAll('.product-thumb').forEach((thumb, i) => {
+      thumb.addEventListener('click', () => goToImage(i));
     });
+
+    qs('#pd-img-prev')?.addEventListener('click', () => goToImage(activeIndex - 1));
+    qs('#pd-img-next')?.addEventListener('click', () => goToImage(activeIndex + 1));
+
+    const imgWrap = qs('#pd-img-wrap');
+    if (imgWrap) {
+      let touchStartX = 0;
+      imgWrap.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].clientX;
+      }, { passive: true });
+      imgWrap.addEventListener('touchend', (e) => {
+        const deltaX = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(deltaX) > 40) goToImage(activeIndex + (deltaX < 0 ? 1 : -1));
+      }, { passive: true });
+    }
   }
 
   // Add to Cart button
@@ -894,13 +930,15 @@ function initProductPage() {
     const relatedIds = Object.keys(PRODUCTS).filter(k => k !== id).slice(0, 4);
     relatedGrid.innerHTML = relatedIds.map((relId, idx) => {
       const rp = PRODUCTS[relId];
+      const fitClass = rp.imageFit === 'contain' ? ' product-img-contain' : '';
+      const bgStyle = rp.imageBg ? ` style="background:${rp.imageBg};"` : '';
       return `
         <article class="product-card" data-id="${relId}" data-reveal data-reveal-delay="${idx}">
           <div class="product-card-image-wrap">
             <a href="product.html?id=${relId}" class="product-card-media-link">
-              <div class="product-card-media">
-                <img src="${rp.images[0]}" alt="${rp.name}" class="product-img-primary" loading="lazy" decoding="async">
-                ${rp.images[1] ? `<img src="${rp.images[1]}" alt="${rp.name} alt view" class="product-img-secondary" loading="lazy" decoding="async">` : ''}
+              <div class="product-card-media"${bgStyle}>
+                <img src="${rp.images[0]}" alt="${rp.name}" class="product-img-primary${fitClass}" loading="lazy" decoding="async">
+                ${rp.images[1] ? `<img src="${rp.images[1]}" alt="${rp.name} alt view" class="product-img-secondary${fitClass}" loading="lazy" decoding="async">` : ''}
               </div>
             </a>
             <button class="product-card-cta" data-quick-add>Add to Cart</button>
@@ -1593,6 +1631,24 @@ window.applyCoupon = function() {
 };
 
 // ── Init ──────────────────────────────────────────────────
+function initProductCarousel() {
+  qsa('.product-carousel').forEach(carousel => {
+    const track = carousel.querySelector('.product-grid--slider');
+    const prevBtn = carousel.querySelector('.product-carousel-prev');
+    const nextBtn = carousel.querySelector('.product-carousel-next');
+    if (!track || !prevBtn || !nextBtn) return;
+
+    const scrollByCard = (direction) => {
+      const card = track.querySelector('.product-card');
+      const amount = card ? card.getBoundingClientRect().width + 24 : track.clientWidth;
+      track.scrollBy({ left: amount * direction, behavior: 'smooth' });
+    };
+
+    prevBtn.addEventListener('click', () => scrollByCard(-1));
+    nextBtn.addEventListener('click', () => scrollByCard(1));
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
   initMobileMenu();
@@ -1621,6 +1677,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCartPage();
   initDeliveryEstimator();
   initTearStrips();
+  initProductCarousel();
 });
 
 // Expose for inline calls
