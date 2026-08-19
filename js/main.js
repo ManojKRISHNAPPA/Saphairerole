@@ -1583,7 +1583,7 @@ function initCartPage() {
     const coupon   = getActiveCoupon();
     const discount = couponDiscountAmount(subtotal, coupon);
     const taxable  = Math.max(subtotal - discount, 0);
-    const shipping = subtotal >= 2000 ? 0 : 99;
+    const shipping = subtotal >= 2000 ? 0 : 1;
     const tax      = Math.round(taxable * 0.18);
     const total    = taxable + shipping + tax;
 

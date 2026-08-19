@@ -51,7 +51,7 @@ window.SS_CONFIG = {
   // ── Order rules (kept in sync with the cart page) ─────────
   order: {
     freeShippingThreshold: 2000, // ₹ — at/above this, shipping is free
-    shippingFlat:          99,   // ₹ — flat shipping below the threshold
+    shippingFlat:          1,    // ₹ — test shipping charge below the threshold
     taxRate:               0.18, // 18% GST
     deliveryDays:          7,
     allowManualWithoutPayment: true, // temporary fallback until Razorpay is configured
