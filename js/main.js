@@ -7,9 +7,9 @@ const PRODUCTS = {
   'the-shift': {
     category: 'Journal',
     name: 'The Shift – Productivity Journal',
-    price: 1399,
+    price: 2,
     mrp: 1999,
-    priceFormatted: '₹1,399',
+    priceFormatted: '₹2',
     inStock: true,
     images: [
       'images/product-portraits/the-shift-1.webp',
@@ -37,9 +37,9 @@ const PRODUCTS = {
   'gentle-pause': {
     category: 'Journal',
     name: 'The Gentle Pause',
-    price: 1399,
+    price: 2,
     mrp: 1999,
-    priceFormatted: '₹1,399',
+    priceFormatted: '₹2',
     inStock: true,
     images: [
       'images/product-portraits/gentle-pause-1.webp',
