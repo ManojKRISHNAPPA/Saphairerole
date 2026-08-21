@@ -20,9 +20,25 @@ razorpay: {
   keyId: 'rzp_live_xxxxxxxxxxxxx',
   currency: 'INR',
   themeColor: '#1C1C2E',
-   apiBaseUrl: 'https://your-worker.your-account.workers.dev',
+  apiBaseUrl: 'https://your-worker.your-account.workers.dev',
+  allowedHosts: ['www.thesapphirescroll.com', 'thesapphirescroll.com'],
 }
 ```
+
+### Fixing "Business - Website Mismatch"
+
+If Razorpay shows this status, it usually means checkout was opened on a domain
+different from your approved website.
+
+1. In Razorpay Dashboard, set **Account & Settings → Website/App URL** to your
+   production checkout domain (for this site: `https://www.thesapphirescroll.com`).
+2. Ensure your public Key ID and backend secret belong to the same Razorpay account.
+3. In `js/config.js`, keep `store.url` and `razorpay.allowedHosts` aligned to the
+   exact hostnames you use for checkout.
+4. Avoid collecting live payments from preview/staging domains.
+
+Checkout now blocks live-key payments on unexpected hosts and shows a clear
+message before payment starts.
 
 ### Secure Razorpay backend with Cloudflare Worker
 

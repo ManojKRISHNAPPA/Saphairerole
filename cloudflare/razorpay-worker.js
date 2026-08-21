@@ -61,6 +61,7 @@ async function createOrder(request, env) {
 
   const receipt = String(body.orderId || `ss_${Date.now()}`).slice(0, 40);
   const notes = body.billing || {};
+  const website = body.website || {};
   const orderPayload = {
     amount: Math.round(amount * 100),
     currency: body.currency || 'INR',
@@ -72,6 +73,8 @@ async function createOrder(request, env) {
       customer_phone: String(notes.phone || '').slice(0, 40),
       district: String(notes.district || '').slice(0, 80),
       pincode: String(notes.pincode || '').slice(0, 20),
+      checkout_origin: String(website.origin || '').slice(0, 120),
+      checkout_host: String(website.hostname || '').slice(0, 80),
     },
   };
 

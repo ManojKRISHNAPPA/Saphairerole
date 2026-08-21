@@ -34,6 +34,10 @@ window.SS_CONFIG = {
     // Optional secure backend for creating Razorpay Orders and verifying signatures.
     // Example: 'https://sapphire-razorpay-api.yourname.workers.dev'
     apiBaseUrl: 'https://little-cake-2bae.contactmanojmech.workers.dev',
+    // Optional host allow-list for LIVE key safety checks.
+    // If omitted, checkout uses store.url hostname.
+    // Example: ['www.thesapphirescroll.com', 'thesapphirescroll.com']
+    allowedHosts: ['www.thesapphirescroll.com', 'thesapphirescroll.com'],
   },
 
   // ── EmailJS ───────────────────────────────────────────────

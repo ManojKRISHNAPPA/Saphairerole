@@ -27,6 +27,48 @@
     return !!keyId && !String(keyId).includes('REPLACE_ME');
   }
 
+  function isLiveRazorpayKey() {
+    const keyId = CFG.razorpay && CFG.razorpay.keyId;
+    return /^rzp_live_/i.test(String(keyId || ''));
+  }
+
+  function getExpectedCheckoutHosts() {
+    const fromConfig = [];
+
+    try {
+      const storeUrl = CFG.store && CFG.store.url;
+      if (storeUrl) fromConfig.push(new URL(String(storeUrl)).hostname.toLowerCase());
+    } catch {
+      // Ignore malformed store URL.
+    }
+
+    const extraHosts = CFG.razorpay && CFG.razorpay.allowedHosts;
+    if (Array.isArray(extraHosts)) {
+      extraHosts
+        .map(h => String(h || '').trim().toLowerCase())
+        .filter(Boolean)
+        .forEach(h => fromConfig.push(h));
+    }
+
+    return [...new Set(fromConfig)];
+  }
+
+  function hostAllowedForLiveRazorpay() {
+    const expected = getExpectedCheckoutHosts();
+    if (!expected.length) return true;
+
+    const current = String(window.location.hostname || '').toLowerCase();
+    return expected.includes(current);
+  }
+
+  function liveHostMismatchMessage() {
+    const current = String(window.location.hostname || '').toLowerCase();
+    const expected = getExpectedCheckoutHosts();
+    if (!expected.length) return '';
+
+    return `Live Razorpay key is configured for ${expected.join(' or ')}, but checkout is running on ${current}. Open checkout from the configured domain and make sure the same website is set in Razorpay Dashboard → Account & Settings → Website/App URL.`;
+  }
+
   function razorpayApiBaseUrl() {
     const baseUrl = CFG.razorpay && CFG.razorpay.apiBaseUrl;
     if (!baseUrl || String(baseUrl).includes('REPLACE_ME')) return '';
@@ -137,6 +179,11 @@
     setText('#co-tax',      INR(totals.tax));
     setText('#co-total',    INR(totals.total));
     setText('#co-delivery-est', deliveryWindow());
+
+    if (isLiveRazorpayKey() && !hostAllowedForLiveRazorpay()) {
+      const note = $('.co-secure-note');
+      if (note) note.textContent = 'Live payments are blocked on this host. Open checkout from the configured production domain.';
+    }
 
     if (manualCheckoutEnabled() && !hasValidRazorpayKey()) {
       if (payBtn) payBtn.textContent = 'Place Order';
@@ -255,6 +302,11 @@
   async function startRazorpay(cart, totals, billing, payBtn) {
     const rzpCfg = CFG.razorpay || {};
 
+    if (isLiveRazorpayKey() && !hostAllowedForLiveRazorpay()) {
+      alert(liveHostMismatchMessage());
+      return;
+    }
+
     if (!hasValidRazorpayKey()) {
       if (manualCheckoutEnabled()) {
         const order = buildOrder(orderNumber(), cart, totals, billing, {
@@ -372,6 +424,11 @@
             phone: billing.phone,
             district: billing.district,
             pincode: billing.pincode,
+          },
+          website: {
+            origin: window.location.origin,
+            hostname: window.location.hostname,
+            path: window.location.pathname,
           },
         }),
       });
